@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -29,7 +28,7 @@ public class TileManager {
         sprites = new Sprite[3];
 
         // Initialise the map data to be the max size of the screen
-        mapSpriteData = new int[gameWindow.getMaxScreenRow()][gameWindow.getMaxScreenCol()];
+        mapSpriteData = new int[gameWindow.getMaxScreenCol()][gameWindow.getMaxScreenRow()];
 
         // Load sprite(s)
         loadSprites();
@@ -37,16 +36,19 @@ public class TileManager {
         // WE NEED ERROR HANDLING FOR INCORRECT WORLDS AND STUFF TODO
         // IF ITS INCORRECT RIGHT NOW IT WILL JUST DISPLAY THE FIRST IMAGE IN THE ARRAY
         // THIS COULD JUST BECOME A DEFAULT TEXTURE THEN LOG A MESSAGE?
-        loadWorldFromFile("/worlds/test-world-2.txt");
+        loadWorldFromFile("/worlds/test-world.txt");
     }
 
     public void loadSprites() {
         try {
             sprites[0] = new Sprite();
-            sprites[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/test2.png")));
+            sprites[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/test.png")));
 
             sprites[1] = new Sprite();
-            sprites[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/test3.png")));
+            sprites[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/test2.png")));
+
+            sprites[2] = new Sprite();
+            sprites[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/test3.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,50 +60,38 @@ public class TileManager {
             InputStream inputStream = getClass().getResourceAsStream(filePath);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(inputStream)));
 
-            // X , Y
-            int row = 0;
-            int column = 0;
+            int x = 0;
+            int y = 0;
 
-            while(row < gameWindow.getMaxScreenRow() && column < gameWindow.getMaxScreenCol()) {
-                // Reading the text file line by line while it's within limits of the screen size we have defined
+            // TODO: Works but could be more optimised
+            while(x < gameWindow.getMaxScreenCol() && y < gameWindow.getMaxScreenRow()) {
                 String line = bufferedReader.readLine();
 
-                while (row < gameWindow.getMaxScreenRow()) {
+                while(x < gameWindow.getMaxScreenCol()) {
                     String[] numbers = line.split(" ");
-                    int num = Integer.parseInt(numbers[row]);
-
-                    mapSpriteData[row][column] = num;
-                    row++;
+                    int num = Integer.parseInt(numbers[x]);
+                    mapSpriteData[x][y] = num;
+                    x++;
                 }
 
-                if (row == gameWindow.getMaxScreenRow()) {
-                    row = 0;
-                    column++;
+                if(x == gameWindow.getMaxScreenCol()) {
+                    x = 0;
+                    y++;
                 }
             }
-            System.out.println(Arrays.deepToString(mapSpriteData));
             bufferedReader.close();
         } catch(Exception ignored) {}
     }
 
     public void draw(Graphics2D graphics2D) {
-        // The tile at (x,y) on screen
-        int x = 0;
-        int y = 0;
+        for (int column = 0; column < gameWindow.getMaxScreenCol(); column++) {
+            for (int row = 0; row < gameWindow.getMaxScreenRow(); row++) {
+                int sprite = mapSpriteData[column][row];
 
-        // Loop through the mapSpriteData array to draw the tiles
-        for(int row = 0; row < gameWindow.getMaxScreenRow(); row++) {
-            for(int col = 0; col < gameWindow.getMaxScreenCol(); col++) {
-                // The sprite at the specified point on the row and column
-                int sprite = mapSpriteData[row][col];
+                int xPos = column * gameWindow.getTileSize();
+                int yPos = row * gameWindow.getTileSize();
 
-                graphics2D.drawImage(sprites[sprite].image, x * gameWindow.getTileSize(), y * gameWindow.getTileSize(), gameWindow.getTileSize(), gameWindow.getTileSize(), null);
-                x++;
-
-                if(x == gameWindow.getMaxScreenRow()) {
-                    x = 0;
-                    y++;
-                }
+                graphics2D.drawImage(sprites[sprite].image, xPos, yPos, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
             }
         }
     }

@@ -1,7 +1,14 @@
 import Engine.GameWindow;
 import javax.swing.JFrame;
 
-// TODO: Could we have the TileManager, Player etc., all inside the GameStateManager?
+// TODO: I am loading the data completely wrong, this needs fixing ASAP
+
+/*
+    In summary:
+    Rows → y-axis (vertical)
+    Columns → x-axis (horizontal)
+    Thus, when you access array[row][column], you are accessing the element at the (x, y) position in the grid.
+ */
 
 public class EntryPoint {
     public static void main(String[] args) {

@@ -1,4 +1,5 @@
 package Engine.Managers;
+import Engine.GameWindow;
 import Engine.Input.KeyHandler;
 import Engine.States.GameState;
 import Engine.States.PauseState;
@@ -12,11 +13,14 @@ import java.util.HashMap;
 public class GameStateManager {
     private final HashMap<STATES, GameState> states = new HashMap<STATES, GameState>();
     private STATES currentState;
+    private final GameWindow gameWindow;
 
     // Default Constructor
-    public GameStateManager() {
+    public GameStateManager(GameWindow gameWindow) {
+        this.gameWindow = gameWindow;
+
         states.put(STATES.PLAY, new PlayState(this, true));
-        states.put(STATES.PAUSE, new PauseState(this, false));
+        //states.put(STATES.PAUSE, new PauseState(this, false));
 
         currentState = STATES.PLAY;
     }
@@ -51,4 +55,5 @@ public class GameStateManager {
     public void setGameStateIsActive(STATES stateToUpdate, boolean isActive) {
         states.get(stateToUpdate).setActive(isActive);
     }
+    public GameWindow getGameWindow() { return this.gameWindow; }
 }

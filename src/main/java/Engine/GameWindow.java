@@ -1,7 +1,7 @@
 package Engine;
 import Engine.Input.KeyHandler;
 import Engine.Managers.GameStateManager;
-import Engine.Managers.TileManager;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -22,8 +22,8 @@ public class GameWindow extends JPanel implements Runnable {
 
     // Creating the maximum amount of screen columns / rows we can display sprites to get an aspect ratio of 4:3
     // The max sprites will be (30 x 16)
-    int maxScreenRow;
     int maxScreenCol;
+    int maxScreenRow;
 
     // The max screen width and height (1920 x 1080)
     int screenWidth;
@@ -33,8 +33,8 @@ public class GameWindow extends JPanel implements Runnable {
     private boolean isRunning = false;
     double FPS = 60;
 
-    private TileManager tileManager;
-    private KeyHandler keyHandler;
+//    private TileManager tileManager;
+//    private KeyHandler keyHandler;
     private GameStateManager gameStateManager;
 
     public GameWindow() {
@@ -45,15 +45,15 @@ public class GameWindow extends JPanel implements Runnable {
         this.setFocusable(true);
 
         tileSize = 64;
-        maxScreenRow = 30;
-        maxScreenCol = 16;
+        maxScreenCol = 30;
+        maxScreenRow = 16;
         screenWidth = 1920;
         screenHeight = 1080;
 
         init();
     }
 
-    public GameWindow(int screenWidth, int screenHeight, int tileSize, int maxScreenCol, int maxScreenRow) {
+    public GameWindow(int screenWidth, int screenHeight, int tileSize, int maxScreenX, int maxScreenY) {
         // Setting up the game window
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
         this.setBackground(Color.black);
@@ -61,8 +61,8 @@ public class GameWindow extends JPanel implements Runnable {
         this.setFocusable(true);
 
         this.tileSize = tileSize;
-        this.maxScreenRow = maxScreenRow;
-        this.maxScreenCol = maxScreenCol;
+        this.maxScreenCol = maxScreenX;
+        this.maxScreenRow = maxScreenY;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
 
@@ -71,9 +71,9 @@ public class GameWindow extends JPanel implements Runnable {
 
     public void init() {
         isRunning = true;
-        tileManager = new TileManager(this);
-        keyHandler = new KeyHandler(this);
-        gameStateManager = new GameStateManager();
+//        tileManager = new TileManager(this);
+//        keyHandler = new KeyHandler(this);
+        gameStateManager = new GameStateManager(this);
     }
 
     // Override that is called when the JPanel is created
@@ -103,7 +103,7 @@ public class GameWindow extends JPanel implements Runnable {
                 // Update game state and redraw
                 update();
                 repaint();
-                input(keyHandler);
+//                input(keyHandler);
                 delta--;
             }
         }
@@ -130,10 +130,10 @@ public class GameWindow extends JPanel implements Runnable {
     public int getTileSize() {
         return tileSize;
     }
-    public int getMaxScreenRow() {
-        return maxScreenRow;
-    }
     public int getMaxScreenCol() {
         return maxScreenCol;
+    }
+    public int getMaxScreenRow() {
+        return maxScreenRow;
     }
 }
