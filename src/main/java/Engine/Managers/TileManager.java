@@ -1,8 +1,6 @@
 package Engine.Managers;
-
 import Engine.GameWindow;
 import Engine.Graphics.Sprite;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.BufferedReader;
@@ -20,9 +18,10 @@ public class TileManager {
 
     // Information on the sprites
     public Sprite[] sprites;                    // Stores all the sprites that will be used in the game
-    // TODO: ^ Have a sprite manager that maybe reads in a sprite sheet and builds the correct sized array etc?
-    public int[][] mapSpriteData;
+    public int[][] mapSpriteData;               // Stores the actual sprite that represent an (X,Y) map coordinate
 
+    // TODO: PROBABLY SHOULD PASS IN THE MAP TO LOAD AND ALSO ADD MORE CUSTOMIZATION HERE
+    // i.e., will the map be full-screen, can you have the concept of a bigger world all this jazz
     public TileManager(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
         sprites = new Sprite[3];
@@ -33,14 +32,12 @@ public class TileManager {
         // Load sprite(s)
         loadSprites();
         // Load world
-        // WE NEED ERROR HANDLING FOR INCORRECT WORLDS AND STUFF TODO
-        // IF ITS INCORRECT RIGHT NOW IT WILL JUST DISPLAY THE FIRST IMAGE IN THE ARRAY
-        // THIS COULD JUST BECOME A DEFAULT TEXTURE THEN LOG A MESSAGE?
         loadWorldFromFile("/worlds/test-world.txt");
     }
 
     public void loadSprites() {
         try {
+            // TODO: Could we work with sprite-sheets instead?
             sprites[0] = new Sprite();
             sprites[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/test.png")));
 

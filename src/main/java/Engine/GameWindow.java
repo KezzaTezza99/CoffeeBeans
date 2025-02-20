@@ -32,9 +32,6 @@ public class GameWindow extends JPanel implements Runnable {
     Thread mainThread;
     private boolean isRunning = false;
     double FPS = 60;
-
-//    private TileManager tileManager;
-//    private KeyHandler keyHandler;
     private GameStateManager gameStateManager;
 
     public GameWindow() {
@@ -71,8 +68,6 @@ public class GameWindow extends JPanel implements Runnable {
 
     public void init() {
         isRunning = true;
-//        tileManager = new TileManager(this);
-//        keyHandler = new KeyHandler(this);
         gameStateManager = new GameStateManager(this);
     }
 
@@ -103,7 +98,6 @@ public class GameWindow extends JPanel implements Runnable {
                 // Update game state and redraw
                 update();
                 repaint();
-//                input(keyHandler);
                 delta--;
             }
         }
@@ -119,11 +113,6 @@ public class GameWindow extends JPanel implements Runnable {
         Graphics2D graphics2D = (Graphics2D) graphics;
         gameStateManager.draw(graphics2D);
         graphics2D.dispose();
-    }
-
-    // TODO: THIS COULD PROBABLY BE REMOVED AND JUST KEPT INTERNALLY IN GSM
-    public void input(KeyHandler keyHandler) {
-        gameStateManager.input(keyHandler);
     }
 
     // Some useful getters
