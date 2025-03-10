@@ -20,14 +20,18 @@ public class TileManager {
     public Sprite[] sprites;                    // Stores all the sprites that will be used in the game
     public int[][] mapSpriteData;               // Stores the actual sprite that represent an (X,Y) map coordinate
 
+    public boolean canMoveOffScreen;
+
     // TODO: PROBABLY SHOULD PASS IN THE MAP TO LOAD AND ALSO ADD MORE CUSTOMIZATION HERE
     // i.e., will the map be full-screen, can you have the concept of a bigger world all this jazz
-    public TileManager(GameWindow gameWindow) {
+    public TileManager(GameWindow gameWindow, boolean canMoveOffScreen) {
         this.gameWindow = gameWindow;
         sprites = new Sprite[3];
 
         // Initialise the map data to be the max size of the screen
         mapSpriteData = new int[gameWindow.getMaxScreenCol()][gameWindow.getMaxScreenRow()];
+
+        this.canMoveOffScreen = canMoveOffScreen;
 
         // Load sprite(s)
         loadSprites();

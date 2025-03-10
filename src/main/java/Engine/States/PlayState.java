@@ -12,7 +12,7 @@ public class PlayState extends GameState {
         super(gm, isActive);
 
         // Initialise the TileManager and handle input
-        tileManager = new TileManager(gm.getGameWindow());
+        tileManager = new TileManager(gm.getGameWindow(), false);
         //KeyHandler input = new KeyHandler(gameStateManager.getGameWindow());
     }
 
@@ -32,4 +32,6 @@ public class PlayState extends GameState {
     public void draw(Graphics2D graphics2D) {
         tileManager.draw(graphics2D);
     }
+
+    public TileManager getTileManager() { return tileManager; }
 }

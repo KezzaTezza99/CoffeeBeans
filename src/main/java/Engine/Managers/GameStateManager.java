@@ -11,7 +11,7 @@ import java.util.HashMap;
 // TODO: May be worth having some custom constructors here, i.e., give a list of states and initialise them all???
 
 public class GameStateManager {
-    private final HashMap<STATES, GameState> states = new HashMap<STATES, GameState>();
+    public final HashMap<STATES, GameState> states = new HashMap<STATES, GameState>();
     private STATES currentState;
     private final GameWindow gameWindow;
 
@@ -56,5 +56,8 @@ public class GameStateManager {
     public void setGameStateIsActive(STATES stateToUpdate, boolean isActive) {
         states.get(stateToUpdate).setActive(isActive);
     }
-    public GameWindow getGameWindow() { return this.gameWindow; }
+
+    public GameWindow getGameWindow() {
+        return this.gameWindow;
+    }
 }

@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 // TODO:
 // Collision manager to track collisions
 // Way to change an entities state, i.e., the entity has "died" or "despawned" etc.,
+// A way to test movements passed the screen, i.e. load a new map or have a "world" that is bigger than the screen
 
 // FIXES:
 // Shouldn't be able to go off the screen (this is iffy, should be able to if the "world" is bigger than the screen)

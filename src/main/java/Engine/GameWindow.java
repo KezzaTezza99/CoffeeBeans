@@ -77,7 +77,7 @@ public class GameWindow extends JPanel implements Runnable {
         gameStateManager = new GameStateManager(this);
 
         keyHandler = new KeyHandler(this);
-        player = new Player(this, keyHandler);
+        player = new Player(this, keyHandler, gameStateManager);
     }
 
     // Override that is called when the JPanel is created
@@ -137,4 +137,5 @@ public class GameWindow extends JPanel implements Runnable {
         return maxScreenRow;
     }
     public KeyHandler getKeyHandler() { return keyHandler; }
+    public GameStateManager getGameStateManager() { return gameStateManager; }
 }
