@@ -2,8 +2,8 @@ package Engine.Collisions;
 import java.awt.*;
 
 public class AABB {
-    private final float x, y;                             // Position of the bottom left corner
-    private final float width, height;                    // Dimensions of the collision box
+    private float x, y;                             // Position of the bottom left corner
+    private final float width, height;              // Dimensions of the collision box
 
     public AABB(float x, float y, float width, float height) {
         this.x = x;
@@ -38,4 +38,8 @@ public class AABB {
     public float getHeight() {
         return height;
     }
+
+    // Setters
+    public void setX(int x) { this.x = x; }
+    public void setY(int y) { this.y = y; }
 }

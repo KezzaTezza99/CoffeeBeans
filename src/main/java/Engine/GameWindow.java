@@ -1,4 +1,5 @@
 package Engine;
+import Engine.Entity.Player;
 import Engine.Input.KeyHandler;
 import Engine.Managers.GameStateManager;
 
@@ -32,7 +33,12 @@ public class GameWindow extends JPanel implements Runnable {
     Thread mainThread;
     private boolean isRunning = false;
     double FPS = 60;
+
     private GameStateManager gameStateManager;
+
+    // COULD WE HANDLE THIS IN GAME STATE MANAGER ? OR SHOULD WE HAVE A GAME CLASS?
+    private Player player;
+    private KeyHandler keyHandler;
 
     public GameWindow() {
         // Setting up the game window
@@ -69,6 +75,9 @@ public class GameWindow extends JPanel implements Runnable {
     public void init() {
         isRunning = true;
         gameStateManager = new GameStateManager(this);
+
+        keyHandler = new KeyHandler(this);
+        player = new Player(this, keyHandler);
     }
 
     // Override that is called when the JPanel is created
@@ -105,6 +114,7 @@ public class GameWindow extends JPanel implements Runnable {
 
     public void update() {
         gameStateManager.update();
+        player.update();
     }
 
     @Override
@@ -112,6 +122,7 @@ public class GameWindow extends JPanel implements Runnable {
         super.paintComponent(graphics);
         Graphics2D graphics2D = (Graphics2D) graphics;
         gameStateManager.draw(graphics2D);
+        player.draw(graphics2D);
         graphics2D.dispose();
     }
 
@@ -125,4 +136,5 @@ public class GameWindow extends JPanel implements Runnable {
     public int getMaxScreenRow() {
         return maxScreenRow;
     }
+    public KeyHandler getKeyHandler() { return keyHandler; }
 }

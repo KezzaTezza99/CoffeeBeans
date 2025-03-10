@@ -28,6 +28,7 @@ public class GameStateManager {
     public void update() {
         for (GameState state : states.values()) {
             state.update();
+            input(gameWindow.getKeyHandler());
         }
     }
 

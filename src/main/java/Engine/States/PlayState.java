@@ -23,6 +23,9 @@ public class PlayState extends GameState {
 
     @Override
     public void input(KeyHandler keyHandler) {
+        if(keyHandler.escape.down) {
+            System.exit(0);
+        }
     }
 
     @Override

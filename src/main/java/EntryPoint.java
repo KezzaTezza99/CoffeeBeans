@@ -10,6 +10,14 @@ import javax.swing.JFrame;
     Thus, when you access array[row][column], you are accessing the element at the (x, y) position in the grid.
  */
 
+// TODO:
+// Collision manager to track collisions
+// Way to change an entities state, i.e., the entity has "died" or "despawned" etc.,
+
+// FIXES:
+// Shouldn't be able to go off the screen (this is iffy, should be able to if the "world" is bigger than the screen)
+// or potentially the game will move you to a new world? room? depends on the games needs so need to think about this!
+
 public class EntryPoint {
     public static void main(String[] args) {
         // Create a frame to hold the panel
@@ -17,7 +25,7 @@ public class EntryPoint {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
 
-        //window.setUndecorated(true);    // borderless fullscreen
+        window.setUndecorated(true);    // borderless fullscreen
 
         // Create the custom panel and add it to the frame
         GameWindow gameWindow = new GameWindow();
