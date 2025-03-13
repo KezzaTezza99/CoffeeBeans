@@ -25,8 +25,7 @@ public class EntryPoint {
         JFrame window = new JFrame("CoffeeBeans");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-
-        window.setUndecorated(true);    // borderless fullscreen
+        window.setUndecorated(true);
 
         // Create the custom panel and add it to the frame
         GameWindow gameWindow = new GameWindow();

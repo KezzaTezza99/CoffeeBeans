@@ -1,4 +1,5 @@
 package Engine.States;
+import Engine.Entity.Player;
 import Engine.Input.KeyHandler;
 import Engine.Managers.GameStateManager;
 import Engine.Managers.TileManager;
@@ -7,6 +8,7 @@ import java.awt.*;
 
 public class PlayState extends GameState {
     TileManager tileManager;
+    Player player;
 
     public PlayState(GameStateManager gm, boolean isActive) {
         super(gm, isActive);
@@ -24,7 +26,8 @@ public class PlayState extends GameState {
     @Override
     public void input(KeyHandler keyHandler) {
         if(keyHandler.escape.down) {
-            System.exit(0);
+            //System.exit(0);
+            this.setActive(false);
         }
     }
 

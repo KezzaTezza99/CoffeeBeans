@@ -37,7 +37,7 @@ public class GameWindow extends JPanel implements Runnable {
     private GameStateManager gameStateManager;
 
     // COULD WE HANDLE THIS IN GAME STATE MANAGER ? OR SHOULD WE HAVE A GAME CLASS?
-    private Player player;
+    //private Player player;
     private KeyHandler keyHandler;
 
     public GameWindow() {
@@ -47,9 +47,10 @@ public class GameWindow extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.setFocusable(true);
 
+
         tileSize = 64;
         maxScreenCol = 30;
-        maxScreenRow = 16;
+        maxScreenRow = 17;
         screenWidth = 1920;
         screenHeight = 1080;
 
@@ -77,7 +78,7 @@ public class GameWindow extends JPanel implements Runnable {
         gameStateManager = new GameStateManager(this);
 
         keyHandler = new KeyHandler(this);
-        player = new Player(this, keyHandler, gameStateManager);
+        //player = new Player(this, keyHandler, gameStateManager);
     }
 
     // Override that is called when the JPanel is created
@@ -114,7 +115,7 @@ public class GameWindow extends JPanel implements Runnable {
 
     public void update() {
         gameStateManager.update();
-        player.update();
+        //player.update();
     }
 
     @Override
@@ -122,7 +123,7 @@ public class GameWindow extends JPanel implements Runnable {
         super.paintComponent(graphics);
         Graphics2D graphics2D = (Graphics2D) graphics;
         gameStateManager.draw(graphics2D);
-        player.draw(graphics2D);
+        //player.draw(graphics2D);
         graphics2D.dispose();
     }
 
