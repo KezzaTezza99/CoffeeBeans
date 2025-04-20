@@ -22,6 +22,9 @@ public class TileManager {
 
     public boolean canMoveOffScreen;
 
+    // TEMP SOLUTION TO DRAWING PAUSE MENU
+    public boolean drawPauseMenu = false;
+
     // TODO: PROBABLY SHOULD PASS IN THE MAP TO LOAD AND ALSO ADD MORE CUSTOMIZATION HERE
     // i.e., will the map be full-screen, can you have the concept of a bigger world all this jazz
     public TileManager(GameWindow gameWindow, boolean canMoveOffScreen) {
@@ -85,15 +88,27 @@ public class TileManager {
     }
 
     public void draw(Graphics2D graphics2D) {
-        for (int column = 0; column < gameWindow.getMaxScreenCol(); column++) {
-            for (int row = 0; row < gameWindow.getMaxScreenRow(); row++) {
-                int sprite = mapSpriteData[column][row];
+        if(!drawPauseMenu) {
+            for (int column = 0; column < gameWindow.getMaxScreenCol(); column++) {
+                for (int row = 0; row < gameWindow.getMaxScreenRow(); row++) {
+                    int sprite = mapSpriteData[column][row];
 
-                int xPos = column * gameWindow.getTileSize();
-                int yPos = row * gameWindow.getTileSize();
+                    int xPos = column * gameWindow.getTileSize();
+                    int yPos = row * gameWindow.getTileSize();
 
-                graphics2D.drawImage(sprites[sprite].image, xPos, yPos, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
+                    graphics2D.drawImage(sprites[sprite].image, xPos, yPos, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
+                }
             }
+        } else {
+            graphics2D.setColor(Color.BLUE);
+            graphics2D.fillRoundRect(100, gameWindow.getScreenHeight() / 4, (gameWindow.getScreenWidth() - 210), 600, 35 , 35);
+            graphics2D.setColor(Color.white);
+            graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 24F));
+            graphics2D.drawString("The game is now paused", gameWindow.getScreenWidth() / 2, gameWindow.getScreenHeight() / 3);
         }
+    }
+
+    public void setDrawPauseMenu(boolean drawPauseMenu) {
+        this.drawPauseMenu = drawPauseMenu;
     }
 }

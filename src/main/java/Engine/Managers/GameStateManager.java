@@ -14,27 +14,43 @@ public class GameStateManager {
     public final HashMap<STATES, GameState> states = new HashMap<STATES, GameState>();
     private STATES currentState;
     private final GameWindow gameWindow;
+    public boolean pauseFlag = false;
+
+    private STATES queuedState = null;
 
     // Default Constructor
     public GameStateManager(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
 
         states.put(STATES.PLAY, new PlayState(this, true));
-        //states.put(STATES.PAUSE, new PauseState(this, false));
+        states.put(STATES.PAUSE, new PauseState(this, false));
 
         currentState = STATES.PLAY;
     }
 
+
+    // TODO: Should I only update the active state??
     public void update() {
+        if (queuedState != null) {
+            setGameStateIsActive(currentState, false);
+            setGameStateIsActive(queuedState, true);
+            setCurrentState(queuedState);
+            queuedState = null;
+            return; // Skip update this frame to avoid weirdness
+        }
+
         for (GameState state : states.values()) {
-            state.update();
-            input(gameWindow.getKeyHandler());
+            if (state.isActive()) {
+                state.update();
+            }
         }
     }
 
     public void input(KeyHandler key) {
         for (GameState state: states.values()) {
-            state.input(key);
+            if(state.isActive()) {
+                state.input(key);
+            }
         }
     }
 
@@ -56,8 +72,13 @@ public class GameStateManager {
     public void setGameStateIsActive(STATES stateToUpdate, boolean isActive) {
         states.get(stateToUpdate).setActive(isActive);
     }
-
     public GameWindow getGameWindow() {
         return this.gameWindow;
+    }
+    public void setPauseFlag(boolean flag) { pauseFlag = flag; }
+
+    public void queueStateSwitch(STATES nextState, boolean pauseFlag) {
+        this.queuedState = nextState;
+        this.pauseFlag = pauseFlag;
     }
 }
