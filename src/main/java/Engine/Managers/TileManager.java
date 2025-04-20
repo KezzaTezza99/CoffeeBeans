@@ -88,23 +88,15 @@ public class TileManager {
     }
 
     public void draw(Graphics2D graphics2D) {
-        if(!drawPauseMenu) {
-            for (int column = 0; column < gameWindow.getMaxScreenCol(); column++) {
-                for (int row = 0; row < gameWindow.getMaxScreenRow(); row++) {
-                    int sprite = mapSpriteData[column][row];
+        for (int column = 0; column < gameWindow.getMaxScreenCol(); column++) {
+            for (int row = 0; row < gameWindow.getMaxScreenRow(); row++) {
+                int sprite = mapSpriteData[column][row];
 
-                    int xPos = column * gameWindow.getTileSize();
-                    int yPos = row * gameWindow.getTileSize();
+                int xPos = column * gameWindow.getTileSize();
+                int yPos = row * gameWindow.getTileSize();
 
-                    graphics2D.drawImage(sprites[sprite].image, xPos, yPos, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
-                }
+                graphics2D.drawImage(sprites[sprite].image, xPos, yPos, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
             }
-        } else {
-            graphics2D.setColor(Color.BLUE);
-            graphics2D.fillRoundRect(100, gameWindow.getScreenHeight() / 4, (gameWindow.getScreenWidth() - 210), 600, 35 , 35);
-            graphics2D.setColor(Color.white);
-            graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 24F));
-            graphics2D.drawString("The game is now paused", gameWindow.getScreenWidth() / 2, gameWindow.getScreenHeight() / 3);
         }
     }
 

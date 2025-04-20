@@ -19,14 +19,6 @@ public class PauseState extends GameState {
     @Override
     // TODO: WHY CANT WE USE THE P KEY FOR PAUSING AND UNPAUSING? IT DOES BOTH AT SAME TIME
     public void input(KeyHandler keyHandler) {
-//        if(keyHandler.pause.clicked && gameStateManager.getCurrentState() == STATES.PAUSE && gameStateManager.pauseFlag) {
-//            System.out.println("WE HAVE UN-PAUSED THE GAME");
-//            gameStateManager.setGameStateIsActive(STATES.PLAY, true);
-//            gameStateManager.setGameStateIsActive(STATES.PAUSE, false);
-//            gameStateManager.setCurrentState(STATES.PLAY);
-//            gameStateManager.setPauseFlag(false);
-//        }
-
         if (keyHandler.pause.clicked && gameStateManager.getCurrentState() == STATES.PAUSE && gameStateManager.pauseFlag) {
             System.out.println("WE HAVE UN-PAUSED THE GAME");
             gameStateManager.queueStateSwitch(STATES.PLAY, false);
@@ -35,7 +27,15 @@ public class PauseState extends GameState {
 
     @Override
     public void draw(Graphics2D graphics2D) {
-        graphics2D.setColor(Color.red);
-        graphics2D.drawRect(100, 100, 200, 200);
+        graphics2D.setColor(Color.BLUE);
+        graphics2D.fillRoundRect(
+                100,
+                gameStateManager.getGameWindow().getScreenHeight() / 4,
+                (gameStateManager.getGameWindow().getScreenWidth() - 210),
+                600, 35 , 35);
+
+        graphics2D.setColor(Color.white);
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 24F));
+        graphics2D.drawString("The game is now paused", gameStateManager.getGameWindow().getScreenWidth() / 2, gameStateManager.getGameWindow().getScreenHeight() / 3);
     }
 }
