@@ -29,7 +29,7 @@ public class TileManager {
     // i.e., will the map be full-screen, can you have the concept of a bigger world all this jazz
     public TileManager(GameWindow gameWindow, boolean canMoveOffScreen) {
         this.gameWindow = gameWindow;
-        sprites = new Sprite[3];
+        sprites = new Sprite[4];
 
         // Initialise the map data to be the max size of the screen
         mapSpriteData = new int[gameWindow.getMaxScreenCol()][gameWindow.getMaxScreenRow()];
@@ -53,6 +53,10 @@ public class TileManager {
 
             sprites[2] = new Sprite();
             sprites[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/test3.png")));
+
+            sprites[3] = new Sprite();
+            sprites[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/test4.png")));
+            sprites[3].isCollidable = true;
         } catch (IOException e) {
             e.printStackTrace();
         }

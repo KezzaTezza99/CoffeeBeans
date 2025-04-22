@@ -3,6 +3,7 @@ package Engine.Entity;
 import Engine.Collisions.AABB;
 import Engine.GameWindow;
 import Engine.Input.KeyHandler;
+import Engine.Managers.CollisionManager;
 import Engine.Managers.GameStateManager;
 import Engine.Managers.TileManager;
 import Engine.States.GameState;
@@ -19,6 +20,11 @@ public class Player extends Entity {
     GameWindow gameWindow;
     KeyHandler keyHandler;
     TileManager tileManager;
+
+    // TODO: THIS IS TEMP
+    CollisionManager collisionManager;
+    private AABB futureBounds;
+    //!TEMP
 
     // The players position on screen
     public final int screenX;
@@ -39,15 +45,19 @@ public class Player extends Entity {
         direction = "down";
 
         entitiesCollisionBox = new AABB(x, y, 64, 64);
+        futureBounds = new AABB(x, y, 64, 64);
 
         GameState playState = gsm.states.get(STATES.PLAY);
 
+        // TOD0: 22/04 WHY WAS I DOING THIS?
         // TODO: Do I really only need tile manager if its play state?
         // What happens when I want to incorporate more states
         // Not sure if I like the current creation of objects and the way everything links, but for now its okay
         if(playState instanceof PlayState) {
             this.tileManager = ((PlayState) playState).getTileManager();
         }
+
+        collisionManager = new CollisionManager(tileManager, gameWindow);
 
         loadPlayerSprite();
     }
@@ -70,20 +80,41 @@ public class Player extends Entity {
 
     public void update() {
         // TODO: I shouldn't be able to move off the screen!
-        // Okay kinda hacked a solution need to make this neater tho probably TODO
-        // get rid of the hard-coded values
+        // Okay kinda hacked a solution need to make this neater tho probably TODO get rid of the hard-coded values
+        // solution is to just use 0 -> window size (y) - (tile size) etc.,
+
         if (keyHandler.up.down && (tileManager.canMoveOffScreen || y != 0)) {
             direction = "up";
-            y -= speed;
+            futureBounds.setX(x);
+            futureBounds.setY(y - speed);
+
+            if(!collisionManager.willCollide(futureBounds)) {
+                y -= speed;
+            }
         } else if (keyHandler.down.down && (tileManager.canMoveOffScreen || y != 1016)) {
             direction = "down";
-            y += speed;
+            futureBounds.setX(x);
+            futureBounds.setY(y + speed);
+
+            if(!collisionManager.willCollide(futureBounds)) {
+                y += speed;
+            }
         } else if (keyHandler.left.down && (tileManager.canMoveOffScreen || x != 0)) {
             direction = "left";
-            x -= speed;
+            futureBounds.setX(x - speed);
+            futureBounds.setY(y);
+
+            if(!collisionManager.willCollide(futureBounds)) {
+                x -= speed;
+            }
         } else if (keyHandler.right.down && (tileManager.canMoveOffScreen || x != 1856)) {
             direction = "right";
-            x += speed;
+            futureBounds.setX(x + speed);
+            futureBounds.setY(y);
+
+            if(!collisionManager.willCollide(futureBounds)) {
+                x += speed;
+            }
         }
 
         // Reset the collision box as it now needs to mimic the users movement
@@ -118,6 +149,7 @@ public class Player extends Entity {
 
         graphics2D.drawImage(image, x, y, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
         entitiesCollisionBox.drawCollider(graphics2D, Color.GREEN);
+        futureBounds.drawCollider(graphics2D, Color.YELLOW);
         graphics2D.setColor(Color.GREEN);
     }
 }

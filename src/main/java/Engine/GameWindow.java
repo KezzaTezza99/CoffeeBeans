@@ -116,11 +116,13 @@ public class GameWindow extends JPanel implements Runnable {
 
     public void update() {
         keyHandler.tick();
-        //todo: could do draw in side game state manager?
-        // then draw different things for the states?
         gameStateManager.input(keyHandler);
         gameStateManager.update();
-        player.update();
+
+        // Would place all game logic updates in here, i.e. enemy movement etc
+        if(gameStateManager.getCurrentState() == STATES.PLAY) {
+            player.update();
+        }
     }
 
     @Override
