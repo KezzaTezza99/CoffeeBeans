@@ -26,13 +26,19 @@ public class CollisionManager {
         return true;
     }
 
-    // TODO:
-    // Edge Case Safety: might want to clamp col and row in willCollide to make sure they don’t go out of bounds when near map edges
     public boolean willCollide(AABB futureBounds) {
         int leftTile = (int)(futureBounds.getX()) / gameWindow.getTileSize();
         int rightTile = (int)(futureBounds.getX() + futureBounds.getWidth() - 1) / gameWindow.getTileSize();
         int topTile = (int)(futureBounds.getY()) / gameWindow.getTileSize();
         int bottomTile = (int)(futureBounds.getY() + futureBounds.getHeight() - 1) / gameWindow.getTileSize();
+
+        // Optional bounds check if we allow moving off-screen / camera follow
+        if (tileManager.canMoveOffScreen) {
+            if (leftTile < 0 || rightTile >= tileManager.mapSpriteData.length ||
+                    topTile < 0 || bottomTile >= tileManager.mapSpriteData[0].length) {
+                return false;
+            }
+        }
 
         for (int col = leftTile; col <= rightTile; col++) {
             for (int row = topTile; row <= bottomTile; row++) {

@@ -79,10 +79,6 @@ public class Player extends Entity {
     }
 
     public void update() {
-        // TODO: I shouldn't be able to move off the screen!
-        // Okay kinda hacked a solution need to make this neater tho probably TODO get rid of the hard-coded values
-        // solution is to just use 0 -> window size (y) - (tile size) etc.,
-
         if (keyHandler.up.down && (tileManager.canMoveOffScreen || y != 0)) {
             direction = "up";
             futureBounds.setX(x);
@@ -91,7 +87,7 @@ public class Player extends Entity {
             if(!collisionManager.willCollide(futureBounds)) {
                 y -= speed;
             }
-        } else if (keyHandler.down.down && (tileManager.canMoveOffScreen || y != 1016)) {
+        } else if (keyHandler.down.down && (tileManager.canMoveOffScreen || y != (gameWindow.getScreenHeight()) - gameWindow.getTileSize())) {
             direction = "down";
             futureBounds.setX(x);
             futureBounds.setY(y + speed);
@@ -107,7 +103,7 @@ public class Player extends Entity {
             if(!collisionManager.willCollide(futureBounds)) {
                 x -= speed;
             }
-        } else if (keyHandler.right.down && (tileManager.canMoveOffScreen || x != 1856)) {
+        } else if (keyHandler.right.down && (tileManager.canMoveOffScreen || x != (gameWindow.getScreenWidth()) - gameWindow.getTileSize())) {
             direction = "right";
             futureBounds.setX(x + speed);
             futureBounds.setY(y);
