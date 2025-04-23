@@ -1,6 +1,8 @@
 package Engine;
 import Engine.Entity.Player;
+import Engine.Entity.Enemy;
 import Engine.Input.KeyHandler;
+import Engine.Managers.EntityManager;
 import Engine.Managers.GameStateManager;
 import Engine.States.STATES;
 
@@ -40,6 +42,8 @@ public class GameWindow extends JPanel implements Runnable {
     // COULD WE HANDLE THIS IN GAME STATE MANAGER ? OR SHOULD WE HAVE A GAME CLASS?
     private Player player;
     private KeyHandler keyHandler;
+    public Enemy enemy;
+    public EntityManager entityManager;
 
     public GameWindow() {
         // Setting up the game window
@@ -80,6 +84,10 @@ public class GameWindow extends JPanel implements Runnable {
 
         keyHandler = new KeyHandler(this);
         player = new Player(this, keyHandler, gameStateManager);
+        enemy = new Enemy(this);
+        entityManager = new EntityManager();
+        entityManager.addEntity(player);
+        entityManager.addEntity(enemy);
     }
 
     // Override that is called when the JPanel is created
@@ -121,7 +129,7 @@ public class GameWindow extends JPanel implements Runnable {
 
         // Would place all game logic updates in here, i.e. enemy movement etc
         if(gameStateManager.getCurrentState() == STATES.PLAY) {
-            player.update();
+            entityManager.update();
         }
     }
 
@@ -132,7 +140,7 @@ public class GameWindow extends JPanel implements Runnable {
         gameStateManager.draw(graphics2D);
 
         if(gameStateManager.getCurrentState() == STATES.PLAY) {
-            player.draw(graphics2D);
+            entityManager.draw(graphics2D);
         }
 
         graphics2D.dispose();

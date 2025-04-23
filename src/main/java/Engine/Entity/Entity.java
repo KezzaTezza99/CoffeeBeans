@@ -1,10 +1,14 @@
 package Engine.Entity;
-
 import Engine.Collisions.AABB;
-
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Entity {
+// SUGGESTED THINGS I COULD DO
+// Move position x,y to be protected / private and use Getters / Setters
+// Could pass gameWindow in the update function if entities need access to the tile map data etc.,
+// Could sort entities based on Y coordinates for top-down rendering order to fake depth
+
+public abstract class Entity {
     // Generic Entity Stuff
     public int x,y;                                     // Stores the entities (x,y) position
     public int worldX, worldY;                          // If the "world" is bigger than the screen this is the players
@@ -23,4 +27,8 @@ public class Entity {
 
     // Collision Stuff
     public AABB entitiesCollisionBox;                   // The box that will be used to determine collisions
+    public AABB entitiesFutureBounds;
+
+    public abstract void draw(Graphics2D graphics2D);
+    public abstract void update();
 }

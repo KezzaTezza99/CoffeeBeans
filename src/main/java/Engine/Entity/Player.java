@@ -23,7 +23,7 @@ public class Player extends Entity {
 
     // TODO: THIS IS TEMP
     CollisionManager collisionManager;
-    private AABB futureBounds;
+    //private final AABB futureBounds;
     //!TEMP
 
     // The players position on screen
@@ -44,8 +44,8 @@ public class Player extends Entity {
         speed = 4;
         direction = "down";
 
-        entitiesCollisionBox = new AABB(x, y, 64, 64);
-        futureBounds = new AABB(x, y, 64, 64);
+        entitiesCollisionBox = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
+        entitiesFutureBounds = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
 
         GameState playState = gsm.states.get(STATES.PLAY);
 
@@ -81,34 +81,34 @@ public class Player extends Entity {
     public void update() {
         if (keyHandler.up.down && (tileManager.canMoveOffScreen || y != 0)) {
             direction = "up";
-            futureBounds.setX(x);
-            futureBounds.setY(y - speed);
+            entitiesFutureBounds.setX(x);
+            entitiesFutureBounds.setY(y - speed);
 
-            if(!collisionManager.willCollide(futureBounds)) {
+            if(!collisionManager.willCollide(entitiesFutureBounds)) {
                 y -= speed;
             }
         } else if (keyHandler.down.down && (tileManager.canMoveOffScreen || y != (gameWindow.getScreenHeight()) - gameWindow.getTileSize())) {
             direction = "down";
-            futureBounds.setX(x);
-            futureBounds.setY(y + speed);
+            entitiesFutureBounds.setX(x);
+            entitiesFutureBounds.setY(y + speed);
 
-            if(!collisionManager.willCollide(futureBounds)) {
+            if(!collisionManager.willCollide(entitiesFutureBounds)) {
                 y += speed;
             }
         } else if (keyHandler.left.down && (tileManager.canMoveOffScreen || x != 0)) {
             direction = "left";
-            futureBounds.setX(x - speed);
-            futureBounds.setY(y);
+            entitiesFutureBounds.setX(x - speed);
+            entitiesFutureBounds.setY(y);
 
-            if(!collisionManager.willCollide(futureBounds)) {
+            if(!collisionManager.willCollide(entitiesFutureBounds)) {
                 x -= speed;
             }
         } else if (keyHandler.right.down && (tileManager.canMoveOffScreen || x != (gameWindow.getScreenWidth()) - gameWindow.getTileSize())) {
             direction = "right";
-            futureBounds.setX(x + speed);
-            futureBounds.setY(y);
+            entitiesFutureBounds.setX(x + speed);
+            entitiesFutureBounds.setY(y);
 
-            if(!collisionManager.willCollide(futureBounds)) {
+            if(!collisionManager.willCollide(entitiesFutureBounds)) {
                 x += speed;
             }
         }
@@ -131,7 +131,16 @@ public class Player extends Entity {
                 }
             }
         }
-        // TODO: CHECK COLLISIONS
+
+        // TODO: CHECK COLLISIONS (this needs to be decoupled and handled nicer)
+        if(collisionManager.isCollidingWithAnotherEntity(this, gameWindow.enemy)) {
+            System.out.println("Hit");
+        }
+
+        if(collisionManager.isCollidingWithTrigger(this.entitiesCollisionBox, gameWindow.enemy.chaseZone)) {
+            System.out.println("Chasing the player");
+            gameWindow.enemy.y += speed;
+        }
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -144,8 +153,5 @@ public class Player extends Entity {
         };
 
         graphics2D.drawImage(image, x, y, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
-        entitiesCollisionBox.drawCollider(graphics2D, Color.GREEN);
-        futureBounds.drawCollider(graphics2D, Color.YELLOW);
-        graphics2D.setColor(Color.GREEN);
     }
 }

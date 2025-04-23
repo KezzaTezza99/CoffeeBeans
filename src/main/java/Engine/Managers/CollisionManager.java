@@ -1,6 +1,7 @@
 package Engine.Managers;
 
 import Engine.Collisions.AABB;
+import Engine.Entity.Entity;
 import Engine.GameWindow;
 import Engine.States.STATES;
 
@@ -49,5 +50,13 @@ public class CollisionManager {
             }
         }
         return false;
+    }
+
+    public boolean isCollidingWithAnotherEntity(Entity self, Entity other) {
+        return self.entitiesCollisionBox.isCollidingWith(other.entitiesCollisionBox);
+    }
+
+    public boolean isCollidingWithTrigger(AABB self, AABB trigger) {
+        return self.isCollidingWith(trigger);
     }
 }
