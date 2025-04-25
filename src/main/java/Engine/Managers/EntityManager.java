@@ -1,6 +1,8 @@
 package Engine.Managers;
 import Engine.Entity.Entity;
-import Engine.GameWindow;
+import Engine.Entity.EntityType;
+import Engine.Entity.Enemy;
+import Engine.Entity.Player;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,28 @@ public class EntityManager {
     public void update() {
         for(Entity entity : entities) {
             entity.update();
+        }
+
+        // Checking collisions
+        for(int i = 0; i < entities.size(); i++) {
+            for(int j = i + 1; j < entities.size(); j++) {
+                Entity a = entities.get(i);
+                Entity b = entities.get(j);
+
+                // Check for direct collisions
+                if(a.getBounds().isCollidingWith(b.getBounds())) {
+                     a.handleCollision(b);
+                     b.handleCollision(a);
+                }
+
+                // Check for vision radius collisions
+                if(a.tag == EntityType.ENEMY && b.tag == EntityType.PLAYER) {
+                    Enemy enemy = (Enemy) a;
+                    Player player = (Player) b;
+
+
+                }
+            }
         }
     }
 

@@ -2,8 +2,6 @@ package Engine.Entity;
 
 import Engine.Collisions.AABB;
 import Engine.GameWindow;
-import Engine.Managers.CollisionManager;
-import Engine.Managers.TileManager;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -13,9 +11,10 @@ import java.util.Objects;
 
 public class Enemy extends Entity {
     GameWindow gameWindow;
-    AABB chaseZone;
 
     public Enemy(GameWindow gm) {
+        tag = EntityType.ENEMY;
+
         this.gameWindow = gm;
 
         // Setting the enemies position to be top left of screen
@@ -24,7 +23,7 @@ public class Enemy extends Entity {
 
         entitiesCollisionBox = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
         entitiesFutureBounds = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
-        chaseZone = new AABB(x, y, 256, 256);
+        entitiesAggroZone = new AABB(x, y, 256, 256);
 
         speed = 4;
         direction = "down";
@@ -63,6 +62,13 @@ public class Enemy extends Entity {
 
         graphics2D.drawImage(image, x, y, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
         entitiesCollisionBox.drawCollider(graphics2D, Color.YELLOW);
-        chaseZone.drawCollider(graphics2D, Color.BLACK);
+        entitiesAggroZone.drawCollider(graphics2D, Color.BLACK);
+    }
+
+    public void handleCollision(Entity other) {
+        if(other.tag == EntityType.PLAYER) {
+            // TODO: Attack the player
+            System.out.println("The enemy would be attacking the player right now");
+        }
     }
 }

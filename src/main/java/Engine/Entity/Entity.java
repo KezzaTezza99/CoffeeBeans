@@ -14,6 +14,7 @@ public abstract class Entity {
     public int worldX, worldY;                          // If the "world" is bigger than the screen this is the players
                                                         // position in relation to the world / map
     public int speed;                                   // Stores the entities movement speed
+    public EntityType tag;                              // Useful for knowing what an entity is when handling collision logic
 
     // Graphics and Animation Stuff
     // TODO: SPRITE SHEETS
@@ -26,9 +27,14 @@ public abstract class Entity {
     //public int spriteIndex;                             // The index of the sprite to draw within the sprite-sheet
 
     // Collision Stuff
-    public AABB entitiesCollisionBox;                   // The box that will be used to determine collisions
-    public AABB entitiesFutureBounds;
+    protected AABB entitiesCollisionBox;                // The box that will be used to determine collisions
+    public AABB entitiesFutureBounds;                   // Used to stop entities walking into walls etc.,
+    public AABB entitiesAggroZone;                      // Will be used for some entities for simple AI behaviour, i.e., chase player
+
+    public AABB getBounds() { return this.entitiesCollisionBox; }
+    public AABB getAggroZone() { return this.entitiesAggroZone; }
 
     public abstract void draw(Graphics2D graphics2D);
     public abstract void update();
+    public abstract void handleCollision(Entity other);
 }

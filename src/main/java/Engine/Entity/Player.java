@@ -31,6 +31,8 @@ public class Player extends Entity {
     public final int screenY;
 
     public Player(GameWindow gm, KeyHandler kh, GameStateManager gsm) {
+        tag = EntityType.PLAYER;
+
         this.gameWindow = gm;
         this.keyHandler = kh;
 
@@ -114,6 +116,7 @@ public class Player extends Entity {
         }
 
         // Reset the collision box as it now needs to mimic the users movement
+        // TODO: as we made this protected should we actually use a setter
         entitiesCollisionBox.setX(x);
         entitiesCollisionBox.setY(y);
 
@@ -131,16 +134,6 @@ public class Player extends Entity {
                 }
             }
         }
-
-        // TODO: CHECK COLLISIONS (this needs to be decoupled and handled nicer)
-        if(collisionManager.isCollidingWithAnotherEntity(this, gameWindow.enemy)) {
-            System.out.println("Hit");
-        }
-
-        if(collisionManager.isCollidingWithTrigger(this.entitiesCollisionBox, gameWindow.enemy.chaseZone)) {
-            System.out.println("Chasing the player");
-            gameWindow.enemy.y += speed;
-        }
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -153,5 +146,9 @@ public class Player extends Entity {
         };
 
         graphics2D.drawImage(image, x, y, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
+    }
+
+    public void handleCollision(Entity other) {
+        System.out.println("The player is colliding with something");
     }
 }

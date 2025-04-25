@@ -19,9 +19,10 @@ import javax.swing.JFrame;
 // Shouldn't be able to go off the screen (this is iffy, should be able to if the "world" is bigger than the screen)
 // or potentially the game will move you to a new world? room? depends on the games needs so need to think about this!
 
-
 // TODO: 18/04/25
 // Now that we have a "pause menu" we need to change the game state somehow and draw then instead of inside the tile manager
+
+// Not necessary but all my entity override classes add @Override tag for clarity
 public class EntryPoint {
     public static void main(String[] args) {
         // Create a frame to hold the panel

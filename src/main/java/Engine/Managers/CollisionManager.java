@@ -52,11 +52,12 @@ public class CollisionManager {
         return false;
     }
 
-    public boolean isCollidingWithAnotherEntity(Entity self, Entity other) {
-        return self.entitiesCollisionBox.isCollidingWith(other.entitiesCollisionBox);
-    }
-
-    public boolean isCollidingWithTrigger(AABB self, AABB trigger) {
-        return self.isCollidingWith(trigger);
-    }
+    // TODO: DO WE NEED THIS WHY CANT WE JUST USE isCollidingWith?
+//    public boolean isCollidingWithAnotherEntity(Entity self, Entity other) {
+//        return self.getBounds().isCollidingWith(other.getBounds());
+//    }
+//
+//    public boolean isCollidingWithTrigger(AABB self, AABB trigger) {
+//        return self.isCollidingWith(trigger);
+//    }
 }
