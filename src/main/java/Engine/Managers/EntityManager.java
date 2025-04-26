@@ -1,8 +1,5 @@
 package Engine.Managers;
 import Engine.Entity.Entity;
-import Engine.Entity.EntityType;
-import Engine.Entity.Enemy;
-import Engine.Entity.Player;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +8,7 @@ public class EntityManager {
     public List<Entity> entities;
 
     public EntityManager() {
-        entities = new ArrayList<>();
+        this.entities = new ArrayList<>();
     }
 
     public void addEntity(Entity entityToAdd) {
@@ -39,13 +36,11 @@ public class EntityManager {
                      b.handleCollision(a);
                 }
 
-                // Check for vision radius collisions
-                if(a.tag == EntityType.ENEMY && b.tag == EntityType.PLAYER) {
-                    Enemy enemy = (Enemy) a;
-                    Player player = (Player) b;
-
-
-                }
+//                // Check for vision radius collisions
+//                if(a.tag == EntityType.ENEMY && b.tag == EntityType.PLAYER) {
+//                    Enemy enemy = (Enemy) a;
+//                    Player player = (Player) b;
+//                }
             }
         }
     }

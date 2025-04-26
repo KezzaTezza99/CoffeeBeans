@@ -1,12 +1,9 @@
 package Engine.States;
-import Engine.Entity.Player;
-import Engine.GameWindow;
 import Engine.Input.KeyHandler;
 import Engine.Managers.GameStateManager;
 import Engine.Managers.TileManager;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 // TODO: TRYING TO GAVE GAME WINDOW IN THE PLAY STATE SO WE CAN ACCESS THE GAMESTATE MANAGER
 // OR COULD ALL STATES GET THE GAMESTATE MANAGER?
