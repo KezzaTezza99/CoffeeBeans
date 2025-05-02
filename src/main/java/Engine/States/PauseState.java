@@ -17,10 +17,8 @@ public class PauseState extends GameState {
     }
 
     @Override
-    // TODO: WHY CANT WE USE THE P KEY FOR PAUSING AND UNPAUSING? IT DOES BOTH AT SAME TIME
     public void input(KeyHandler keyHandler) {
         if (keyHandler.pause.clicked && gameStateManager.getCurrentState() == STATES.PAUSE && gameStateManager.pauseFlag) {
-            System.out.println("WE HAVE UN-PAUSED THE GAME");
             gameStateManager.queueStateSwitch(STATES.PLAY, false);
         }
     }

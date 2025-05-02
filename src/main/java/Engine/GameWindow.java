@@ -5,7 +5,6 @@ import Engine.Input.KeyHandler;
 import Engine.Managers.EntityManager;
 import Engine.Managers.GameStateManager;
 import Engine.States.STATES;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -39,7 +38,7 @@ public class GameWindow extends JPanel implements Runnable {
 
     private GameStateManager gameStateManager;
 
-    // COULD WE HANDLE THIS IN GAME STATE MANAGER ? OR SHOULD WE HAVE A GAME CLASS?
+    // TODO: COULD WE HANDLE THIS IN GAME STATE MANAGER ? OR SHOULD WE HAVE A GAME CLASS?
     private Player player;
     private KeyHandler keyHandler;
     public Enemy enemy;

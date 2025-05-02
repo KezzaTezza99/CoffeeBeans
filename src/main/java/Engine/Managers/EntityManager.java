@@ -21,7 +21,9 @@ public class EntityManager {
 
     public void update() {
         for(Entity entity : entities) {
-            entity.update();
+            if(entity.isAlive) {
+                entity.update();
+            }
         }
 
         // Checking collisions
@@ -35,19 +37,15 @@ public class EntityManager {
                      a.handleCollision(b);
                      b.handleCollision(a);
                 }
-
-//                // Check for vision radius collisions
-//                if(a.tag == EntityType.ENEMY && b.tag == EntityType.PLAYER) {
-//                    Enemy enemy = (Enemy) a;
-//                    Player player = (Player) b;
-//                }
             }
         }
     }
 
     public void draw(Graphics2D graphics2D) {
         for(Entity entity : entities) {
-            entity.draw(graphics2D);
+            if(entity.isAlive) {
+                entity.draw(graphics2D);
+            }
         }
     }
 }

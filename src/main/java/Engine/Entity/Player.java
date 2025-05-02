@@ -2,6 +2,7 @@ package Engine.Entity;
 
 import Engine.Collisions.AABB;
 import Engine.GameWindow;
+import Engine.Graphics.Camera;
 import Engine.Input.KeyHandler;
 import Engine.Managers.CollisionManager;
 import Engine.Managers.GameStateManager;
@@ -21,6 +22,7 @@ public class Player extends Entity {
     KeyHandler keyHandler;
     TileManager tileManager;
 
+    Camera camera;
     // TODO: THIS IS TEMP
     CollisionManager collisionManager;
     //private final AABB futureBounds;
@@ -32,6 +34,7 @@ public class Player extends Entity {
 
     public Player(GameWindow gm, KeyHandler kh, GameStateManager gsm) {
         tag = EntityType.PLAYER;
+        this.setIsAlive(true);
 
         this.gameWindow = gm;
         this.keyHandler = kh;
@@ -60,7 +63,6 @@ public class Player extends Entity {
         }
 
         collisionManager = new CollisionManager(tileManager, gameWindow);
-
         loadPlayerSprite();
     }
 
@@ -80,6 +82,7 @@ public class Player extends Entity {
         }
     }
 
+    @Override
     public void update() {
         if (keyHandler.up.down && (tileManager.canMoveOffScreen || y != 0)) {
             direction = "up";
@@ -136,6 +139,7 @@ public class Player extends Entity {
         }
     }
 
+    @Override
     public void draw(Graphics2D graphics2D) {
         BufferedImage image = switch (direction) {
             case "up" -> (spriteNumber == 1) ? up1 : up2;
@@ -148,6 +152,7 @@ public class Player extends Entity {
         graphics2D.drawImage(image, x, y, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
     }
 
+    @Override
     public void handleCollision(Entity other) {
         System.out.println("The player is colliding with something");
     }

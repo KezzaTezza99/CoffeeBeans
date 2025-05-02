@@ -1,28 +1,7 @@
 import Engine.GameWindow;
 import javax.swing.JFrame;
 
-// TODO: I am loading the data completely wrong, this needs fixing ASAP
-
-/*
-    In summary:
-    Rows → y-axis (vertical)
-    Columns → x-axis (horizontal)
-    Thus, when you access array[row][column], you are accessing the element at the (x, y) position in the grid.
- */
-
-// TODO:
-// Collision manager to track collisions
-// Way to change an entities state, i.e., the entity has "died" or "despawned" etc.,
-// A way to test movements passed the screen, i.e. load a new map or have a "world" that is bigger than the screen
-
-// FIXES:
-// Shouldn't be able to go off the screen (this is iffy, should be able to if the "world" is bigger than the screen)
-// or potentially the game will move you to a new world? room? depends on the games needs so need to think about this!
-
-// TODO: 18/04/25
-// Now that we have a "pause menu" we need to change the game state somehow and draw then instead of inside the tile manager
-
-// Not necessary but all my entity override classes add @Override tag for clarity
+// TODO: A way to test movements passed the screen, i.e. load a new map or have a "world" that is bigger than the screen
 public class EntryPoint {
     public static void main(String[] args) {
         // Create a frame to hold the panel

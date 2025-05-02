@@ -1,8 +1,6 @@
 package Engine.Entity;
-
 import Engine.Collisions.AABB;
 import Engine.GameWindow;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,6 +12,7 @@ public class Enemy extends Entity {
 
     public Enemy(GameWindow gm) {
         tag = EntityType.ENEMY;
+        this.setIsAlive(true);
 
         this.gameWindow = gm;
 
@@ -47,10 +46,12 @@ public class Enemy extends Entity {
         }
     }
 
+    @Override
     public void update() {
 
     }
 
+    @Override
     public void draw(Graphics2D graphics2D) {
         BufferedImage image = switch (direction) {
             case "up" -> (spriteNumber == 1) ? up1 : up2;
@@ -65,10 +66,12 @@ public class Enemy extends Entity {
         entitiesAggroZone.drawCollider(graphics2D, Color.BLACK);
     }
 
+    @Override
     public void handleCollision(Entity other) {
         if(other.tag == EntityType.PLAYER) {
             // TODO: Attack the player
-            System.out.println("The enemy would be attacking the player right now");
+            System.out.println("Attacking player");
+            gameWindow.entityManager.removeEntity(this);
         }
     }
 }

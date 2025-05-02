@@ -10,11 +10,13 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity {
     // Generic Entity Stuff
-    public int x,y;                                     // Stores the entities (x,y) position
+    protected int x,y;                                  // Stores the entities (x,y) position
     public int worldX, worldY;                          // If the "world" is bigger than the screen this is the players
                                                         // position in relation to the world / map
     public int speed;                                   // Stores the entities movement speed
     public EntityType tag;                              // Useful for knowing what an entity is when handling collision logic
+
+    public boolean isAlive = false;                     // Useful for spawning / de-spawning entities
 
     // Graphics and Animation Stuff
     // TODO: SPRITE SHEETS
@@ -33,6 +35,9 @@ public abstract class Entity {
 
     public AABB getBounds() { return this.entitiesCollisionBox; }
     public AABB getAggroZone() { return this.entitiesAggroZone; }
+
+    public void setIsAlive(boolean isAlive) { this.isAlive = isAlive; }
+    public boolean getIsAlive() { return this.isAlive; }
 
     public abstract void draw(Graphics2D graphics2D);
     public abstract void update();
