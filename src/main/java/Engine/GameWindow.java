@@ -4,6 +4,7 @@ import Engine.Entity.Enemy;
 import Engine.Input.KeyHandler;
 import Engine.Managers.EntityManager;
 import Engine.Managers.GameStateManager;
+import Engine.Managers.SoundManager;
 import Engine.States.STATES;
 import javax.swing.*;
 import java.awt.*;
@@ -43,6 +44,9 @@ public class GameWindow extends JPanel implements Runnable {
     private KeyHandler keyHandler;
     public Enemy enemy;
     public EntityManager entityManager;
+
+    // Testing sound
+    public SoundManager soundManager;
 
     public GameWindow() {
         // Setting up the game window
@@ -87,6 +91,9 @@ public class GameWindow extends JPanel implements Runnable {
         entityManager = new EntityManager();
         entityManager.addEntity(player);
         entityManager.addEntity(enemy);
+
+        soundManager = new SoundManager();
+        soundManager.setFile(0);
     }
 
     // Override that is called when the JPanel is created
@@ -129,6 +136,10 @@ public class GameWindow extends JPanel implements Runnable {
         // Would place all game logic updates in here, i.e. enemy movement etc
         if(gameStateManager.getCurrentState() == STATES.PLAY) {
             entityManager.update();
+            soundManager.play();
+            soundManager.loop();
+        } else {
+            soundManager.stop();
         }
     }
 
