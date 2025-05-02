@@ -93,7 +93,6 @@ public class GameWindow extends JPanel implements Runnable {
         entityManager.addEntity(enemy);
 
         soundManager = new SoundManager();
-        soundManager.setFile(0);
     }
 
     // Override that is called when the JPanel is created
@@ -136,10 +135,11 @@ public class GameWindow extends JPanel implements Runnable {
         // Would place all game logic updates in here, i.e. enemy movement etc
         if(gameStateManager.getCurrentState() == STATES.PLAY) {
             entityManager.update();
-            soundManager.play();
-            soundManager.loop();
+            soundManager.stop("pause");
+            soundManager.loop("test");
         } else {
-            soundManager.stop();
+            soundManager.stop("test");
+            soundManager.loop("pause");
         }
     }
 
