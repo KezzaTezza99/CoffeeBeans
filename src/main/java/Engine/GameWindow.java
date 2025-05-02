@@ -139,7 +139,7 @@ public class GameWindow extends JPanel implements Runnable {
             soundManager.loop("test");
         } else {
             soundManager.stop("test");
-            soundManager.loop("pause");
+            soundManager.play("pause");
         }
     }
 

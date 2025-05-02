@@ -50,13 +50,14 @@ public class SoundManager {
     public void stop(String id) {
         Clip clip = soundClips.get(id);
         if (clip == null) return;
-
+        clip.setFramePosition(0);                       // Set the clip back to the beginning ready for next play
         clip.stop();
     }
 
     public void closeAll(boolean releaseResources) {
         for(Clip clip : soundClips.values()) {
             if(clip != null && clip.isOpen()) {
+                clip.setFramePosition(0);               // Unlikely to use the resources after unloading, but setting back to 0 in case we do
                 clip.stop();                            // Stop any playing clips
 
                 if(releaseResources) {
