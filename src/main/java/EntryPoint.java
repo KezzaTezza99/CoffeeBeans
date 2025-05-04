@@ -2,6 +2,13 @@ import Engine.GameWindow;
 import javax.swing.JFrame;
 
 // TODO: A way to test movements passed the screen, i.e. load a new map or have a "world" that is bigger than the screen
+
+// TODO: 04/05/25 -> We need to start thinking about how often we pass stuff around, do we use dependency injection or the idea of
+// EngineContext which has all the necessary core services, i.e., EventBus, SoundManager and pass EngineContext when needed?
+
+// TODO: Look into expanding the EventBus by looking at the following:
+// EVENT PRIORITIES, ONE-SHOT LISTENERS, EVENT BUBBLING
+
 public class EntryPoint {
     public static void main(String[] args) {
         // Create a frame to hold the panel

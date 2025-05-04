@@ -13,6 +13,7 @@ public class SoundManager {
         // Register sounds by ID and path
         registerSound("test", "/sounds/test.wav");
         registerSound("pause", "/sounds/pause.wav");
+        registerSound("death", "/sounds/death.wav");
     }
 
     public void registerSound(String id, String path) {

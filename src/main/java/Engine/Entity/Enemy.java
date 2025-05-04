@@ -1,6 +1,9 @@
 package Engine.Entity;
 import Engine.Collisions.AABB;
+import Engine.Event.EventBusService;
 import Engine.GameWindow;
+import Game.EnemyDiedEvent;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -27,6 +30,7 @@ public class Enemy extends Entity {
         speed = 4;
         direction = "down";
 
+        EventBusService.getBus().register(EnemyDiedEvent.class,event -> enemyDied());
         loadEnemySprite();
     }
 
@@ -70,8 +74,12 @@ public class Enemy extends Entity {
     public void handleCollision(Entity other) {
         if(other.tag == EntityType.PLAYER) {
             // TODO: Attack the player
-            System.out.println("Attacking player");
+            EventBusService.getBus().post(new EnemyDiedEvent());
             gameWindow.entityManager.removeEntity(this);
         }
+    }
+
+    private void enemyDied() {
+                    gameWindow.soundManager.play("death");
     }
 }
