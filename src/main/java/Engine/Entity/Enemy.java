@@ -1,8 +1,8 @@
 package Engine.Entity;
 import Engine.Collisions.AABB;
-import Engine.Event.EventBusService;
+import Engine.Dispatcher.EventBusService;
 import Engine.GameWindow;
-import Game.EnemyDiedEvent;
+import Game.Events.EnemyDied;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -30,7 +30,7 @@ public class Enemy extends Entity {
         speed = 4;
         direction = "down";
 
-        EventBusService.getBus().register(EnemyDiedEvent.class,event -> enemyDied());
+        EventBusService.getBus().register(EnemyDied.class, event -> enemyDied());
         loadEnemySprite();
     }
 
@@ -74,7 +74,7 @@ public class Enemy extends Entity {
     public void handleCollision(Entity other) {
         if(other.tag == EntityType.PLAYER) {
             // TODO: Attack the player
-            EventBusService.getBus().post(new EnemyDiedEvent());
+            EventBusService.getBus().post(new EnemyDied());
             gameWindow.entityManager.removeEntity(this);
         }
     }

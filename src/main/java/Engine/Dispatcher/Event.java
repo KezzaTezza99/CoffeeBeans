@@ -1,4 +1,4 @@
-package Engine.Event;
+package Engine.Dispatcher;
 
 public interface Event {
 }

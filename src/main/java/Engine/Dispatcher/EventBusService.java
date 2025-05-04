@@ -1,4 +1,4 @@
-package Engine.Event;
+package Engine.Dispatcher;
 
 // TODO: THIS IS A TEMP SOLUTION, USING AS A SINGLETON FOR TESTING PURPOSES
 // We will come up with a better solution

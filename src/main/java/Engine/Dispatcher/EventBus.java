@@ -1,4 +1,4 @@
-package Engine.Event;
+package Engine.Dispatcher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
