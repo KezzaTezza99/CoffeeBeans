@@ -34,6 +34,28 @@ public class Enemy extends Entity {
         loadEnemySprite();
     }
 
+    // TODO: TEMP -> THIS IS TESTING HAVING 2 ENEMIES, IN REALITY WOULD CHOSE A SPAWN POINT OR MAKE IT RANDOM ETC., BASED
+    // ON GAME NEEDS FOR NOW WILL JUST CONSTRUCT MY SECOND ENEMY SLIGHTLY DIFFERENTLY !
+    public Enemy(GameWindow gm, int xPos, int yPos) {
+        tag = EntityType.ENEMY;
+        this.setIsAlive(true);
+
+        this.gameWindow = gm;
+
+        x = xPos;
+        y = yPos;
+
+        entitiesCollisionBox = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
+        entitiesFutureBounds = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
+        entitiesAggroZone = new AABB(x, y, 256, 256);
+
+        speed = 4;
+        direction = "down";
+
+        EventBusService.getBus().register(EnemyDied.class, event -> enemyDied());
+        loadEnemySprite();
+    }
+
     private void loadEnemySprite() {
         try {
             //Try loading the player sprites
@@ -80,6 +102,7 @@ public class Enemy extends Entity {
     }
 
     private void enemyDied() {
-                    gameWindow.soundManager.play("death");
+        gameWindow.soundManager.play("death");
+        gameWindow.soundManager.reset("death");
     }
 }

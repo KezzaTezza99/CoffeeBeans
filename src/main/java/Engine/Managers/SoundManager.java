@@ -55,6 +55,15 @@ public class SoundManager {
         clip.stop();
     }
 
+    public void reset(String id) {
+        Clip clip = soundClips.get(id);
+
+        if(clip == null) return;
+        if(!clip.isRunning()) {
+            clip.setFramePosition(0);
+        }
+    }
+
     public void closeAll(boolean releaseResources) {
         for(Clip clip : soundClips.values()) {
             if(clip != null && clip.isOpen()) {
