@@ -5,6 +5,7 @@ import Engine.Input.KeyHandler;
 import Engine.Managers.EntityManager;
 import Engine.Managers.GameStateManager;
 import Engine.Managers.SoundManager;
+import Engine.Managers.UIManager;
 import Engine.States.STATES;
 import javax.swing.*;
 import java.awt.*;
@@ -47,6 +48,9 @@ public class GameWindow extends JPanel implements Runnable {
 
     // Testing sound
     public SoundManager soundManager;
+
+    // Testing UI
+    public UIManager uiManager;
 
     public GameWindow() {
         // Setting up the game window
@@ -93,6 +97,7 @@ public class GameWindow extends JPanel implements Runnable {
         entityManager.addEntity(enemy);
 
         soundManager = new SoundManager();
+        uiManager = new UIManager();
     }
 
     // Override that is called when the JPanel is created
@@ -151,6 +156,7 @@ public class GameWindow extends JPanel implements Runnable {
 
         if(gameStateManager.getCurrentState() == STATES.PLAY) {
             entityManager.draw(graphics2D);
+            uiManager.draw(graphics2D);
         }
 
         graphics2D.dispose();

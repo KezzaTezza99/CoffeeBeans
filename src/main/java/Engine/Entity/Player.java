@@ -1,6 +1,7 @@
 package Engine.Entity;
 
 import Engine.Collisions.AABB;
+import Engine.Dispatcher.EventBusService;
 import Engine.GameWindow;
 import Engine.Graphics.Camera;
 import Engine.Input.KeyHandler;
@@ -10,6 +11,7 @@ import Engine.Managers.TileManager;
 import Engine.States.GameState;
 import Engine.States.PlayState;
 import Engine.States.STATES;
+import Game.Events.PlayerTookDamage;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -31,6 +33,11 @@ public class Player extends Entity {
     // The players position on screen
     public final int screenX;
     public final int screenY;
+
+    // TEMP - THIS COULD BECOME PART OF ENTITY!
+    //TODO: ^
+    //Testing UIManager and EventBus
+    private int playerHealth = 100;
 
     public Player(GameWindow gm, KeyHandler kh, GameStateManager gsm) {
         tag = EntityType.PLAYER;
@@ -154,6 +161,9 @@ public class Player extends Entity {
 
     @Override
     public void handleCollision(Entity other) {
-        System.out.println("The player is colliding with something");
+        if(other.tag == EntityType.ENEMY) {
+            this.playerHealth -= 10;
+            EventBusService.getBus().post(new PlayerTookDamage(this.playerHealth));
+        }
     }
 }
