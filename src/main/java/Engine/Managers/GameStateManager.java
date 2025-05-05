@@ -28,8 +28,6 @@ public class GameStateManager {
         currentState = STATES.PLAY;
     }
 
-
-    // TODO: Should I only update the active state??
     public void update() {
         if (queuedState != null) {
             setGameStateIsActive(currentState, false);
@@ -75,9 +73,8 @@ public class GameStateManager {
     public GameWindow getGameWindow() {
         return this.gameWindow;
     }
-    public void setPauseFlag(boolean flag) { pauseFlag = flag; }
 
-    public void queueStateSwitch(STATES nextState, boolean pauseFlag) {
+    public void queueStateSwitchPauseAndPlay(STATES nextState, boolean pauseFlag) {
         this.queuedState = nextState;
         this.pauseFlag = pauseFlag;
     }

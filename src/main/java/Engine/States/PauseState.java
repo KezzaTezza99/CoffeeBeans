@@ -19,7 +19,7 @@ public class PauseState extends GameState {
     @Override
     public void input(KeyHandler keyHandler) {
         if (keyHandler.pause.clicked && gameStateManager.getCurrentState() == STATES.PAUSE && gameStateManager.pauseFlag) {
-            gameStateManager.queueStateSwitch(STATES.PLAY, false);
+            gameStateManager.queueStateSwitchPauseAndPlay(STATES.PLAY, false);
         }
     }
 

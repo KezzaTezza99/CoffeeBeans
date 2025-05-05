@@ -58,7 +58,7 @@ public class PlayState extends GameState {
 
         if (keyHandler.pause.clicked && gameStateManager.getCurrentState() == STATES.PLAY && !gameStateManager.pauseFlag) {
             System.out.println("WE HAVE PAUSED THE GAME");
-            gameStateManager.queueStateSwitch(STATES.PAUSE, true);
+            gameStateManager.queueStateSwitchPauseAndPlay(STATES.PAUSE, true);
         }
     }
 

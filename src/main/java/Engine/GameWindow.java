@@ -45,6 +45,7 @@ public class GameWindow extends JPanel implements Runnable {
     private KeyHandler keyHandler;
     public Enemy enemy;
     public Enemy enemy2;
+    public Enemy enemy3;
     public EntityManager entityManager;
 
     // Testing sound
@@ -94,10 +95,13 @@ public class GameWindow extends JPanel implements Runnable {
         player = new Player(this, keyHandler, gameStateManager);
         enemy = new Enemy(this);
         enemy2 = new Enemy(this, 128 * 4, 128);
+        enemy3 = new Enemy(this, 128 * 3, 128);
+
         entityManager = new EntityManager();
         entityManager.addEntity(player);
         entityManager.addEntity(enemy);
         entityManager.addEntity(enemy2);
+        entityManager.addEntity(enemy3);
 
         soundManager = new SoundManager();
         uiManager = new UIManager();
