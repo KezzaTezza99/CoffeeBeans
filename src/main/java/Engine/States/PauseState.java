@@ -1,5 +1,6 @@
 package Engine.States;
 import Engine.Input.KeyHandler;
+import Engine.Input.MouseHandler;
 import Engine.Managers.GameStateManager;
 import java.awt.*;
 
@@ -21,6 +22,11 @@ public class PauseState extends GameState {
         if (keyHandler.pause.clicked && gameStateManager.getCurrentState() == STATES.PAUSE && gameStateManager.pauseFlag) {
             gameStateManager.queueStateSwitchPauseAndPlay(STATES.PLAY, false);
         }
+    }
+
+    @Override
+    public void input(KeyHandler keyHandler, MouseHandler mouseHandler) {
+        input(keyHandler);
     }
 
     @Override

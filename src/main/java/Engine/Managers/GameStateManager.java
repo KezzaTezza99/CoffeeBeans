@@ -1,10 +1,9 @@
 package Engine.Managers;
 import Engine.GameWindow;
 import Engine.Input.KeyHandler;
-import Engine.States.GameState;
-import Engine.States.PauseState;
-import Engine.States.PlayState;
-import Engine.States.STATES;
+import Engine.Input.MouseHandler;
+import Engine.States.*;
+
 import java.awt.*;
 import java.util.HashMap;
 
@@ -22,10 +21,11 @@ public class GameStateManager {
     public GameStateManager(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
 
-        states.put(STATES.PLAY, new PlayState(this, true));
+        states.put(STATES.MAIN_MENU, new MainMenuState(this, true));
+        states.put(STATES.PLAY, new PlayState(this, false));
         states.put(STATES.PAUSE, new PauseState(this, false));
 
-        currentState = STATES.PLAY;
+        currentState = STATES.MAIN_MENU;
     }
 
     public void update() {
@@ -48,6 +48,14 @@ public class GameStateManager {
         for (GameState state: states.values()) {
             if(state.isActive()) {
                 state.input(key);
+            }
+        }
+    }
+
+    public void input(KeyHandler key, MouseHandler mouse) {
+        for (GameState state: states.values()) {
+            if(state.isActive()) {
+                state.input(key, mouse);
             }
         }
     }

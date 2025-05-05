@@ -1,5 +1,6 @@
 package Engine.States;
 import Engine.Input.KeyHandler;
+import Engine.Input.MouseHandler;
 import Engine.Managers.GameStateManager;
 import Engine.Managers.TileManager;
 
@@ -33,33 +34,15 @@ public class PlayState extends GameState {
             System.exit(0);
         }
 
-//        if(keyHandler.pause.clicked && gameStateManager.getCurrentState() == STATES.PLAY) {
-////            pauseFlag = !pauseFlag;
-////            // we should really change GAME STATE
-//////            this.setActive(false);
-////            tileManager.setDrawPauseMenu(pauseFlag);
-//            if(!gameStateManager.pauseFlag) {
-//                System.out.println("WE HAVE PAUSED THE GAME");
-//                gameStateManager.setCurrentState(STATES.PAUSE);
-//                gameStateManager.setGameStateIsActive(STATES.PLAY, false);
-//                gameStateManager.setGameStateIsActive(STATES.PAUSE, true);
-//                gameStateManager.setPauseFlag(true);
-//            }
-//        }
-//    }
-
-//        if(keyHandler.pause.clicked && gameStateManager.getCurrentState() == STATES.PLAY && !gameStateManager.pauseFlag) {
-//            System.out.println("WE HAVE PAUSED THE GAME");
-//            gameStateManager.setGameStateIsActive(STATES.PAUSE, true);
-//            gameStateManager.setGameStateIsActive(STATES.PLAY, false);
-//            gameStateManager.setCurrentState(STATES.PAUSE);
-//            gameStateManager.setPauseFlag(true);
-//        }
-
         if (keyHandler.pause.clicked && gameStateManager.getCurrentState() == STATES.PLAY && !gameStateManager.pauseFlag) {
             System.out.println("WE HAVE PAUSED THE GAME");
             gameStateManager.queueStateSwitchPauseAndPlay(STATES.PAUSE, true);
         }
+    }
+
+    @Override
+    public void input(KeyHandler keyHandler, MouseHandler mouseHandler) {
+        input(keyHandler);
     }
 
     @Override

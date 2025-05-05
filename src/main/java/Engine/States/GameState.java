@@ -1,6 +1,7 @@
 package Engine.States;
 
 import Engine.Input.KeyHandler;
+import Engine.Input.MouseHandler;
 import Engine.Managers.GameStateManager;
 
 import java.awt.*;
@@ -17,6 +18,7 @@ public abstract class GameState {
 
     public abstract void update();
     public abstract void input(KeyHandler keyHandler);
+    public abstract void input(KeyHandler keyHandler, MouseHandler mouseHandler);
     public abstract void draw(Graphics2D graphics2D);
 
     public boolean isActive() {

@@ -3,6 +3,6 @@ package Engine.States;
 public enum STATES {
     PLAY,
     PAUSE,
-    MENU,
+    MAIN_MENU,
     SETTINGS,
 }

@@ -2,6 +2,7 @@ package Engine;
 import Engine.Entity.Player;
 import Engine.Entity.Enemy;
 import Engine.Input.KeyHandler;
+import Engine.Input.MouseHandler;
 import Engine.Managers.EntityManager;
 import Engine.Managers.GameStateManager;
 import Engine.Managers.SoundManager;
@@ -43,6 +44,7 @@ public class GameWindow extends JPanel implements Runnable {
     // TODO: COULD WE HANDLE THIS IN GAME STATE MANAGER ? OR SHOULD WE HAVE A GAME CLASS?
     private Player player;
     private KeyHandler keyHandler;
+    private MouseHandler mouseHandler;
     public Enemy enemy;
     public Enemy enemy2;
     public Enemy enemy3;
@@ -92,6 +94,7 @@ public class GameWindow extends JPanel implements Runnable {
         gameStateManager = new GameStateManager(this);
 
         keyHandler = new KeyHandler(this);
+        mouseHandler = new MouseHandler(this);
         player = new Player(this, keyHandler, gameStateManager);
         enemy = new Enemy(this);
         enemy2 = new Enemy(this, 128 * 4, 128);
@@ -141,7 +144,7 @@ public class GameWindow extends JPanel implements Runnable {
 
     public void update() {
         keyHandler.tick();
-        gameStateManager.input(keyHandler);
+        gameStateManager.input(keyHandler, mouseHandler);
         gameStateManager.update();
 
         // Would place all game logic updates in here, i.e. enemy movement etc
@@ -149,7 +152,7 @@ public class GameWindow extends JPanel implements Runnable {
             entityManager.update();
             soundManager.stop("pause");
             soundManager.loop("test");
-        } else {
+        } else if(gameStateManager.getCurrentState() == STATES.PAUSE) {
             soundManager.stop("test");
             soundManager.play("pause");
         }
