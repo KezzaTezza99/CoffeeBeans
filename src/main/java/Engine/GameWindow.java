@@ -107,7 +107,7 @@ public class GameWindow extends JPanel implements Runnable {
         entityManager.addEntity(enemy3);
 
         soundManager = new SoundManager();
-        uiManager = new UIManager();
+        uiManager = new UIManager(this);
     }
 
     // Override that is called when the JPanel is created

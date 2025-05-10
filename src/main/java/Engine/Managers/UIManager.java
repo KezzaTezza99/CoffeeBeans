@@ -1,8 +1,10 @@
 package Engine.Managers;
+import Engine.GameWindow;
 import Engine.Services.EventBusService;
 import Engine.Services.TimerService;
 import Game.Events.DrawDeathSplashscreen;
 import Game.Events.PlayerTookDamage;
+import Game.UIElements.GenericSplashScreen;
 import Game.UIElements.StatBar;
 
 import java.awt.*;
@@ -10,11 +12,14 @@ import java.awt.*;
 public class UIManager {
     private int health = 100;
     private final StatBar healthBar;
+    private final GenericSplashScreen deathSplashscreen;
     private boolean showHUD = true;
     private boolean showDeathSplashscreen = false;
 
-    public UIManager() {
+    // TODO: GameWindow is a temporary dependency
+    public UIManager(GameWindow gameWindow) {
         healthBar = new StatBar(192, 16, 100, 32, 100);
+        deathSplashscreen = new GenericSplashScreen(gameWindow, "YOU DIED");
 
         EventBusService.getBus().register(PlayerTookDamage.class, event -> {
             this.health = event.getNewHealth();
@@ -54,8 +59,7 @@ public class UIManager {
     }
 
     private void drawDeathSplashscreen(Graphics2D graphics2D) {
-        graphics2D.setColor(Color.white);
-        graphics2D.fillRect(100, 100, 200, 200);
+        deathSplashscreen.draw(graphics2D);
     }
 
     private void displaySplashscreen(long displayForMs) {

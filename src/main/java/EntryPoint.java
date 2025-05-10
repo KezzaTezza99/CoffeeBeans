@@ -14,6 +14,8 @@ import javax.swing.JFrame;
 
 // Do we want to clean up before we exit the application?
 
+// Should we inject important information about the GameWindow and stuff into a service provider, i.e. window info?
+
 // URGENT:
 // Implementation for next sprint implement hopefully by 12.05.25
 //----------------------------------------------------------------------------------------------------------------------
