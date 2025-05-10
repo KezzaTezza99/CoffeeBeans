@@ -2,19 +2,19 @@ package Engine.States;
 import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
 import Engine.Managers.GameStateManager;
-import Game.UIElements.GenericUIButton;
+import Engine.GenericUIComponents.UIButton;
 import java.awt.*;
 
 public class MainMenuState extends GameState {
     private final GameStateManager gameStateManager;
-    private final GenericUIButton playButton;
-    private final GenericUIButton exitButton;
+    private final UIButton playButton;
+    private final UIButton exitButton;
 
     public MainMenuState(GameStateManager gm, boolean isActive) {
         super(gm, isActive);
         this.gameStateManager = gm;
 
-        playButton = new GenericUIButton(
+        playButton = new UIButton(
                 gameStateManager.getGameWindow().getHalfScreenWidth(),
                 gameStateManager.getGameWindow().getHalfScreenHeight() + (gameStateManager.getGameWindow().getTileSize() / 2),
                 100,
@@ -22,7 +22,7 @@ public class MainMenuState extends GameState {
                 "Play",
                 this::loadGame);
 
-        exitButton = new GenericUIButton(
+        exitButton = new UIButton(
                 gameStateManager.getGameWindow().getHalfScreenWidth(),
                 (int) (gameStateManager.getGameWindow().getHalfScreenHeight() + (gameStateManager.getGameWindow().getTileSize() / 0.5)),
                 100,

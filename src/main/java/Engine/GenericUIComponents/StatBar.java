@@ -1,4 +1,4 @@
-package Game.UIElements;
+package Engine.GenericUIComponents;
 
 import java.awt.*;
 

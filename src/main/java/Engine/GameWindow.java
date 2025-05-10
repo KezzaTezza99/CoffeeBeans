@@ -172,6 +172,9 @@ public class GameWindow extends JPanel implements Runnable {
         graphics2D.dispose();
     }
 
+    // TODO: RESET EVERYTHING AND THEN RE-INIT
+    // This will be useful for resetting a game, should clean up resources for a final game exit also!
+
     // Some useful getters
     public int getTileSize() {
         return tileSize;

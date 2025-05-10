@@ -1,13 +1,13 @@
-package Game.UIElements;
+package Engine.GenericUIComponents;
 
 import java.awt.*;
 
-public class GenericUIButton {
+public class UIButton {
     private int x, y, width, height;
     private String label;
     private Runnable onClick;
 
-    public GenericUIButton(int x, int y, int w, int h, String l, Runnable onClick) {
+    public UIButton(int x, int y, int w, int h, String l, Runnable onClick) {
         this.x = x;
         this.y = y;
         this.width = w;

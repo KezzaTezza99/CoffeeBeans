@@ -4,22 +4,22 @@ import Engine.Services.EventBusService;
 import Engine.Services.TimerService;
 import Game.Events.DrawDeathSplashscreen;
 import Game.Events.PlayerTookDamage;
-import Game.UIElements.GenericSplashScreen;
-import Game.UIElements.StatBar;
+import Engine.GenericUIComponents.SplashScreen;
+import Engine.GenericUIComponents.StatBar;
 
 import java.awt.*;
 
 public class UIManager {
     private int health = 100;
     private final StatBar healthBar;
-    private final GenericSplashScreen deathSplashscreen;
+    private final SplashScreen deathSplashscreen;
     private boolean showHUD = true;
     private boolean showDeathSplashscreen = false;
 
     // TODO: GameWindow is a temporary dependency
     public UIManager(GameWindow gameWindow) {
         healthBar = new StatBar(192, 16, 100, 32, 100);
-        deathSplashscreen = new GenericSplashScreen(gameWindow, "YOU DIED");
+        deathSplashscreen = new SplashScreen(gameWindow, "YOU DIED");
 
         EventBusService.getBus().register(PlayerTookDamage.class, event -> {
             this.health = event.getNewHealth();
