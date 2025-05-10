@@ -1,6 +1,6 @@
 package Engine.Entity;
 import Engine.Collisions.AABB;
-import Engine.Dispatcher.EventBusService;
+import Engine.Services.EventBusService;
 import Engine.GameWindow;
 import Game.Events.EnemyDied;
 

@@ -1,3 +1,9 @@
 package Game.Events;
 import Engine.Dispatcher.Event;
-public class PlayerDied implements Event {}
+import Engine.Services.EventBusService;
+
+public class PlayerDied implements Event {
+    public PlayerDied() {
+        EventBusService.getBus().post(new DrawDeathSplashscreen());
+    }
+}

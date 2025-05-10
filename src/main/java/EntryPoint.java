@@ -9,6 +9,22 @@ import javax.swing.JFrame;
 // TODO: Look into expanding the EventBus by looking at the following:
 // EVENT PRIORITIES, ONE-SHOT LISTENERS, EVENT BUBBLING
 
+// TODO: 05/05/25 -> Clickable entities for games that would use point and click for attacking (potentially movement too)
+// Could test if clicking would trigger AABB for successful sword attack for example?
+
+// Do we want to clean up before we exit the application?
+
+// URGENT:
+// Implementation for next sprint implement hopefully by 12.05.25
+//----------------------------------------------------------------------------------------------------------------------
+// Gameplay Features:
+// Death splash screen appears when the player dies have some info then after an N amount of time we fade back to the
+// main menu. Think I'll need some UI components creating and a timer class creating to implement everything we need
+
+// UI Components:
+// Create a generic dialog system, it produces something visual on screen with some text (simulate interacting with an NPC)
+// Create a method in UIManager that prints dialog / string to the screen with an x,y and label parameter
+//----------------------------------------------------------------------------------------------------------------------
 public class EntryPoint {
     public static void main(String[] args) {
         // Create a frame to hold the panel

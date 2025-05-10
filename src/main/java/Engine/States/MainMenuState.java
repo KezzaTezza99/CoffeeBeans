@@ -7,19 +7,28 @@ import java.awt.*;
 
 public class MainMenuState extends GameState {
     private final GameStateManager gameStateManager;
-    private GenericUIButton button;
+    private final GenericUIButton playButton;
+    private final GenericUIButton exitButton;
 
     public MainMenuState(GameStateManager gm, boolean isActive) {
         super(gm, isActive);
         this.gameStateManager = gm;
 
-        button = new GenericUIButton(
+        playButton = new GenericUIButton(
                 gameStateManager.getGameWindow().getHalfScreenWidth(),
                 gameStateManager.getGameWindow().getHalfScreenHeight() + (gameStateManager.getGameWindow().getTileSize() / 2),
                 100,
                 50,
                 "Play",
                 this::loadGame);
+
+        exitButton = new GenericUIButton(
+                gameStateManager.getGameWindow().getHalfScreenWidth(),
+                (int) (gameStateManager.getGameWindow().getHalfScreenHeight() + (gameStateManager.getGameWindow().getTileSize() / 0.5)),
+                100,
+                50,
+                "Exit",
+                this::exitGame);
     }
 
     @Override
@@ -30,10 +39,9 @@ public class MainMenuState extends GameState {
 
     @Override
     public void input(KeyHandler keyHandler, MouseHandler mouseHandler) {
-        if(keyHandler.escape.clicked) System.exit(0);
-
         if(mouseHandler.isClicked()) {
-            button.handleClick(mouseHandler.getMouseX(), mouseHandler.getMouseY());
+            playButton.handleClick(mouseHandler.getMouseX(), mouseHandler.getMouseY());
+            exitButton.handleClick(mouseHandler.getMouseX(), mouseHandler.getMouseY());
             mouseHandler.resetClick();
         }
     }
@@ -42,7 +50,8 @@ public class MainMenuState extends GameState {
     public void draw(Graphics2D graphics2D) {
         graphics2D.setColor(Color.white);
         graphics2D.drawString("Main Menu", gameStateManager.getGameWindow().getHalfScreenWidth(), gameStateManager.getGameWindow().getHalfScreenHeight());
-        button.draw(graphics2D);
+        playButton.draw(graphics2D);
+        exitButton.draw(graphics2D);
     }
 
     private void loadGame() {
@@ -50,4 +59,7 @@ public class MainMenuState extends GameState {
         gameStateManager.setGameStateIsActive(STATES.PLAY, true);
         gameStateManager.setCurrentState(STATES.PLAY);
     }
+
+    // TODO: Eventually we could clean up memory, is it even worth it we could let garbage collection do it
+    private void exitGame() { System.exit(0); }
 }

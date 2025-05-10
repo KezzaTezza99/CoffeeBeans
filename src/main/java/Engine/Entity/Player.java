@@ -1,7 +1,7 @@
 package Engine.Entity;
 
 import Engine.Collisions.AABB;
-import Engine.Dispatcher.EventBusService;
+import Engine.Services.EventBusService;
 import Engine.GameWindow;
 import Engine.Graphics.Camera;
 import Engine.Input.KeyHandler;
@@ -162,7 +162,7 @@ public class Player extends Entity {
     @Override
     public void handleCollision(Entity other) {
         if(other.tag == EntityType.ENEMY) {
-            this.playerHealth -= 49;
+            this.playerHealth -= 100;
             EventBusService.getBus().post(new PlayerTookDamage(this.playerHealth, this));
         }
     }

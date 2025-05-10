@@ -1,11 +1,11 @@
 package Game.Events;
 import Engine.Dispatcher.Event;
-import Engine.Dispatcher.EventBusService;
+import Engine.Services.EventBusService;
 import Engine.Entity.Player;
 
 public class PlayerTookDamage implements Event {
     private final int newHealth;
-    private Player player;
+    private final Player player;
 
     public PlayerTookDamage(int newHealth, Player player) {
         this.player = player;

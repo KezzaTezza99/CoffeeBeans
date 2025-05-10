@@ -1,5 +1,7 @@
 package Engine.Managers;
-import Engine.Dispatcher.EventBusService;
+import Engine.Services.EventBusService;
+import Engine.Services.TimerService;
+import Game.Events.DrawDeathSplashscreen;
 import Game.Events.PlayerTookDamage;
 import Game.UIElements.StatBar;
 
@@ -9,6 +11,7 @@ public class UIManager {
     private int health = 100;
     private final StatBar healthBar;
     private boolean showHUD = true;
+    private boolean showDeathSplashscreen = false;
 
     public UIManager() {
         healthBar = new StatBar(192, 16, 100, 32, 100);
@@ -19,6 +22,8 @@ public class UIManager {
 
             if(health == 0 || health < 0) showHUD = false;
         });
+
+        EventBusService.getBus().register(DrawDeathSplashscreen.class, event -> displaySplashscreen(5000));
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -26,6 +31,10 @@ public class UIManager {
             drawHUD(graphics2D);
             drawScore(graphics2D);
         }
+
+        if(showDeathSplashscreen)
+            drawDeathSplashscreen(graphics2D);
+
         graphics2D.dispose();
     }
 
@@ -43,4 +52,19 @@ public class UIManager {
         graphics2D.setColor(Color.yellow);
         graphics2D.drawString("Score: 100", 64, 64);
     }
+
+    private void drawDeathSplashscreen(Graphics2D graphics2D) {
+        graphics2D.setColor(Color.white);
+        graphics2D.fillRect(100, 100, 200, 200);
+    }
+
+    private void displaySplashscreen(long displayForMs) {
+        setShowDeathSplashscreen(true);
+
+        TimerService.getTimer().runAfterDelay(() -> {
+            System.exit(0);
+        }, displayForMs);
+    }
+
+    private void setShowDeathSplashscreen(boolean flag) { this.showDeathSplashscreen = flag; }
 }
