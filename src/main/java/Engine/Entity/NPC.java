@@ -3,6 +3,7 @@ import Engine.Collisions.AABB;
 import Engine.GameContext;
 import Engine.GameWindow;
 import Engine.Services.EventBusService;
+import Engine.States.STATES;
 import Game.Events.ShowDialog;
 
 import javax.imageio.ImageIO;
@@ -29,6 +30,8 @@ public class NPC extends Entity {
         entitiesAggroZone = new AABB(x, y, 256, 256);
 
         direction = "left";
+
+        EventBusService.getBus().register(ShowDialog.class, event -> showDialog());
 
         // TODO: Become an override or default method inside Entity??
         loadSprite();
@@ -82,5 +85,11 @@ public class NPC extends Entity {
                 EventBusService.getBus().post(new ShowDialog());
             }
         }
+    }
+
+    private void showDialog() {
+        // Change the game state
+//        gameWindow.getGameStateManager().blockInputForCurrentState(true);
+        gameWindow.getGameStateManager().setGameStateIsActive(STATES.DIALOG, true);
     }
 }

@@ -3,6 +3,7 @@ import Engine.GameWindow;
 import Engine.GenericUIComponents.DialogOverlay;
 import Engine.Services.EventBusService;
 import Engine.Services.TimerService;
+import Engine.States.STATES;
 import Game.Events.DrawDeathSplashscreen;
 import Game.Events.PlayerTookDamage;
 import Engine.GenericUIComponents.SplashScreen;
@@ -15,18 +16,18 @@ public class UIManager {
     private int health = 100;
     private final StatBar healthBar;
     private final SplashScreen deathSplashscreen;
-    private final DialogOverlay dialogOverlay;
     private boolean showHUD = true;
     private boolean showDeathSplashscreen = false;
-    private boolean showDialog = false;
+
+    // TEMP
+    private final GameWindow gameWindow;
 
     // TODO: GameWindow is a temporary dependency
     public UIManager(GameWindow gameWindow) {
+        this.gameWindow = gameWindow;
+
         healthBar = new StatBar(192, 16, 100, 32, 100);
         deathSplashscreen = new SplashScreen(gameWindow, "YOU DIED");
-
-        // TODO: How would we actually handle dialog message???
-        dialogOverlay = new DialogOverlay(gameWindow, "Test");
 
         EventBusService.getBus().register(PlayerTookDamage.class, event -> {
             this.health = event.getNewHealth();
@@ -35,7 +36,6 @@ public class UIManager {
             if(health == 0 || health < 0) showHUD = false;
         });
 
-        EventBusService.getBus().register(ShowDialog.class, event -> setShowDialog(true));
         EventBusService.getBus().register(DrawDeathSplashscreen.class, event -> displaySplashscreen(5000));
     }
 
@@ -45,14 +45,9 @@ public class UIManager {
                 drawHUD(graphics2D);
                 drawScore(graphics2D);
             }
-
-            if (showDialog)
-                drawDialog(graphics2D);
         } else {
             drawDeathSplashscreen(graphics2D);
         }
-
-        graphics2D.dispose();
     }
 
     private void drawHUD(Graphics2D graphics2D) {
@@ -82,10 +77,5 @@ public class UIManager {
         }, displayForMs);
     }
 
-    private void drawDialog(Graphics2D graphics2D) {
-        dialogOverlay.draw(graphics2D);
-    }
-
     private void setShowDeathSplashscreen(boolean flag) { this.showDeathSplashscreen = flag; }
-    private void setShowDialog(boolean flag) { this.showDialog = flag; }
 }

@@ -63,18 +63,6 @@ public class Player extends Entity {
         entitiesFutureBounds = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
         entitiesAggroZone = new AABB(x, y, 256, 256);
 
-//        GameState playState = gsm.states.get(STATES.PLAY);
-//
-//        // TOD0: 22/04 WHY WAS I DOING THIS?
-//        // TODO: Do I really only need tile manager if its play state?
-//        // What happens when I want to incorporate more states
-//        // Not sure if I like the current creation of objects and the way everything links, but for now its okay
-//        if(playState instanceof PlayState) {
-//            this.tileManager = ((PlayState) playState).getTileManager();
-//        }
-//
-//        collisionManager = new CollisionManager(tileManager, gameWindow);
-
         collisionManager = new CollisionManager(gx.getTileManager(), gm);
         tileManager = gx.getTileManager();
 

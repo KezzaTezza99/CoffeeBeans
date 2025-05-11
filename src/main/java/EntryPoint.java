@@ -16,6 +16,8 @@ import javax.swing.JFrame;
 
 // Should we inject important information about the GameWindow and stuff into a service provider, i.e. window info?
 
+// GameContext could properly replace lots of calls to getters and other dependencies being injected
+
 // URGENT:
 // Implementation for next sprint implement hopefully by 12.05.25
 //----------------------------------------------------------------------------------------------------------------------

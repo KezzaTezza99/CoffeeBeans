@@ -6,28 +6,22 @@ import Engine.Managers.TileManager;
 
 import java.awt.*;
 
-// TODO: TRYING TO GAVE GAME WINDOW IN THE PLAY STATE SO WE CAN ACCESS THE GAMESTATE MANAGER
-// OR COULD ALL STATES GET THE GAMESTATE MANAGER?
 public class PlayState extends GameState {
-    TileManager tileManager;
-    //boolean pauseFlag = false;
     GameStateManager gameStateManager;
 
     public PlayState(GameStateManager gm, boolean isActive) {
         super(gm, isActive);
-
         gameStateManager = gm;
-
-        // Initialise the TileManager and handle input
-        tileManager = new TileManager(gm.getGameWindow(), false);
-        //KeyHandler input = new KeyHandler(gameStateManager.getGameWindow());
     }
 
     @Override
     public void update() {
+        if(!isBlockUpdate()) {
+            gameStateManager.getGameContext().getEntityManager().update();
+            gameStateManager.getGameContext().getSoundManager().loop("test");
+        }
     }
 
-    // TODO: All temp logic here
     @Override
     public void input(KeyHandler keyHandler) {
         if (keyHandler.escape.down) {
@@ -48,8 +42,8 @@ public class PlayState extends GameState {
 
     @Override
     public void draw(Graphics2D graphics2D) {
-        tileManager.draw(graphics2D);
+        gameStateManager.getGameContext().getTileManager().draw(graphics2D);
+        gameStateManager.getGameContext().getEntityManager().draw(graphics2D);
+        gameStateManager.getGameContext().getUiManager().draw(graphics2D);
     }
-
-    public TileManager getTileManager() { return tileManager; }
 }

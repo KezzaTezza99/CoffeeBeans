@@ -1,29 +1,36 @@
 package Engine.Managers;
+import Engine.GameContext;
 import Engine.GameWindow;
 import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
 import Engine.States.*;
-
 import java.awt.*;
 import java.util.HashMap;
 
 // TODO: May be worth having some custom constructors here, i.e., give a list of states and initialise them all???
 
 public class GameStateManager {
-    public final HashMap<STATES, GameState> states = new HashMap<STATES, GameState>();
+    public final HashMap<STATES, GameState> states = new HashMap<>();
     private STATES currentState;
     private final GameWindow gameWindow;
     public boolean pauseFlag = false;
-
     private STATES queuedState = null;
 
-    // Default Constructor
-    public GameStateManager(GameWindow gameWindow) {
-        this.gameWindow = gameWindow;
+    private final GameContext gameContext;
 
+    // Default Constructor
+    public GameStateManager(GameWindow gameWindow, GameContext gc) {
+        this.gameWindow = gameWindow;
+        this.gameContext = gc;
+
+        init();
+    }
+
+    private void init() {
         states.put(STATES.MAIN_MENU, new MainMenuState(this, true));
         states.put(STATES.PLAY, new PlayState(this, false));
         states.put(STATES.PAUSE, new PauseState(this, false));
+        states.put(STATES.DIALOG, new DialogState(this, false));
 
         currentState = STATES.MAIN_MENU;
     }
@@ -46,7 +53,7 @@ public class GameStateManager {
 
     public void input(KeyHandler key) {
         for (GameState state: states.values()) {
-            if(state.isActive()) {
+            if(state.isActive() && !state.isBlockUpdate()) {
                 state.input(key);
             }
         }
@@ -54,15 +61,21 @@ public class GameStateManager {
 
     public void input(KeyHandler key, MouseHandler mouse) {
         for (GameState state: states.values()) {
-            if(state.isActive()) {
+            if(state.isActive() && !state.isBlockUpdate()) {
                 state.input(key, mouse);
             }
         }
     }
 
     public void draw(Graphics2D graphics2D) {
-        for (GameState state: states.values()) {
-            if(state.isActive()) {
+        for (GameState state : states.values()) {
+            if (state.isActive() && !state.isOverlay()) {
+                state.draw(graphics2D);
+            }
+        }
+
+        for (GameState state : states.values()) {
+            if (state.isActive() && state.isOverlay()) {
                 state.draw(graphics2D);
             }
         }
@@ -85,5 +98,14 @@ public class GameStateManager {
     public void queueStateSwitchPauseAndPlay(STATES nextState, boolean pauseFlag) {
         this.queuedState = nextState;
         this.pauseFlag = pauseFlag;
+    }
+
+    public void blockInputForCurrentState(boolean flag) {
+        GameState state = states.get(currentState);
+        state.setBlockUpdate(flag);
+    }
+
+    public GameContext getGameContext() {
+        return gameContext;
     }
 }

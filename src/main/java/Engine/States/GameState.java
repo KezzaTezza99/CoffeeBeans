@@ -10,6 +10,8 @@ import java.awt.*;
 public abstract class GameState {
     private GameStateManager gameStateManager;
     private boolean isActive;
+    private boolean blockUpdate = false;
+    private boolean overlay = false;
 
     public GameState(GameStateManager gm, boolean isActive) {
         this.gameStateManager = gm;
@@ -25,4 +27,16 @@ public abstract class GameState {
         return isActive;
     }
     public void setActive(boolean active) { isActive = active; }
+    public boolean isBlockUpdate() {
+        return blockUpdate;
+    }
+    public void setBlockUpdate(boolean blockUpdate) {
+        this.blockUpdate = blockUpdate;
+    }
+    public boolean isOverlay() {
+        return overlay;
+    }
+    public void setOverlay(boolean overlay) {
+        this.overlay = overlay;
+    }
 }

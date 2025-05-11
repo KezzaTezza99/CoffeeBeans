@@ -96,28 +96,34 @@ public class GameWindow extends JPanel implements Runnable {
 
     public void init() {
         isRunning = true;
-        gameStateManager = new GameStateManager(this);
-        tileManager = new TileManager(this, false);
-        collisionManager = new CollisionManager(tileManager, this);
-        gameContext = new GameContext(tileManager, collisionManager);
-
         keyHandler = new KeyHandler(this);
         mouseHandler = new MouseHandler(this);
+
+        // Construct stuff with min dependencies
+        tileManager = new TileManager(this, false);
+        collisionManager = new CollisionManager(tileManager, this);
+        uiManager = new UIManager(this);
+        soundManager = new SoundManager();
+        entityManager = new EntityManager();
+
+        gameContext = new GameContext(tileManager, collisionManager, entityManager, uiManager, soundManager);
+
+        // Construct the entities now game context is ready
         player = new Player(this, keyHandler, gameContext);
         enemy = new Enemy(this);
         enemy2 = new Enemy(this, 128 * 4, 128);
         enemy3 = new Enemy(this, 128 * 3, 128);
         npc = new NPC(this, gameContext);
 
-        entityManager = new EntityManager();
+        // Register the entities
         entityManager.addEntity(player);
         entityManager.addEntity(enemy);
         entityManager.addEntity(enemy2);
         entityManager.addEntity(enemy3);
         entityManager.addEntity(npc);
 
-        soundManager = new SoundManager();
-        uiManager = new UIManager(this);
+        // Now construct game states because entities exist
+        gameStateManager = new GameStateManager(this, gameContext);
     }
 
     // Override that is called when the JPanel is created
@@ -156,16 +162,6 @@ public class GameWindow extends JPanel implements Runnable {
         keyHandler.tick();
         gameStateManager.input(keyHandler, mouseHandler);
         gameStateManager.update();
-
-        // Would place all game logic updates in here, i.e. enemy movement etc
-        if(gameStateManager.getCurrentState() == STATES.PLAY) {
-            entityManager.update();
-            soundManager.stop("pause");
-            soundManager.loop("test");
-        } else if(gameStateManager.getCurrentState() == STATES.PAUSE) {
-            soundManager.stop("test");
-            soundManager.play("pause");
-        }
     }
 
     @Override
@@ -173,12 +169,6 @@ public class GameWindow extends JPanel implements Runnable {
         super.paintComponent(graphics);
         Graphics2D graphics2D = (Graphics2D) graphics;
         gameStateManager.draw(graphics2D);
-
-        if(gameStateManager.getCurrentState() == STATES.PLAY) {
-            entityManager.draw(graphics2D);
-            uiManager.draw(graphics2D);
-        }
-
         graphics2D.dispose();
     }
 
@@ -203,7 +193,5 @@ public class GameWindow extends JPanel implements Runnable {
     }
     public int getHalfScreenWidth() { return screenWidth / 2; }
     public int getHalfScreenHeight() { return screenHeight / 2; }
-    public KeyHandler getKeyHandler() { return keyHandler; }
     public GameStateManager getGameStateManager() { return gameStateManager; }
-//    public CollisionManager getCollisionManager() { return }
 }

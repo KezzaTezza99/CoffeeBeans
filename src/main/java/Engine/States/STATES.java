@@ -5,4 +5,5 @@ public enum STATES {
     PAUSE,
     MAIN_MENU,
     SETTINGS,
+    DIALOG,
 }

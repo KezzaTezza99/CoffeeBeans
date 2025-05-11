@@ -13,6 +13,7 @@ public class MainMenuState extends GameState {
     public MainMenuState(GameStateManager gm, boolean isActive) {
         super(gm, isActive);
         this.gameStateManager = gm;
+        setBlockUpdate(false);
 
         playButton = new UIButton(
                 gameStateManager.getGameWindow().getHalfScreenWidth(),

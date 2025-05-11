@@ -52,6 +52,9 @@ public class DialogOverlay {
      }
 
      public void draw(Graphics2D graphics2D) {
+          // TODO: Have a utility class that resets graphics
+          Stroke oldStroke = graphics2D.getStroke();
+
           // TODO: Remove magic numbers, do we want default and then ability to pass this info in?
          graphics2D.setColor(backgroundColour);
          graphics2D.fillRoundRect(dialogX, dialogY, width, height, 35, 35);
@@ -63,5 +66,9 @@ public class DialogOverlay {
 
          // Drawing the text
          graphics2D.drawString(message, textX, textY);
+
+         // Restore graphics state
+         graphics2D.setStroke(oldStroke);
+         graphics2D.dispose();
      }
 }
