@@ -1,62 +1,37 @@
 package Engine.Entity;
 import Engine.Collisions.AABB;
-import Engine.Services.EventBusService;
+import Engine.GameContext;
 import Engine.GameWindow;
-import Game.Events.EnemyDied;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Enemy extends Entity {
-    GameWindow gameWindow;
+public class NPC extends Entity {
+    private final GameWindow gameWindow;
+    private final GameContext gameContext;
 
-    public Enemy(GameWindow gm) {
-        tag = EntityType.ENEMY;
+    public NPC(GameWindow gm, GameContext gx) {
+        this.tag = EntityType.NPC;
         this.setIsAlive(true);
-
         this.gameWindow = gm;
+        this.gameContext = gx;
 
-        // Setting the enemies position to be top left of screen
-        x = gameWindow.getHalfScreenWidth();
-        y = 128;
+        this.x = 300;
+        this.y = 700;
 
         entitiesCollisionBox = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
         entitiesFutureBounds = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
         entitiesAggroZone = new AABB(x, y, 256, 256);
 
-        speed = 4;
-        direction = "down";
+        direction = "left";
 
-        EventBusService.getBus().register(EnemyDied.class, event -> enemyDied());
-        loadEnemySprite();
+        // TODO: Become an override or default method inside Entity??
+        loadSprite();
     }
 
-    // TODO: TEMP -> THIS IS TESTING HAVING 2 ENEMIES, IN REALITY WOULD CHOSE A SPAWN POINT OR MAKE IT RANDOM ETC., BASED
-    // ON GAME NEEDS FOR NOW WILL JUST CONSTRUCT MY SECOND ENEMY SLIGHTLY DIFFERENTLY !
-    public Enemy(GameWindow gm, int xPos, int yPos) {
-        tag = EntityType.ENEMY;
-        this.setIsAlive(true);
-
-        this.gameWindow = gm;
-
-        x = xPos;
-        y = yPos;
-
-        entitiesCollisionBox = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
-        entitiesFutureBounds = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
-        entitiesAggroZone = new AABB(x, y, 256, 256);
-
-        speed = 4;
-        direction = "down";
-
-        EventBusService.getBus().register(EnemyDied.class, event -> enemyDied());
-        loadEnemySprite();
-    }
-
-    private void loadEnemySprite() {
+    private void loadSprite() {
         try {
             //Try loading the player sprites
             up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_1.png")));
@@ -94,20 +69,15 @@ public class Enemy extends Entity {
 
     @Override
     public void handleCollision(Entity other) {
-        if(other.tag == EntityType.PLAYER) {
-            // TODO: Attack the player
-            EventBusService.getBus().post(new EnemyDied());
-            gameWindow.entityManager.removeEntity(this);
-        }
+
     }
 
     @Override
     public void handleTriggers(Entity other) {
-
-    }
-
-    private void enemyDied() {
-        gameWindow.soundManager.play("death");
-        gameWindow.soundManager.reset("death");
+        if(other.tag == EntityType.PLAYER) {
+            if(gameContext.getCollisionManager().isCollidingWithTrigger(this.entitiesAggroZone, other.getAggroZone())) {
+                System.exit(0);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 package Engine.Entity;
 
 import Engine.Collisions.AABB;
+import Engine.GameContext;
 import Engine.Services.EventBusService;
 import Engine.GameWindow;
 import Engine.Graphics.Camera;
@@ -27,6 +28,7 @@ public class Player extends Entity {
     Camera camera;
     // TODO: THIS IS TEMP
     CollisionManager collisionManager;
+    GameContext gameContext;
     //private final AABB futureBounds;
     //!TEMP
 
@@ -39,12 +41,13 @@ public class Player extends Entity {
     //Testing UIManager and EventBus
     private int playerHealth = 100;
 
-    public Player(GameWindow gm, KeyHandler kh, GameStateManager gsm) {
+    public Player(GameWindow gm, KeyHandler kh, GameContext gx) {
         tag = EntityType.PLAYER;
         this.setIsAlive(true);
 
         this.gameWindow = gm;
         this.keyHandler = kh;
+        this.gameContext = gx;
 
         // Setting the players position to be the centre of the map (screen?) changes if the "world" is bigger
         screenX = (gameWindow.getMaxScreenCol() / 2) * gameWindow.getTileSize();
@@ -58,18 +61,23 @@ public class Player extends Entity {
 
         entitiesCollisionBox = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
         entitiesFutureBounds = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
+        entitiesAggroZone = new AABB(x, y, 256, 256);
 
-        GameState playState = gsm.states.get(STATES.PLAY);
+//        GameState playState = gsm.states.get(STATES.PLAY);
+//
+//        // TOD0: 22/04 WHY WAS I DOING THIS?
+//        // TODO: Do I really only need tile manager if its play state?
+//        // What happens when I want to incorporate more states
+//        // Not sure if I like the current creation of objects and the way everything links, but for now its okay
+//        if(playState instanceof PlayState) {
+//            this.tileManager = ((PlayState) playState).getTileManager();
+//        }
+//
+//        collisionManager = new CollisionManager(tileManager, gameWindow);
 
-        // TOD0: 22/04 WHY WAS I DOING THIS?
-        // TODO: Do I really only need tile manager if its play state?
-        // What happens when I want to incorporate more states
-        // Not sure if I like the current creation of objects and the way everything links, but for now its okay
-        if(playState instanceof PlayState) {
-            this.tileManager = ((PlayState) playState).getTileManager();
-        }
+        collisionManager = new CollisionManager(gx.getTileManager(), gm);
+        tileManager = gx.getTileManager();
 
-        collisionManager = new CollisionManager(tileManager, gameWindow);
         loadPlayerSprite();
     }
 
@@ -129,6 +137,8 @@ public class Player extends Entity {
         // TODO: as we made this protected should we actually use a setter
         entitiesCollisionBox.setX(x);
         entitiesCollisionBox.setY(y);
+        entitiesAggroZone.setX(x);
+        entitiesAggroZone.setY(y);
 
         for(KeyHandler.Key key : keyHandler.keys) {
             if(key.down) {
@@ -157,6 +167,8 @@ public class Player extends Entity {
         };
 
         graphics2D.drawImage(image, x, y, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
+        entitiesCollisionBox.drawCollider(graphics2D, Color.YELLOW);
+        entitiesAggroZone.drawCollider(graphics2D, Color.BLACK);
     }
 
     @Override
@@ -166,6 +178,9 @@ public class Player extends Entity {
             EventBusService.getBus().post(new PlayerTookDamage(this.playerHealth, this));
         }
     }
+
+    @Override
+    public void handleTriggers(Entity other) {}
 
     public void playerDied() {
         this.setIsAlive(false);

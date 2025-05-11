@@ -57,7 +57,7 @@ public class CollisionManager {
 //        return self.getBounds().isCollidingWith(other.getBounds());
 //    }
 //
-//    public boolean isCollidingWithTrigger(AABB self, AABB trigger) {
-//        return self.isCollidingWith(trigger);
-//    }
+    public boolean isCollidingWithTrigger(AABB self, AABB trigger) {
+        return self.isCollidingWith(trigger);
+    }
 }

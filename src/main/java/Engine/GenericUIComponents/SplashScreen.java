@@ -11,6 +11,7 @@ public class SplashScreen {
     private final String message;
 
     private int x, y;
+    // TODO: Font set globally? ServiceLocator?
     private final Font font;
 
     public SplashScreen(GameWindow gameWindow, String message) {

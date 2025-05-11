@@ -42,4 +42,5 @@ public abstract class Entity {
     public abstract void draw(Graphics2D graphics2D);
     public abstract void update();
     public abstract void handleCollision(Entity other);
+    public abstract void handleTriggers(Entity other);
 }

@@ -37,6 +37,12 @@ public class EntityManager {
                      a.handleCollision(b);
                      b.handleCollision(a);
                 }
+
+                // TODO: NEED TO RE-VISIT
+                if(a.getAggroZone().isCollidingWith(b.getAggroZone())) {
+                    a.handleTriggers(b);
+                    b.handleTriggers(a);
+                }
             }
         }
     }

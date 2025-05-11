@@ -1,11 +1,10 @@
 package Engine;
+import Engine.Entity.NPC;
 import Engine.Entity.Player;
 import Engine.Entity.Enemy;
 import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
-import Engine.Managers.EntityManager;
-import Engine.Managers.GameStateManager;
-import Engine.Managers.SoundManager;
+import Engine.Managers.*;
 import Engine.Managers.UIManager;
 import Engine.States.STATES;
 import javax.swing.*;
@@ -48,6 +47,7 @@ public class GameWindow extends JPanel implements Runnable {
     public Enemy enemy;
     public Enemy enemy2;
     public Enemy enemy3;
+    public NPC npc;
     public EntityManager entityManager;
 
     // Testing sound
@@ -55,6 +55,11 @@ public class GameWindow extends JPanel implements Runnable {
 
     // Testing UI
     public UIManager uiManager;
+
+    // Testing passing around one main object
+    public CollisionManager collisionManager;
+    public TileManager tileManager;
+    private GameContext gameContext;
 
     public GameWindow() {
         // Setting up the game window
@@ -92,19 +97,24 @@ public class GameWindow extends JPanel implements Runnable {
     public void init() {
         isRunning = true;
         gameStateManager = new GameStateManager(this);
+        tileManager = new TileManager(this, false);
+        collisionManager = new CollisionManager(tileManager, this);
+        gameContext = new GameContext(tileManager, collisionManager);
 
         keyHandler = new KeyHandler(this);
         mouseHandler = new MouseHandler(this);
-        player = new Player(this, keyHandler, gameStateManager);
+        player = new Player(this, keyHandler, gameContext);
         enemy = new Enemy(this);
         enemy2 = new Enemy(this, 128 * 4, 128);
         enemy3 = new Enemy(this, 128 * 3, 128);
+        npc = new NPC(this, gameContext);
 
         entityManager = new EntityManager();
         entityManager.addEntity(player);
         entityManager.addEntity(enemy);
         entityManager.addEntity(enemy2);
         entityManager.addEntity(enemy3);
+        entityManager.addEntity(npc);
 
         soundManager = new SoundManager();
         uiManager = new UIManager(this);
@@ -195,4 +205,5 @@ public class GameWindow extends JPanel implements Runnable {
     public int getHalfScreenHeight() { return screenHeight / 2; }
     public KeyHandler getKeyHandler() { return keyHandler; }
     public GameStateManager getGameStateManager() { return gameStateManager; }
+//    public CollisionManager getCollisionManager() { return }
 }
