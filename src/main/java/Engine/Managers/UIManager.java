@@ -40,16 +40,17 @@ public class UIManager {
     }
 
     public void draw(Graphics2D graphics2D) {
-        if(showHUD) {
-            drawHUD(graphics2D);
-            drawScore(graphics2D);
-        }
+        if(!showDeathSplashscreen) {
+            if (showHUD) {
+                drawHUD(graphics2D);
+                drawScore(graphics2D);
+            }
 
-        if(showDeathSplashscreen)
+            if (showDialog)
+                drawDialog(graphics2D);
+        } else {
             drawDeathSplashscreen(graphics2D);
-
-        if(showDialog)
-            drawDialog(graphics2D);
+        }
 
         graphics2D.dispose();
     }

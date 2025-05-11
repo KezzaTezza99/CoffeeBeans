@@ -2,6 +2,9 @@ package Engine.Entity;
 import Engine.Collisions.AABB;
 import Engine.GameContext;
 import Engine.GameWindow;
+import Engine.Services.EventBusService;
+import Game.Events.ShowDialog;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -76,7 +79,7 @@ public class NPC extends Entity {
     public void handleTriggers(Entity other) {
         if(other.tag == EntityType.PLAYER) {
             if(gameContext.getCollisionManager().isCollidingWithTrigger(this.entitiesAggroZone, other.getAggroZone())) {
-                System.exit(0);
+                EventBusService.getBus().post(new ShowDialog());
             }
         }
     }
