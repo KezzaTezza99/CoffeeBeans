@@ -56,19 +56,19 @@ public class DialogOverlay {
           Stroke oldStroke = graphics2D.getStroke();
 
           // TODO: Remove magic numbers, do we want default and then ability to pass this info in?
-         graphics2D.setColor(backgroundColour);
-         graphics2D.fillRoundRect(dialogX, dialogY, width, height, 35, 35);
+          graphics2D.setColor(backgroundColour);
+          graphics2D.fillRoundRect(dialogX, dialogY, width, height, 35, 35);
 
-         // Draw the border of dialog box
-         graphics2D.setColor(borderColour);
-         graphics2D.setStroke(new BasicStroke(5));
-         graphics2D.drawRoundRect(dialogX + 5, dialogY + 5, width - 10, height - 10, 25, 25);
+          // Draw the border of dialog box
+          graphics2D.setColor(borderColour);
+          graphics2D.setStroke(new BasicStroke(5));
+          graphics2D.drawRoundRect(dialogX + 5, dialogY + 5, width - 10, height - 10, 25, 25);
 
-         // Drawing the text
-         graphics2D.drawString(message, textX, textY);
+          // Drawing the text
+          graphics2D.drawString(message, textX, textY);
 
-         // Restore graphics state
-         graphics2D.setStroke(oldStroke);
-         graphics2D.dispose();
+          // Restore graphics state
+          graphics2D.setStroke(oldStroke);
+          graphics2D.dispose();
      }
 }

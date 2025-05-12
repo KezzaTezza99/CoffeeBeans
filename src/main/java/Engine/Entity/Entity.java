@@ -39,6 +39,8 @@ public abstract class Entity {
     public void setIsAlive(boolean isAlive) { this.isAlive = isAlive; }
     public boolean getIsAlive() { return this.isAlive; }
 
+    public EntityType getTag() { return this.tag; }
+
     public abstract void draw(Graphics2D graphics2D);
     public abstract void update();
     public abstract void handleCollision(Entity other);

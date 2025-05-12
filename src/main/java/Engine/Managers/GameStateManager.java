@@ -105,6 +105,11 @@ public class GameStateManager {
         state.setBlockUpdate(flag);
     }
 
+    public void blockInputForSelectedState(STATES state, boolean flag) {
+        GameState stateToUpdate = states.get(state);
+        stateToUpdate.setBlockUpdate(flag);
+    }
+
     public GameContext getGameContext() {
         return gameContext;
     }

@@ -19,6 +19,8 @@ public abstract class GameState {
     }
 
     public abstract void update();
+
+    // TODO: handle the input, cause if I use just input(key) it doesn't work
     public abstract void input(KeyHandler keyHandler);
     public abstract void input(KeyHandler keyHandler, MouseHandler mouseHandler);
     public abstract void draw(Graphics2D graphics2D);

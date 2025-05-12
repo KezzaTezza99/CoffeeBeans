@@ -16,6 +16,8 @@ public class NPC extends Entity {
     private final GameWindow gameWindow;
     private final GameContext gameContext;
 
+    public boolean hasTriggered = false;
+
     public NPC(GameWindow gm, GameContext gx) {
         this.tag = EntityType.NPC;
         this.setIsAlive(true);
@@ -54,9 +56,7 @@ public class NPC extends Entity {
     }
 
     @Override
-    public void update() {
-
-    }
+    public void update() {}
 
     @Override
     public void draw(Graphics2D graphics2D) {
@@ -82,14 +82,19 @@ public class NPC extends Entity {
     public void handleTriggers(Entity other) {
         if(other.tag == EntityType.PLAYER) {
             if(gameContext.getCollisionManager().isCollidingWithTrigger(this.entitiesAggroZone, other.getAggroZone())) {
-                EventBusService.getBus().post(new ShowDialog());
+                if(!hasTriggered) {
+                    hasTriggered = true;
+                    EventBusService.getBus().post(new ShowDialog());
+                }
             }
         }
     }
 
     private void showDialog() {
         // Change the game state
-//        gameWindow.getGameStateManager().blockInputForCurrentState(true);
+        gameWindow.getGameStateManager().blockInputForCurrentState(true);
         gameWindow.getGameStateManager().setGameStateIsActive(STATES.DIALOG, true);
     }
+
+    public EntityType getType() { return this.tag; }
 }

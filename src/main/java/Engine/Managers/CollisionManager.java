@@ -5,6 +5,8 @@ import Engine.Entity.Entity;
 import Engine.GameWindow;
 import Engine.States.STATES;
 
+import java.awt.*;
+
 public class CollisionManager {
     TileManager tileManager;
     GameWindow gameWindow;
@@ -60,4 +62,15 @@ public class CollisionManager {
     public boolean isCollidingWithTrigger(AABB self, AABB trigger) {
         return self.isCollidingWith(trigger);
     }
+
+    public boolean pointIntersectsAABB(Point point, AABB aabb) {
+        float px = point.x;
+        float py = point.y;
+
+        return px >= aabb.getX() &&
+                px <= aabb.getX() + aabb.getWidth() &&
+                py >= aabb.getY() &&
+                py <= aabb.getY() + aabb.getHeight();
+    }
+
 }
