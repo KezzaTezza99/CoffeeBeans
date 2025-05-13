@@ -19,6 +19,11 @@ public class AABB {
                 this.y + this.height >= other.y;
     }
 
+    public boolean mouseIsCollidingWith(int xPos, int yPos) {
+        return xPos >= this.x && x <= this.x + this.width &&
+                yPos >= this.y && y <= this.y + this.height;
+    }
+
     // For debugging purposes
     public void drawCollider(Graphics2D graphics2D, Color colour) {
         graphics2D.setColor(colour);

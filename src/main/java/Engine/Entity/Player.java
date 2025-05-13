@@ -1,5 +1,4 @@
 package Engine.Entity;
-
 import Engine.Collisions.AABB;
 import Engine.GameContext;
 import Engine.Services.EventBusService;
@@ -7,11 +6,7 @@ import Engine.GameWindow;
 import Engine.Graphics.Camera;
 import Engine.Input.KeyHandler;
 import Engine.Managers.CollisionManager;
-import Engine.Managers.GameStateManager;
 import Engine.Managers.TileManager;
-import Engine.States.GameState;
-import Engine.States.PlayState;
-import Engine.States.STATES;
 import Game.Events.PlayerTookDamage;
 
 import javax.imageio.ImageIO;

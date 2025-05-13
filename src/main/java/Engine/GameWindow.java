@@ -106,7 +106,7 @@ public class GameWindow extends JPanel implements Runnable {
         soundManager = new SoundManager();
         entityManager = new EntityManager();
 
-        gameContext = new GameContext(tileManager, collisionManager, entityManager, uiManager, soundManager);
+        gameContext = new GameContext(tileManager, collisionManager, entityManager, uiManager, soundManager, keyHandler, mouseHandler);
 
         // Construct the entities now game context is ready
         player = new Player(this, keyHandler, gameContext);
