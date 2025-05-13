@@ -37,6 +37,11 @@ public class PlayState extends GameState {
 
     @Override
     public void input(KeyHandler keyHandler, MouseHandler mouseHandler) {
+        if(mouseHandler.isClicked()) {
+            gameStateManager.getGameContext().getEntityManager().handleMouseClick();
+            mouseHandler.resetClick();
+        }
+
         input(keyHandler);
     }
 

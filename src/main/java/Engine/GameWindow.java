@@ -104,15 +104,15 @@ public class GameWindow extends JPanel implements Runnable {
         collisionManager = new CollisionManager(tileManager, this);
         uiManager = new UIManager(this);
         soundManager = new SoundManager();
-        entityManager = new EntityManager();
+        entityManager = new EntityManager(mouseHandler);
 
         gameContext = new GameContext(tileManager, collisionManager, entityManager, uiManager, soundManager, keyHandler, mouseHandler);
 
         // Construct the entities now game context is ready
         player = new Player(this, keyHandler, gameContext);
-        enemy = new Enemy(this);
-        enemy2 = new Enemy(this, 128 * 4, 128);
-        enemy3 = new Enemy(this, 128 * 3, 128);
+        enemy = new Enemy(this, gameContext);
+        enemy2 = new Enemy(this, gameContext, 128 * 4, 128);
+        enemy3 = new Enemy(this, gameContext, 128 * 3, 128);
         npc = new NPC(this, gameContext);
 
         // Register the entities

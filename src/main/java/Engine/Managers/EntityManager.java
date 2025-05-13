@@ -1,6 +1,9 @@
 package Engine.Managers;
 import Engine.Entity.Entity;
 import Engine.Entity.EntityType;
+import Engine.GameContext;
+import Engine.Input.Clickable;
+import Engine.Input.MouseHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,9 +14,15 @@ import java.util.stream.Collectors;
 // Use an HashMap or something?
 
 public class EntityManager {
+    private final MouseHandler mouseHandler;
+
     public List<Entity> entities;
 
-    public EntityManager() { this.entities = new ArrayList<>(); }
+    public EntityManager(MouseHandler mh) {
+        this.mouseHandler = mh;
+        this.entities = new ArrayList<>();
+    }
+
     public void addEntity(Entity entityToAdd) { entities.add(entityToAdd); }
     public void removeEntity(Entity entityToDelete) { entities.remove(entityToDelete); }
 
@@ -55,6 +64,16 @@ public class EntityManager {
         for(Entity entity : entities) {
             if(entity.isAlive) {
                 entity.draw(graphics2D);
+            }
+        }
+    }
+
+    public void handleMouseClick() {
+        for (Entity entity : entities) {
+            if (entity instanceof Clickable clickable &&
+                    mouseHandler.isClicked()          &&
+                    entity.getBounds().mouseIsCollidingWith(mouseHandler.getMouseX(), mouseHandler.getMouseY())) {
+                clickable.onClick();
             }
         }
     }

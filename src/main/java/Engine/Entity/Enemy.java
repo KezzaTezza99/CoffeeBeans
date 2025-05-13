@@ -1,5 +1,7 @@
 package Engine.Entity;
 import Engine.Collisions.AABB;
+import Engine.GameContext;
+import Engine.Input.Clickable;
 import Engine.Services.EventBusService;
 import Engine.GameWindow;
 import Game.Events.EnemyDied;
@@ -10,14 +12,16 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Enemy extends Entity {
+public class Enemy extends Entity implements Clickable {
     GameWindow gameWindow;
 
-    public Enemy(GameWindow gm) {
+    public Enemy(GameWindow gm, GameContext gx) {
+        super(gx);
         tag = EntityType.ENEMY;
         this.setIsAlive(true);
 
         this.gameWindow = gm;
+        this.gameContext = gx;
 
         // Setting the enemies position to be top left of screen
         x = gameWindow.getHalfScreenWidth();
@@ -36,11 +40,13 @@ public class Enemy extends Entity {
 
     // TODO: TEMP -> THIS IS TESTING HAVING 2 ENEMIES, IN REALITY WOULD CHOSE A SPAWN POINT OR MAKE IT RANDOM ETC., BASED
     // ON GAME NEEDS FOR NOW WILL JUST CONSTRUCT MY SECOND ENEMY SLIGHTLY DIFFERENTLY !
-    public Enemy(GameWindow gm, int xPos, int yPos) {
+    public Enemy(GameWindow gm, GameContext gx, int xPos, int yPos) {
+        super(gx);
         tag = EntityType.ENEMY;
         this.setIsAlive(true);
 
         this.gameWindow = gm;
+        this.gameContext = gx;
 
         x = xPos;
         y = yPos;
@@ -109,5 +115,10 @@ public class Enemy extends Entity {
     private void enemyDied() {
         gameWindow.soundManager.play("death");
         gameWindow.soundManager.reset("death");
+    }
+
+    @Override
+    public void onClick() {
+        System.out.println("Enemy clicked on");
     }
 }

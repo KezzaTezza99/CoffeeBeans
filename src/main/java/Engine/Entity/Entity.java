@@ -1,5 +1,8 @@
 package Engine.Entity;
 import Engine.Collisions.AABB;
+import Engine.GameContext;
+import Engine.Input.MouseHandler;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -9,6 +12,8 @@ import java.awt.image.BufferedImage;
 // Could sort entities based on Y coordinates for top-down rendering order to fake depth
 
 public abstract class Entity {
+    protected GameContext gameContext;
+
     // Generic Entity Stuff
     protected int x,y;                                  // Stores the entities (x,y) position
     public int worldX, worldY;                          // If the "world" is bigger than the screen this is the players
@@ -32,6 +37,15 @@ public abstract class Entity {
     protected AABB entitiesCollisionBox;                // The box that will be used to determine collisions
     public AABB entitiesFutureBounds;                   // Used to stop entities walking into walls etc.,
     public AABB entitiesAggroZone;                      // Will be used for some entities for simple AI behaviour, i.e., chase player
+
+    public Entity(GameContext gameContext) {
+        this.gameContext = gameContext;
+    }
+
+    public boolean isMouseOver() {
+        MouseHandler mouse = gameContext.getMouseHandler();
+        return getBounds().mouseIsCollidingWith(mouse.getMouseX(), mouse.getMouseY());
+    }
 
     public AABB getBounds() { return this.entitiesCollisionBox; }
     public AABB getAggroZone() { return this.entitiesAggroZone; }

@@ -37,6 +37,7 @@ public class Player extends Entity {
     private int playerHealth = 100;
 
     public Player(GameWindow gm, KeyHandler kh, GameContext gx) {
+        super(gx);
         tag = EntityType.PLAYER;
         this.setIsAlive(true);
 

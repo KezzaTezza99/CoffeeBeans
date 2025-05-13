@@ -19,9 +19,11 @@ public class AABB {
                 this.y + this.height >= other.y;
     }
 
-    public boolean mouseIsCollidingWith(int xPos, int yPos) {
-        return xPos >= this.x && x <= this.x + this.width &&
-                yPos >= this.y && y <= this.y + this.height;
+    public boolean mouseIsCollidingWith(int x, int y) {
+        return x >= this.x &&
+                x <= this.x + width &&
+                y >= this.y &&
+                y <= this.y + height;
     }
 
     // For debugging purposes
