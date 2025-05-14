@@ -2,7 +2,6 @@ package Engine.States;
 import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
 import Engine.Managers.GameStateManager;
-import Engine.Managers.TileManager;
 
 import java.awt.*;
 
@@ -38,7 +37,7 @@ public class PlayState extends GameState {
     @Override
     public void input(KeyHandler keyHandler, MouseHandler mouseHandler) {
         if(mouseHandler.isClicked()) {
-            gameStateManager.getGameContext().getEntityManager().handleMouseClick();
+            gameStateManager.getGameContext().getEntityManager().handleMouseClickOnAABBBounds();
             mouseHandler.resetClick();
         }
 

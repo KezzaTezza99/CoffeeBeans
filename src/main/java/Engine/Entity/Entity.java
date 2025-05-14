@@ -21,6 +21,7 @@ public abstract class Entity {
     public int speed;                                   // Stores the entities movement speed
     public EntityType tag;                              // Useful for knowing what an entity is when handling collision logic
 
+    public int health;                                  // The entities health
     public boolean isAlive = false;                     // Useful for spawning / de-spawning entities
 
     // Graphics and Animation Stuff
@@ -40,6 +41,10 @@ public abstract class Entity {
 
     public Entity(GameContext gameContext) {
         this.gameContext = gameContext;
+
+        // TODO: For now defaulting all entities health to 100
+        // but in reality would want this to be decided by the programmer
+        health = 100;
     }
 
     public boolean isMouseOver() {
@@ -49,6 +54,13 @@ public abstract class Entity {
 
     public AABB getBounds() { return this.entitiesCollisionBox; }
     public AABB getAggroZone() { return this.entitiesAggroZone; }
+
+    public int getHealth() {
+        return health;
+    }
+    public void setHealth(int health) {
+        this.health = health;
+    }
 
     public void setIsAlive(boolean isAlive) { this.isAlive = isAlive; }
     public boolean getIsAlive() { return this.isAlive; }

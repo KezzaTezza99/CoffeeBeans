@@ -1,7 +1,6 @@
 package Engine.Managers;
 import Engine.Entity.Entity;
 import Engine.Entity.EntityType;
-import Engine.GameContext;
 import Engine.Input.Clickable;
 import Engine.Input.MouseHandler;
 
@@ -68,10 +67,10 @@ public class EntityManager {
         }
     }
 
-    public void handleMouseClick() {
+    // TODO: this is the main AABB bounds we could have a method for triggering the trigger bounds
+    public void handleMouseClickOnAABBBounds() {
         for (Entity entity : entities) {
             if (entity instanceof Clickable clickable &&
-                    mouseHandler.isClicked()          &&
                     entity.getBounds().mouseIsCollidingWith(mouseHandler.getMouseX(), mouseHandler.getMouseY())) {
                 clickable.onClick();
             }

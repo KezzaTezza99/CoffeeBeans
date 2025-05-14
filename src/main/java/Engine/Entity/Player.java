@@ -31,11 +31,6 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    // TEMP - THIS COULD BECOME PART OF ENTITY!
-    //TODO: ^
-    //Testing UIManager and EventBus
-    private int playerHealth = 100;
-
     public Player(GameWindow gm, KeyHandler kh, GameContext gx) {
         super(gx);
         tag = EntityType.PLAYER;
@@ -158,8 +153,8 @@ public class Player extends Entity {
     @Override
     public void handleCollision(Entity other) {
         if(other.tag == EntityType.ENEMY) {
-            this.playerHealth -= 100;
-            EventBusService.getBus().post(new PlayerTookDamage(this.playerHealth, this));
+            this.health -= 100;
+            EventBusService.getBus().post(new PlayerTookDamage(this.health, this));
         }
     }
 

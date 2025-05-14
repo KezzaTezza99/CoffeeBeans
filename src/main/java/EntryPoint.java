@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 
 // GameContext could properly replace lots of calls to getters and other dependencies being injected
 
-// GameContext is enjected into entities this is unnecessary look at start using lightweight interfaces
+// GameContext is injected into entities this is unnecessary look at start using lightweight interfaces
 // URGENT:
 // Implementation for next sprint implement hopefully by 12.05.25
 //----------------------------------------------------------------------------------------------------------------------

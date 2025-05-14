@@ -5,6 +5,7 @@ import Engine.Input.Clickable;
 import Engine.Services.EventBusService;
 import Engine.GameWindow;
 import Game.Events.EnemyDied;
+import Game.Events.EnemyTookDamage;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -100,11 +101,11 @@ public class Enemy extends Entity implements Clickable {
 
     @Override
     public void handleCollision(Entity other) {
-        if(other.tag == EntityType.PLAYER) {
-            // TODO: Attack the player
-            EventBusService.getBus().post(new EnemyDied());
-            gameWindow.entityManager.removeEntity(this);
-        }
+//        if(other.tag == EntityType.PLAYER) {
+//            // TODO: Attack the player
+//            EventBusService.getBus().post(new EnemyDied());
+//            gameWindow.entityManager.removeEntity(this);
+//        }
     }
 
     @Override
@@ -112,13 +113,14 @@ public class Enemy extends Entity implements Clickable {
 
     }
 
-    private void enemyDied() {
+    public void enemyDied() {
         gameWindow.soundManager.play("death");
         gameWindow.soundManager.reset("death");
     }
 
     @Override
     public void onClick() {
-        System.out.println("Enemy clicked on");
+        this.health -= 50;
+        EventBusService.getBus().post(new EnemyTookDamage(this.health, this));
     }
 }
