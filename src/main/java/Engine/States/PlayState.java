@@ -17,6 +17,7 @@ public class PlayState extends GameState {
     public void update() {
         if(!isBlockUpdate()) {
             gameStateManager.getGameContext().getEntityManager().update();
+            gameStateManager.getGameContext().getEntityManager().removeDeadEntities();
             gameStateManager.getGameContext().getSoundManager().loop("test");
         }
     }

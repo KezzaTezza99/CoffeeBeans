@@ -1,14 +1,11 @@
 package Engine.Managers;
 import Engine.GameWindow;
-import Engine.GenericUIComponents.DialogOverlay;
 import Engine.Services.EventBusService;
 import Engine.Services.TimerService;
-import Engine.States.STATES;
 import Game.Events.DrawDeathSplashscreen;
 import Game.Events.PlayerTookDamage;
 import Engine.GenericUIComponents.SplashScreen;
 import Engine.GenericUIComponents.StatBar;
-import Game.Events.ShowDialog;
 
 import java.awt.*;
 
@@ -21,6 +18,10 @@ public class UIManager {
 
     // TEMP
     private final GameWindow gameWindow;
+
+    private boolean drawString = false;
+    private int hpToDisplay;
+    private int xPos, yPos;
 
     // TODO: GameWindow is a temporary dependency
     public UIManager(GameWindow gameWindow) {
@@ -45,6 +46,10 @@ public class UIManager {
                 drawHUD(graphics2D);
                 drawScore(graphics2D);
             }
+
+            if(drawString) {
+                drawHP(graphics2D);
+            }
         } else {
             drawDeathSplashscreen(graphics2D);
         }
@@ -65,6 +70,11 @@ public class UIManager {
         graphics2D.drawString("Score: 100", 64, 64);
     }
 
+    private void drawHP(Graphics2D graphics2D) {
+        graphics2D.setColor(Color.yellow);
+        graphics2D.drawString(String.valueOf(hpToDisplay), xPos, yPos);
+    }
+
     private void drawDeathSplashscreen(Graphics2D graphics2D) {
         deathSplashscreen.draw(graphics2D);
     }
@@ -75,6 +85,13 @@ public class UIManager {
         TimerService.getTimer().runAfterDelay(() -> {
             System.exit(0);
         }, displayForMs);
+    }
+
+    public void displayHP(int hp, int xPos, int yPos) {
+        this.hpToDisplay = hp;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.drawString = true;
     }
 
     private void setShowDeathSplashscreen(boolean flag) { this.showDeathSplashscreen = flag; }

@@ -47,6 +47,8 @@ public abstract class Entity {
         health = 100;
     }
 
+    public GameContext getGameContext() { return this.gameContext; }
+
     public boolean isMouseOver() {
         MouseHandler mouse = gameContext.getMouseHandler();
         return getBounds().mouseIsCollidingWith(mouse.getMouseX(), mouse.getMouseY());

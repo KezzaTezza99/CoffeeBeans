@@ -4,6 +4,7 @@ import Engine.GameContext;
 import Engine.Input.Clickable;
 import Engine.Services.EventBusService;
 import Engine.GameWindow;
+import Game.Events.DrawHP;
 import Game.Events.EnemyDied;
 import Game.Events.EnemyTookDamage;
 
@@ -15,6 +16,10 @@ import java.util.Objects;
 
 public class Enemy extends Entity implements Clickable {
     GameWindow gameWindow;
+    
+    int hp;
+    int damage = 50;
+    int xMousePos, yMousePos;
 
     public Enemy(GameWindow gm, GameContext gx) {
         super(gx);
@@ -36,6 +41,11 @@ public class Enemy extends Entity implements Clickable {
         direction = "down";
 
         EventBusService.getBus().register(EnemyDied.class, event -> enemyDied());
+
+        EventBusService.getBus().register(DrawHP.class, event -> {
+            this.hp = event.getHp();
+            gameContext.getUiManager().displayHP(this.hp, event.getX(), event.getY());
+        });
         loadEnemySprite();
     }
 
@@ -120,7 +130,11 @@ public class Enemy extends Entity implements Clickable {
 
     @Override
     public void onClick() {
-        this.health -= 50;
+        this.health -= damage;
+        this.xMousePos = gameContext.getMouseHandler().getMouseX();
+        this.yMousePos = gameContext.getMouseHandler().getMouseY();
+
         EventBusService.getBus().post(new EnemyTookDamage(this.health, this));
+        EventBusService.getBus().post(new DrawHP(damage, xMousePos, yMousePos));
     }
 }

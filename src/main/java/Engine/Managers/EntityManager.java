@@ -23,7 +23,7 @@ public class EntityManager {
     }
 
     public void addEntity(Entity entityToAdd) { entities.add(entityToAdd); }
-    public void removeEntity(Entity entityToDelete) { entities.remove(entityToDelete); }
+    public void removeDeadEntities() { entities.removeIf(entity -> !entity.getIsAlive());}
 
     public List<Entity> getEntityByTag(EntityType type) {
         return entities.stream()
