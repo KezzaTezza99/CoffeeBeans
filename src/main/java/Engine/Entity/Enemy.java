@@ -16,7 +16,7 @@ import java.util.Objects;
 
 public class Enemy extends Entity implements Clickable {
     GameWindow gameWindow;
-    
+
     int hp;
     int damage = 50;
     int xMousePos, yMousePos;
@@ -44,7 +44,7 @@ public class Enemy extends Entity implements Clickable {
 
         EventBusService.getBus().register(DrawHP.class, event -> {
             this.hp = event.getHp();
-            gameContext.getUiManager().displayHP(this.hp, event.getX(), event.getY());
+            gameContext.getUiManager().displayHP(this.hp, event.getX(), event.getY(), 250);
         });
         loadEnemySprite();
     }

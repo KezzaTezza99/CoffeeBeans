@@ -19,9 +19,10 @@ public class UIManager {
     // TEMP
     private final GameWindow gameWindow;
 
-    private boolean drawString = false;
+    private boolean showDamage = false;
     private int hpToDisplay;
     private int xPos, yPos;
+    private long damageTextEndTime = 0;
 
     // TODO: GameWindow is a temporary dependency
     public UIManager(GameWindow gameWindow) {
@@ -40,6 +41,12 @@ public class UIManager {
         EventBusService.getBus().register(DrawDeathSplashscreen.class, event -> displaySplashscreen(5000));
     }
 
+    public void update() {
+        if(System.currentTimeMillis() > damageTextEndTime) {
+            showDamage = false;
+        }
+    }
+
     public void draw(Graphics2D graphics2D) {
         if(!showDeathSplashscreen) {
             if (showHUD) {
@@ -47,7 +54,7 @@ public class UIManager {
                 drawScore(graphics2D);
             }
 
-            if(drawString) {
+            if(showDamage) {
                 drawHP(graphics2D);
             }
         } else {
@@ -87,11 +94,12 @@ public class UIManager {
         }, displayForMs);
     }
 
-    public void displayHP(int hp, int xPos, int yPos) {
+    public void displayHP(int hp, int xPos, int yPos, int durationInMs) {
         this.hpToDisplay = hp;
         this.xPos = xPos;
         this.yPos = yPos;
-        this.drawString = true;
+        this.damageTextEndTime = System.currentTimeMillis() + durationInMs;
+        this.showDamage = true;
     }
 
     private void setShowDeathSplashscreen(boolean flag) { this.showDeathSplashscreen = flag; }
