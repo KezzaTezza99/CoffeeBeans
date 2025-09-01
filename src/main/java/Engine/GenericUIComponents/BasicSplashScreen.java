@@ -1,40 +1,28 @@
 package Engine.GenericUIComponents;
 import Engine.GameWindow;
+import Engine.Utility.TextPositionHelper;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
-public class SplashScreen {
+public class BasicSplashScreen {
     // For now injecting the GameWindow
     // TODO: How do I want to handle dependencies?
     private final GameWindow gameWindow;
     private final String message;
 
-    private int x, y;
+    private final int x;
+    private final int y;
     // TODO: Font set globally? ServiceLocator?
     private final Font font;
 
-    public SplashScreen(GameWindow gameWindow, String message) {
+    public BasicSplashScreen(GameWindow gameWindow, String message) {
         this.gameWindow = gameWindow;
         this.message = message;
         this.font = new Font("Default", Font.BOLD, 48);
 
-        // TODO: Should I have predetermined text locations and pass this in?
-        computeDefaultTextPos();
-    }
-
-    private void computeDefaultTextPos() {
-        BufferedImage temp = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D graphics2D = temp.createGraphics();
-
-        graphics2D.setFont(this.font);
-
-        FontMetrics metrics = graphics2D.getFontMetrics();
-
-        this.x = (gameWindow.getScreenWidth() - metrics.stringWidth(message)) / 2;
-        this.y = (gameWindow.getScreenHeight() / 2);
-
-        graphics2D.dispose();
+        Point centrePoint = TextPositionHelper.getCentredTextPos(message, font, gameWindow.getScreenWidth(), gameWindow.getScreenHeight());
+        this.x = centrePoint.x;
+        this.y = centrePoint.y;
     }
 
     public void draw(Graphics2D graphics2D) {
