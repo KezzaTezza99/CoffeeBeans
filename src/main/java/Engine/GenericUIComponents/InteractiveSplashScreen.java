@@ -3,6 +3,8 @@ import Engine.GameWindow;
 import Engine.Utility.TextPositionHelper;
 import java.awt.*;
 
+// TODO: Can make this very generic and decide where buttons are placed within different constructors?
+// Should probably have three buttons, one for Restarting, Returning to Menu, Quitting the game?
 public class InteractiveSplashScreen {
     // TODO: Think about how we are handling this GameWindow Injection, could game settings i.e., height width be
     // injected into a settings class where we can access basic information such as dimensions for cases like this?!
@@ -33,7 +35,7 @@ public class InteractiveSplashScreen {
         // Placing the buttons under the centre text with a predetermined spacing
         int buttonPadding = 50;
         restartGameButton = new UIButton(this.x, (this.y + buttonPadding), "Restart", this.font, 25, null);
-        exitGameButton = new UIButton(this.x, (restartGameButton.getY() + restartGameButton.getHeight() + buttonPadding), restartGameButton.getWidth(), restartGameButton.getHeight(), "Exit", null);
+        exitGameButton = new UIButton(this.x, (restartGameButton.getY() + restartGameButton.getHeight() + buttonPadding), restartGameButton.getWidth(), restartGameButton.getHeight(), "Exit", this::exitTheGame);
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -50,4 +52,9 @@ public class InteractiveSplashScreen {
         restartGameButton.draw(graphics2D, Color.blue, Color.white);
         exitGameButton.draw(graphics2D, Color.blue, Color.white);
     }
+
+    // TODO: Restart game stuff
+
+    // The user want's to exit the application so let's exit the game!
+    private void exitTheGame() { System.exit(0); }
 }

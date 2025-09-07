@@ -5,5 +5,6 @@ public enum STATES {
     PAUSE,
     MAIN_MENU,
     SETTINGS,
+    GAME_OVER,
     DIALOG,
 }

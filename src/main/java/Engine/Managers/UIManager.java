@@ -31,7 +31,6 @@ public class UIManager {
         this.gameWindow = gameWindow;
 
         healthBar = new StatBar(192, 16, 100, 32, 100);
-        //deathSplashscreen = new BasicSplashScreen(gameWindow, "YOU DIED");
         deathSplashscreen = new InteractiveSplashScreen(gameWindow, "YOU DIED");
 
         EventBusService.getBus().register(PlayerTookDamage.class, event -> {
@@ -93,7 +92,10 @@ public class UIManager {
         setShowDeathSplashscreen(true);
 
         TimerService.getTimer().runAfterDelay(() -> {
-            System.exit(0);
+            // TODO: We used to close the application but now we want the user to choose so eventually
+            // we should fade this out of the engine, we don't need this call anymore we want the user to
+            // decide if they want to quit the application, return to menu? or replay the level!
+            System.out.println("It's been 5 seconds since we died... are we going to play again?");
         }, displayForMs);
     }
 

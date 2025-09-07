@@ -31,6 +31,7 @@ public class GameStateManager {
         states.put(STATES.PLAY, new PlayState(this, false));
         states.put(STATES.PAUSE, new PauseState(this, false));
         states.put(STATES.DIALOG, new DialogState(this, false));
+        states.put(STATES.GAME_OVER, new GameOverState(this, false));
 
         currentState = STATES.MAIN_MENU;
     }
