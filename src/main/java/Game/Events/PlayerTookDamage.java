@@ -14,7 +14,7 @@ public class PlayerTookDamage implements Event {
         EventBusService.getBus().register(PlayerDied.class, event -> this.player.playerDied());
 
         if(newHealth == 0 || newHealth < 0) {
-            EventBusService.getBus().post(new PlayerDied());
+            EventBusService.getBus().post(new PlayerDied(player.getGameWindow().getGameStateManager()));
         }
     }
 

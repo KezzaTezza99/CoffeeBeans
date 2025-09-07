@@ -1,4 +1,5 @@
 package Engine.States;
+import Engine.GenericUIComponents.InteractiveSplashScreen;
 import Engine.GenericUIComponents.UIButton;
 import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
@@ -7,15 +8,13 @@ import java.awt.*;
 
 public class GameOverState extends GameState {
     private final GameStateManager gameStateManager;
-
-    // CAN WE JUST HAVE A REFERENCE TO THE SPLASH-SCREEN UI???
+    private InteractiveSplashScreen gameOverSplashScreen;
 
     public GameOverState(GameStateManager gm, boolean isActive) {
         super(gm, isActive);
         this.gameStateManager = gm;
         setBlockUpdate(false);
-
-        // We could initialise the splash-screen here, can then just swap out for whatever we need?
+        gameOverSplashScreen = new InteractiveSplashScreen(gm.getGameWindow(), "YOU DIED");
     }
 
     @Override
@@ -25,12 +24,15 @@ public class GameOverState extends GameState {
 
     @Override
     public void input(KeyHandler keyHandler, MouseHandler mouseHandler) {
-        // If we have a reference to the splash-screen we will need to grab the buttons and then handle any clicks
+        if(mouseHandler.isClicked()) {
+            gameOverSplashScreen.getRestartGameButton().handleClick(mouseHandler.getMouseX(), mouseHandler.getMouseY());
+            gameOverSplashScreen.getExitGameButton().handleClick(mouseHandler.getMouseX(), mouseHandler.getMouseY());
+            mouseHandler.resetClick();
+        }
     }
 
     @Override
     public void draw(Graphics2D graphics2D) {
-        // Just testing the state works
-        graphics2D.setColor(Color.YELLOW);
+        gameOverSplashScreen.draw(graphics2D);
     }
 }

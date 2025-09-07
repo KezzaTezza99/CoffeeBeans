@@ -96,6 +96,9 @@ public class GameStateManager {
         return this.gameWindow;
     }
 
+    // TODO: rename these variables, it's confusing when we come back to the code what this is doing
+    // it basically decided the next state and if we should allow for the state underneath to keep running etc
+    // i.e. if the game should keep ticking etc
     public void queueStateSwitchPauseAndPlay(STATES nextState, boolean pauseFlag) {
         this.queuedState = nextState;
         this.pauseFlag = pauseFlag;

@@ -1,5 +1,6 @@
 package Engine.GenericUIComponents;
 import Engine.GameWindow;
+import Engine.States.STATES;
 import Engine.Utility.TextPositionHelper;
 import java.awt.*;
 
@@ -34,7 +35,7 @@ public class InteractiveSplashScreen {
 
         // Placing the buttons under the centre text with a predetermined spacing
         int buttonPadding = 50;
-        restartGameButton = new UIButton(this.x, (this.y + buttonPadding), "Restart", this.font, 25, null);
+        restartGameButton = new UIButton(this.x, (this.y + buttonPadding), "Restart", this.font, 25, this::resetGame);
         exitGameButton = new UIButton(this.x, (restartGameButton.getY() + restartGameButton.getHeight() + buttonPadding), restartGameButton.getWidth(), restartGameButton.getHeight(), "Exit", this::exitTheGame);
     }
 
@@ -53,8 +54,20 @@ public class InteractiveSplashScreen {
         exitGameButton.draw(graphics2D, Color.blue, Color.white);
     }
 
-    // TODO: Restart game stuff
+    // The user want's to restart the game so we need to reinitialise everything!!!
+    private void resetGame() {
+        // TODO: actually reset the game
+        this.gameWindow.init();
+    }
 
     // The user want's to exit the application so let's exit the game!
     private void exitTheGame() { System.exit(0); }
+
+    // Getters
+    public UIButton getRestartGameButton() {
+        return restartGameButton;
+    }
+    public UIButton getExitGameButton() {
+        return exitGameButton;
+    }
 }

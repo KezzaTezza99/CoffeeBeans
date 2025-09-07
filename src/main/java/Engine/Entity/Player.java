@@ -164,4 +164,8 @@ public class Player extends Entity {
     public void playerDied() {
         this.setIsAlive(false);
     }
+
+    // TODO: THIS ISN'T THE BEST APPROACH, TO DO DEATH SCREEN WE NEED THE GAME STATE MANAGER WE ARE GETTING IT
+    // THROUGH PLAYER, GAME WINDOW THEN GETTING THE GSM
+    public GameWindow getGameWindow() { return gameWindow; }
 }
