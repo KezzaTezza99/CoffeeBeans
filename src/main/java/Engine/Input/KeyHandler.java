@@ -45,7 +45,6 @@ public class KeyHandler implements KeyListener {
     public Key down = new Key();
     public Key left = new Key();
     public Key right = new Key();
-    public Key escape = new Key();
     public Key pause = new Key();
     public Key enter = new Key();
 
@@ -66,8 +65,7 @@ public class KeyHandler implements KeyListener {
         if(e.getKeyCode() == KeyEvent.VK_S) down.toggle(pressed);
         if(e.getKeyCode() == KeyEvent.VK_A) left.toggle(pressed);
         if(e.getKeyCode() == KeyEvent.VK_D) right.toggle(pressed);
-        if(e.getKeyCode() == KeyEvent.VK_ESCAPE) escape.toggle(pressed);
-        if(e.getKeyCode() == KeyEvent.VK_P) pause.toggle(pressed);
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE) pause.toggle(pressed);
         if(e.getKeyCode() == KeyEvent.VK_ENTER) enter.toggle(pressed);
     }
 

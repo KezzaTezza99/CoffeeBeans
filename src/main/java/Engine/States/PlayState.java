@@ -25,12 +25,6 @@ public class PlayState extends GameState {
 
     @Override
     public void input(KeyHandler keyHandler) {
-        if (keyHandler.escape.down) {
-            gameStateManager.setGameStateIsActive(STATES.PLAY, false);
-            gameStateManager.setGameStateIsActive(STATES.MAIN_MENU, true);
-            gameStateManager.setCurrentState(STATES.MAIN_MENU);
-        }
-
         if (keyHandler.pause.clicked && gameStateManager.getCurrentState() == STATES.PLAY && !gameStateManager.pauseFlag) {
             gameStateManager.queueStateSwitchPauseAndPlay(STATES.PAUSE, true);
         }
