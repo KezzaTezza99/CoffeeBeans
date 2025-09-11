@@ -1,15 +1,18 @@
 package Engine.States;
+import Engine.GenericUIComponents.PauseSplashScreen;
 import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
 import Engine.Managers.GameStateManager;
 import java.awt.*;
 
 public class PauseState extends GameState {
-    private GameStateManager gameStateManager;
+    private final GameStateManager gameStateManager;
+    private final PauseSplashScreen pauseSplashScreen;
 
     public PauseState(GameStateManager gm, boolean isActive) {
         super(gm, isActive);
         this.gameStateManager = gm;
+        this.pauseSplashScreen = new PauseSplashScreen(gm.getGameWindow());
     }
 
     @Override
@@ -26,20 +29,17 @@ public class PauseState extends GameState {
 
     @Override
     public void input(KeyHandler keyHandler, MouseHandler mouseHandler) {
+        if(mouseHandler.isClicked()) {
+            pauseSplashScreen.getResumeButton().handleClick(mouseHandler.getMouseX(), mouseHandler.getMouseY());
+            pauseSplashScreen.getOptionsButton().handleClick(mouseHandler.getMouseX(), mouseHandler.getMouseY());
+            pauseSplashScreen.getExitToMainMenuButton().handleClick(mouseHandler.getMouseX(), mouseHandler.getMouseY());
+            pauseSplashScreen.getExitToDesktopButton().handleClick(mouseHandler.getMouseX(), mouseHandler.getMouseY());
+        }
         input(keyHandler);
     }
 
     @Override
     public void draw(Graphics2D graphics2D) {
-        graphics2D.setColor(Color.BLUE);
-        graphics2D.fillRoundRect(
-                100,
-                gameStateManager.getGameWindow().getScreenHeight() / 4,
-                (gameStateManager.getGameWindow().getScreenWidth() - 210),
-                600, 35 , 35);
-
-        graphics2D.setColor(Color.white);
-        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 24F));
-        graphics2D.drawString("The game is now paused", gameStateManager.getGameWindow().getScreenWidth() / 2, gameStateManager.getGameWindow().getScreenHeight() / 3);
+        pauseSplashScreen.draw(graphics2D);
     }
 }

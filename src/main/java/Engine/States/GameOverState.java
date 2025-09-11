@@ -1,6 +1,5 @@
 package Engine.States;
-import Engine.GenericUIComponents.InteractiveSplashScreen;
-import Engine.GenericUIComponents.UIButton;
+import Engine.GenericUIComponents.DeathSplashScreen;
 import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
 import Engine.Managers.GameStateManager;
@@ -8,13 +7,13 @@ import java.awt.*;
 
 public class GameOverState extends GameState {
     private final GameStateManager gameStateManager;
-    private InteractiveSplashScreen gameOverSplashScreen;
+    private DeathSplashScreen gameOverSplashScreen;
 
     public GameOverState(GameStateManager gm, boolean isActive) {
         super(gm, isActive);
         this.gameStateManager = gm;
         setBlockUpdate(false);
-        gameOverSplashScreen = new InteractiveSplashScreen(gm.getGameWindow(), "YOU DIED");
+        gameOverSplashScreen = new DeathSplashScreen(gm.getGameWindow(), "YOU DIED");
     }
 
     @Override

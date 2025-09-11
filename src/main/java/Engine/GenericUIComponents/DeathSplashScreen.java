@@ -1,12 +1,11 @@
 package Engine.GenericUIComponents;
 import Engine.GameWindow;
-import Engine.States.STATES;
 import Engine.Utility.TextPositionHelper;
 import java.awt.*;
 
 // TODO: Can make this very generic and decide where buttons are placed within different constructors?
 // Should probably have three buttons, one for Restarting, Returning to Menu, Quitting the game?
-public class InteractiveSplashScreen {
+public class DeathSplashScreen {
     // TODO: Think about how we are handling this GameWindow Injection, could game settings i.e., height width be
     // injected into a settings class where we can access basic information such as dimensions for cases like this?!
     private final GameWindow gameWindow;
@@ -23,7 +22,7 @@ public class InteractiveSplashScreen {
     private final UIButton exitGameButton;
 
     // TODO: Can expand with a location flag for deciding where to draw text / buttons
-    public InteractiveSplashScreen(GameWindow gameWindow, String message) {
+    public DeathSplashScreen(GameWindow gameWindow, String message) {
         this.gameWindow = gameWindow;
         this.message = message;
         this.font = new Font("Default", Font.BOLD, 48);
@@ -56,11 +55,11 @@ public class InteractiveSplashScreen {
 
     // The user want's to restart the game so we need to reinitialise everything!!!
     private void resetGame() {
-        // TODO: actually reset the game
+        // TODO: actually reset the game (BETTER)
         this.gameWindow.init();
     }
 
-    // The user want's to exit the application so let's exit the game!
+    // The user want's to exit the application so let's exit the game!gam
     private void exitTheGame() { System.exit(0); }
 
     // Getters
