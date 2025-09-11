@@ -8,8 +8,8 @@ import java.awt.image.BufferedImage;
 public class UIButton {
     private final int x;
     private final int y;
-    private final int width;
-    private final int height;
+    private int width;
+    private int height;
     private final String label;
     private final Runnable onClick;
 
@@ -96,5 +96,13 @@ public class UIButton {
     }
     public int getHeight() {
         return height;
+    }
+    public String getLabel() { return label; }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

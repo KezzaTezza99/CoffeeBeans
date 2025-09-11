@@ -3,6 +3,7 @@ import Engine.GameWindow;
 import Engine.States.STATES;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class PauseSplashScreen {
     private final GameWindow gameWindow;
@@ -11,6 +12,8 @@ public class PauseSplashScreen {
     private final UIButton optionsButton;
     private final UIButton exitToMainMenuButton;
     private final UIButton exitToDesktopButton;
+
+    private ArrayList<UIButton> collectionOfButtons;
 
     public PauseSplashScreen(GameWindow gw) {
         this.gameWindow = gw;
@@ -29,13 +32,23 @@ public class PauseSplashScreen {
         optionsButton = new UIButton(x, (y + resumeButton.getHeight()) + spacing, "Options", font, padding, this::openOptionMenu);
         exitToMainMenuButton = new UIButton(x, (optionsButton.getY() + optionsButton.getHeight()) + spacing, "Exit to Main Menu", font, padding, this::exitToMainMenu);
         exitToDesktopButton = new UIButton(x, (exitToMainMenuButton.getY() + exitToMainMenuButton.getHeight()) + spacing, "Exit to Desktop", font, padding, this::exitToDesktop);
+
+        // TODO: DO THIS IN A DIFFERENT METHOD? JUST MAKE IT NEATER AND NICER
+        // TESTING RESIZING THE BUTTONS
+        collectionOfButtons = new ArrayList<>();
+        collectionOfButtons.add(resumeButton);
+        collectionOfButtons.add(optionsButton);
+        collectionOfButtons.add(exitToMainMenuButton);
+        collectionOfButtons.add(exitToDesktopButton);
+
+        CollectionOfUIButtons collectionOfUIButtons = new CollectionOfUIButtons(collectionOfButtons);
+        collectionOfButtons = collectionOfUIButtons.getResizedButtons();
     }
 
     public void draw(Graphics2D graphics2D) {
-        resumeButton.draw(graphics2D);
-        optionsButton.draw(graphics2D);
-        exitToMainMenuButton.draw(graphics2D);
-        exitToDesktopButton.draw(graphics2D);
+        for(UIButton button : collectionOfButtons) {
+            button.draw(graphics2D);
+        }
     }
 
     // Button methods
@@ -49,8 +62,7 @@ public class PauseSplashScreen {
     }
 
     private void exitToMainMenu() {
-        // TODO: We would actually clean up the game here
-        gameWindow.init();
+        gameWindow.init(STATES.MAIN_MENU);
     }
 
     private void exitToDesktop() { System.exit(0); }

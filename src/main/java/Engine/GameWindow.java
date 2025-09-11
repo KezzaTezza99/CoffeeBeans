@@ -75,7 +75,7 @@ public class GameWindow extends JPanel implements Runnable {
         screenWidth = 1920;
         screenHeight = 1080;
 
-        init();
+        init(STATES.MAIN_MENU);
     }
 
     public GameWindow(int screenWidth, int screenHeight, int tileSize, int maxScreenX, int maxScreenY) {
@@ -91,10 +91,10 @@ public class GameWindow extends JPanel implements Runnable {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
 
-        init();
+        init(STATES.MAIN_MENU);
     }
 
-    public void init() {
+    public void init(STATES stateToInit) {
         isRunning = true;
         keyHandler = new KeyHandler(this);
         mouseHandler = new MouseHandler(this);
@@ -123,7 +123,7 @@ public class GameWindow extends JPanel implements Runnable {
         entityManager.addEntity(npc);
 
         // Now construct game states because entities exist
-        gameStateManager = new GameStateManager(this, gameContext);
+        gameStateManager = new GameStateManager(this, gameContext, stateToInit);
     }
 
     // Override that is called when the JPanel is created

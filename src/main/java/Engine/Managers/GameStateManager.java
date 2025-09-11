@@ -18,22 +18,28 @@ public class GameStateManager {
 
     private final GameContext gameContext;
 
+    // TODO: Realistically is the stateToInit even needed? So far we only use if to initialise the main menu
+    // When we die etc., we reinit and just recreate everything, realistically it works for now but we should do this
+    // smarter in the future!
+
     // Default Constructor
-    public GameStateManager(GameWindow gameWindow, GameContext gc) {
+    public GameStateManager(GameWindow gameWindow, GameContext gc, STATES stateToInit) {
         this.gameWindow = gameWindow;
         this.gameContext = gc;
 
-        init();
+        init(stateToInit);
     }
 
-    private void init() {
+    private void init(STATES currentState) {
         states.put(STATES.MAIN_MENU, new MainMenuState(this, true));
         states.put(STATES.PLAY, new PlayState(this, false));
         states.put(STATES.PAUSE, new PauseState(this, false));
         states.put(STATES.DIALOG, new DialogState(this, false));
         states.put(STATES.GAME_OVER, new GameOverState(this, false));
 
-        currentState = STATES.MAIN_MENU;
+        System.out.println(this.currentState);
+        this.currentState = currentState;
+        System.out.println(this.currentState);
     }
 
     public void update() {

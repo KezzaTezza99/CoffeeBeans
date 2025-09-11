@@ -1,5 +1,6 @@
 package Engine.GenericUIComponents;
 import Engine.GameWindow;
+import Engine.States.STATES;
 import Engine.Utility.TextPositionHelper;
 import java.awt.*;
 
@@ -56,7 +57,7 @@ public class DeathSplashScreen {
     // The user want's to restart the game so we need to reinitialise everything!!!
     private void resetGame() {
         // TODO: actually reset the game (BETTER)
-        this.gameWindow.init();
+        this.gameWindow.init(STATES.MAIN_MENU);
     }
 
     // The user want's to exit the application so let's exit the game!gam
