@@ -63,20 +63,20 @@ public class UIButton {
 
     // Custom draw method for different colours
     public void draw(Graphics2D graphics2D, Color buttonBackgroundColour, Color buttonTextColour) {
-        graphics2D.setColor(buttonBackgroundColour);
-        graphics2D.fillRect(x, y, width, height);  // Fill background with custom color
+       graphics2D.setColor(buttonBackgroundColour);
+       graphics2D.fillRect(x, y, width, height);  // Fill background with custom color
 
-        graphics2D.setColor(Color.BLACK);  // Border color (can also be customizable if needed)
-        graphics2D.drawRect(x, y, width, height);  // Draw border
+       graphics2D.setColor(Color.BLACK);  // Border color (can also be customizable if needed)
+       graphics2D.drawRect(x, y, width, height);  // Draw border
 
-        // Use TextPositionHelper to get the centered position for the label
-        Point textPos = TextPositionHelper.getCentredTextPositionInsideUIElement(label, graphics2D.getFont(), x, y, width, height);
+       // Use TextPositionHelper to get the centered position for the label
+       Point textPos = TextPositionHelper.getCentredTextPositionInsideUIElement(label, graphics2D.getFont(), x, y, width, height);
 
-        // Set the custom text color
-        graphics2D.setColor(buttonTextColour);  // Custom text color
+       // Set the custom text color
+       graphics2D.setColor(buttonTextColour);  // Custom text color
 
-        // Draw the text at the calculated position
-        graphics2D.drawString(label, textPos.x, textPos.y);
+       // Draw the text at the calculated position
+       graphics2D.drawString(label, textPos.x, textPos.y);
     }
 
     public void handleClick(int mouseX, int mouseY) {
@@ -85,6 +85,7 @@ public class UIButton {
         }
     }
 
+    // Getters and Setters
     public int getX() {
         return x;
     }

@@ -37,4 +37,21 @@ public class TextPositionHelper {
         return new Point(x, y);
     }
 
+    // TODO: finish at a later date? It works as intended I suppose but could be done better maybe?
+    public static Point getLeftAlignedTextPositionInsideUIElement(Font font, int rectX, int rectY, int padding) {
+        // DRY! - could have a method that returns all this info
+        BufferedImage temp = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graphics2D = temp.createGraphics();
+
+        graphics2D.setFont(font);
+        FontMetrics fontMetrics = graphics2D.getFontMetrics();
+        //-- end method
+
+        int x = rectX + padding;
+        int y = rectY + (fontMetrics.getHeight());
+
+        graphics2D.dispose();
+
+        return new Point(x,y);
+    }
 }

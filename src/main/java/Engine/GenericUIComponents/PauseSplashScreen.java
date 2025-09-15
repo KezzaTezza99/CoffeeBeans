@@ -1,18 +1,20 @@
 package Engine.GenericUIComponents;
 import Engine.GameWindow;
 import Engine.States.STATES;
-
 import java.awt.*;
 import java.util.ArrayList;
 
 public class PauseSplashScreen {
     private final GameWindow gameWindow;
 
+    // The buttons that will populate the pause screen
     private final UIButton resumeButton;
     private final UIButton optionsButton;
     private final UIButton exitToMainMenuButton;
     private final UIButton exitToDesktopButton;
 
+    // I want the buttons to be the same width and height so will add them all to a list
+    // and use my collection of buttons class to arrange them to all be the same size
     private ArrayList<UIButton> collectionOfButtons;
 
     public PauseSplashScreen(GameWindow gw) {
@@ -26,15 +28,17 @@ public class PauseSplashScreen {
         int padding = 12;
         int spacing = 20;
 
-        // TODO: Can I maybe have a collection of buttons class that sorts spacing etc out mathmatically etc., buttons
-        // have same spacing, same padding, same width, height etc.,
+        // Creating the buttons
         resumeButton = new UIButton(x, y, "Resume ", font, padding, this::resumeGameplay);
         optionsButton = new UIButton(x, (y + resumeButton.getHeight()) + spacing, "Options", font, padding, this::openOptionMenu);
         exitToMainMenuButton = new UIButton(x, (optionsButton.getY() + optionsButton.getHeight()) + spacing, "Exit to Main Menu", font, padding, this::exitToMainMenu);
         exitToDesktopButton = new UIButton(x, (exitToMainMenuButton.getY() + exitToMainMenuButton.getHeight()) + spacing, "Exit to Desktop", font, padding, this::exitToDesktop);
 
-        // TODO: DO THIS IN A DIFFERENT METHOD? JUST MAKE IT NEATER AND NICER
-        // TESTING RESIZING THE BUTTONS
+        // Resizing the buttons to be the same size
+        resizeButtons();
+    }
+
+    private void resizeButtons() {
         collectionOfButtons = new ArrayList<>();
         collectionOfButtons.add(resumeButton);
         collectionOfButtons.add(optionsButton);
