@@ -21,6 +21,10 @@ public class Enemy extends Entity implements Clickable {
     int damage = 50;
     int xMousePos, yMousePos;
 
+    // Movement stuff
+    float maxSpeed = 4f;
+    float damping = 0.05f;
+
     public Enemy(GameWindow gm, GameContext gx) {
         super(gx);
         tag = EntityType.ENEMY;
@@ -91,7 +95,30 @@ public class Enemy extends Entity implements Clickable {
 
     @Override
     public void update() {
+        if(gameContext.getCollisionManager().isCollidingWithTrigger(this.entitiesAggroZone, gameWindow.player.entitiesAggroZone)) updatePosition();
+    }
 
+    private void updatePosition() {
+        int dx = gameWindow.player.x - this.x;
+        int dy = gameWindow.player.y - this.y;
+        float distance = (float) Math.sqrt(dx * dx + dy * dy);
+
+        if(distance > 0.01f) {
+            float dirX = dx / distance;
+            float dirY = dy / distance;
+
+            // Slow down the closer we get
+            float speed = Math.min(maxSpeed, distance * damping);
+
+            this.x += (int) (dirX * speed);
+            this.y += (int) (dirY * speed);
+        }
+
+        // Finally move the entities collision boxes
+        this.entitiesCollisionBox.setX(x);
+        this.entitiesCollisionBox.setY(y);
+        this.entitiesAggroZone.setX(x);
+        this.entitiesAggroZone.setY(y);
     }
 
     @Override
@@ -120,7 +147,12 @@ public class Enemy extends Entity implements Clickable {
 
     @Override
     public void handleTriggers(Entity other) {
-
+        if(other.tag == EntityType.PLAYER) {
+//            if(gameContext.getCollisionManager().isCollidingWithTrigger(this.entitiesAggroZone, other.getAggroZone())) {
+//                // Move the enemy towards the players intersected position
+//                updateEnemyPosition = true;
+//            }
+        }
     }
 
     public void enemyDied() {

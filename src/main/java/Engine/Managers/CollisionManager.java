@@ -54,11 +54,6 @@ public class CollisionManager {
         return false;
     }
 
-    // TODO: DO WE NEED THIS WHY CANT WE JUST USE isCollidingWith?
-//    public boolean isCollidingWithAnotherEntity(Entity self, Entity other) {
-//        return self.getBounds().isCollidingWith(other.getBounds());
-//    }
-//
     public boolean isCollidingWithTrigger(AABB self, AABB trigger) {
         return self.isCollidingWith(trigger);
     }

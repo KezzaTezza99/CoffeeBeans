@@ -41,7 +41,7 @@ public class GameWindow extends JPanel implements Runnable {
     private GameStateManager gameStateManager;
 
     // TODO: COULD WE HANDLE THIS IN GAME STATE MANAGER ? OR SHOULD WE HAVE A GAME CLASS?
-    private Player player;
+    public Player player;
     private KeyHandler keyHandler;
     private MouseHandler mouseHandler;
     public Enemy enemy;

@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 // GameContext is injected into entities this is unnecessary look at start using lightweight interfaces
 
 // GameWindow global somehow?
+
+// TODO: Should change the x,y for entities to be floats and cast to Int when we draw just for smoother movement!
+
 public class EntryPoint {
     public static void main(String[] args) {
         // Create a frame to hold the panel
