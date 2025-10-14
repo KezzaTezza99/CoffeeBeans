@@ -103,6 +103,16 @@ public class Enemy extends Entity implements Clickable {
         int dy = gameWindow.player.y - this.y;
         float distance = (float) Math.sqrt(dx * dx + dy * dy);
 
+        // Get the direction needed for the sprite
+        if(Math.abs(dx) > Math.abs(dy)) {
+            if(dx > 0) direction = "right";
+            else direction = "left";
+        } else {
+            if(dy > 0) direction = "down";
+            else direction = "up";
+        }
+
+        // Slow the enemy down gradually if closing in on the player
         if(distance > 0.01f) {
             float dirX = dx / distance;
             float dirY = dy / distance;
@@ -119,6 +129,16 @@ public class Enemy extends Entity implements Clickable {
         this.entitiesCollisionBox.setY(y);
         this.entitiesAggroZone.setX(x);
         this.entitiesAggroZone.setY(y);
+
+        // "Animate" the sprite by rotating through the sprites
+        spriteCounter++;
+
+        if(spriteCounter > 10) {
+            if(spriteNumber == 1) spriteNumber = 2;
+            else spriteNumber = 1;
+
+            spriteCounter = 0;
+        }
     }
 
     @Override
@@ -137,23 +157,10 @@ public class Enemy extends Entity implements Clickable {
     }
 
     @Override
-    public void handleCollision(Entity other) {
-//        if(other.tag == EntityType.PLAYER) {
-//            // TODO: Attack the player
-//            EventBusService.getBus().post(new EnemyDied());
-//            gameWindow.entityManager.removeEntity(this);
-//        }
-    }
+    public void handleCollision(Entity other) {}
 
     @Override
-    public void handleTriggers(Entity other) {
-        if(other.tag == EntityType.PLAYER) {
-//            if(gameContext.getCollisionManager().isCollidingWithTrigger(this.entitiesAggroZone, other.getAggroZone())) {
-//                // Move the enemy towards the players intersected position
-//                updateEnemyPosition = true;
-//            }
-        }
-    }
+    public void handleTriggers(Entity other) {}
 
     public void enemyDied() {
         gameWindow.soundManager.play("death");
