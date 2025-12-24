@@ -11,6 +11,10 @@ import javax.swing.JFrame;
 // TODO: Fix the "attacking" of a player
 // TODO: In some instances the enemy chasing the player can pass through collide-able objects
 
+// TODO: WHEN YOU COME BACK DO THE FOLLOWING:
+// Look at only allowing player to damage an enemy when within a certain radius
+// Attack animation??? Potential day task
+
 public class EntryPoint {
     public static void main(String[] args) {
         // Create a frame to hold the panel

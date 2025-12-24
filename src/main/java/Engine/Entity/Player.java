@@ -31,6 +31,12 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
+    // A 0.5-second delay before the player can take damage again from an enemy
+    private final int DELAY = 30;
+    private final int ENEMY_DAMAGE = 25;
+    private int hasTakenDamageCooldown = DELAY;
+    private boolean startTimer = false;
+
     public Player(GameWindow gm, KeyHandler kh, GameContext gx) {
         super(gx);
         tag = EntityType.PLAYER;
@@ -133,6 +139,16 @@ public class Player extends Entity {
                 }
             }
         }
+
+        // Count down the time before the player can take damage again
+        if(startTimer) {
+            hasTakenDamageCooldown--;
+        }
+
+        if(startTimer && hasTakenDamageCooldown <= 0) {
+            startTimer = false;
+            hasTakenDamageCooldown = DELAY;
+        }
     }
 
     @Override
@@ -153,8 +169,11 @@ public class Player extends Entity {
     @Override
     public void handleCollision(Entity other) {
         if(other.tag == EntityType.ENEMY) {
-            this.health -= 2;
-            EventBusService.getBus().post(new PlayerTookDamage(this.health, this));
+            if(!startTimer) {
+                startTimer = true;
+                this.health -= ENEMY_DAMAGE;
+                EventBusService.getBus().post(new PlayerTookDamage(this.health, this));
+            }
         }
     }
 
