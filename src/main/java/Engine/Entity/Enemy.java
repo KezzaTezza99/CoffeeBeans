@@ -40,8 +40,8 @@ public class Enemy extends Entity implements Clickable {
         entitiesCollisionBox = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
         entitiesFutureBounds = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
         entitiesAggroZone = new AABB(x, y, 256, 256);
+        entitiesDamageZone = new AABB(x, y, 126, 126);
 
-        speed = 4;
         direction = "down";
 
         EventBusService.getBus().register(EnemyDied.class, event -> enemyDied());
@@ -50,6 +50,7 @@ public class Enemy extends Entity implements Clickable {
             this.hp = event.getHp();
             gameContext.getUiManager().displayHP(this.hp, event.getX(), event.getY(), 250);
         });
+
         loadEnemySprite();
     }
 
@@ -69,8 +70,8 @@ public class Enemy extends Entity implements Clickable {
         entitiesCollisionBox = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
         entitiesFutureBounds = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
         entitiesAggroZone = new AABB(x, y, 256, 256);
+        entitiesDamageZone = new AABB(x, y, 126, 126);
 
-        speed = 4;
         direction = "down";
 
         EventBusService.getBus().register(EnemyDied.class, event -> enemyDied());
@@ -118,17 +119,14 @@ public class Enemy extends Entity implements Clickable {
             float dirY = dy / distance;
 
             // Slow down the closer we get
-            float speed = Math.min(maxSpeed, distance * damping);
+            speed = (int) Math.min(maxSpeed, distance * damping);
 
             this.x += (int) (dirX * speed);
             this.y += (int) (dirY * speed);
         }
 
         // Finally move the entities collision boxes
-        this.entitiesCollisionBox.setX(x);
-        this.entitiesCollisionBox.setY(y);
-        this.entitiesAggroZone.setX(x);
-        this.entitiesAggroZone.setY(y);
+        updateAllAABBs();
 
         // "Animate" the sprite by rotating through the sprites
         spriteCounter++;
@@ -139,6 +137,15 @@ public class Enemy extends Entity implements Clickable {
 
             spriteCounter = 0;
         }
+    }
+
+    private void updateAllAABBs() {
+        this.entitiesCollisionBox.setX(x);
+        this.entitiesCollisionBox.setY(y);
+        this.entitiesAggroZone.setX(x);
+        this.entitiesAggroZone.setY(y);
+        this.entitiesDamageZone.setX(x);
+        this.entitiesDamageZone.setY(y);
     }
 
     @Override
@@ -154,6 +161,7 @@ public class Enemy extends Entity implements Clickable {
         graphics2D.drawImage(image, x, y, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
         entitiesCollisionBox.drawCollider(graphics2D, Color.YELLOW);
         entitiesAggroZone.drawCollider(graphics2D, Color.BLACK);
+        entitiesDamageZone.drawCollider(graphics2D, Color.CYAN);
     }
 
     @Override

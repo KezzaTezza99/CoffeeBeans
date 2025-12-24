@@ -29,7 +29,9 @@ public class TileManager {
     // i.e., will the map be full-screen, can you have the concept of a bigger world all this jazz
     public TileManager(GameWindow gameWindow, boolean canMoveOffScreen) {
         this.gameWindow = gameWindow;
-        sprites = new Sprite[4];
+        // TODO: Should probably decide on size of this array based on an input folder for sprite?
+        // TODO: Should def introduce the idea of spritesheets instead!
+        sprites = new Sprite[40];
 
         // Initialise the map data to be the max size of the screen
         mapSpriteData = new int[gameWindow.getMaxScreenCol()][gameWindow.getMaxScreenRow()];
@@ -45,11 +47,12 @@ public class TileManager {
     public void loadSprites() {
         try {
             // TODO: Could we work with sprite-sheets instead?
+            // TODO: also far to repetitive code we could make this recursive for an entire folder path
             sprites[0] = new Sprite();
-            sprites[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/test.png")));
+            sprites[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/sprites/grass/base-01.png")));
 
             sprites[1] = new Sprite();
-            sprites[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/test2.png")));
+            sprites[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/sprites/grass/base-02.png")));
 
             sprites[2] = new Sprite();
             sprites[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/test3.png")));
@@ -57,6 +60,23 @@ public class TileManager {
             sprites[3] = new Sprite();
             sprites[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/test4.png")));
             sprites[3].isCollidable = true;
+
+            sprites[4] = new Sprite();
+            sprites[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/sprites/house-01.png")));
+            sprites[4].isCollidable = true;
+
+            sprites[5] = new Sprite();
+            sprites[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/sprites/house-02.png")));
+            sprites[5].isCollidable = true;
+
+            sprites[6] = new Sprite();
+            sprites[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/sprites/grass/vertical-01.png")));
+
+            sprites[7] = new Sprite();
+            sprites[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/sprites/grass/horizontal-01.png")));
+
+            sprites[8] = new Sprite();
+            sprites[8].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/sprites/grass/cross-roads-01.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }

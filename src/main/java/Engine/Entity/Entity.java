@@ -38,10 +38,10 @@ public abstract class Entity {
     protected AABB entitiesCollisionBox;                // The box that will be used to determine collisions
     public AABB entitiesFutureBounds;                   // Used to stop entities walking into walls etc.,
     public AABB entitiesAggroZone;                      // Will be used for some entities for simple AI behaviour, i.e., chase player
+    public AABB entitiesDamageZone;                     // Will be used for some entities for an attack radius / damage radius depending on needs
 
     public Entity(GameContext gameContext) {
         this.gameContext = gameContext;
-
         // TODO: For now defaulting all entities health to 100
         // but in reality would want this to be decided by the programmer
         health = 100;

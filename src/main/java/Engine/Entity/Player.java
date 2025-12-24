@@ -153,7 +153,7 @@ public class Player extends Entity {
     @Override
     public void handleCollision(Entity other) {
         if(other.tag == EntityType.ENEMY) {
-            this.health -= 100;
+            this.health -= 2;
             EventBusService.getBus().post(new PlayerTookDamage(this.health, this));
         }
     }

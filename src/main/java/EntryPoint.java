@@ -6,6 +6,10 @@ import javax.swing.JFrame;
 // GameWindow global somehow?
 
 // TODO: Should change the x,y for entities to be floats and cast to Int when we draw just for smoother movement!
+// TODO: So many hardcoded values that need to be gone!
+// TODO: Entities chasing player need variation of speed and positioning (don't all collapse ontop of each other)
+// TODO: Fix the "attacking" of a player
+// TODO: In some instances the enemy chasing the player can pass through collide-able objects
 
 public class EntryPoint {
     public static void main(String[] args) {
