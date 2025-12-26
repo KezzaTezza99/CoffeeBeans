@@ -1,12 +1,15 @@
 package Engine.Entity;
 import Engine.Collisions.AABB;
+import Engine.Dispatcher.EventBus;
 import Engine.GameContext;
+import Engine.Input.Clickable;
 import Engine.Services.EventBusService;
 import Engine.GameWindow;
 import Engine.Graphics.Camera;
 import Engine.Input.KeyHandler;
 import Engine.Managers.CollisionManager;
 import Engine.Managers.TileManager;
+import Game.Events.DrawHP;
 import Game.Events.PlayerTookDamage;
 
 import javax.imageio.ImageIO;
@@ -15,7 +18,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Player extends Entity {
+public class Player extends Entity implements Clickable {
     GameWindow gameWindow;
     KeyHandler keyHandler;
     TileManager tileManager;
@@ -166,6 +169,10 @@ public class Player extends Entity {
         entitiesAggroZone.drawCollider(graphics2D, Color.BLACK);
     }
 
+    // Realistically the cooldown and stuff should be put onto the enemy and not the player
+    // this will be an attack cool-down, this will allow us to take damage from many different enemies and not have a
+    // 0.5-second delay...
+    // We should also some-how trigger this event from the enemies attacking method / trigger...
     @Override
     public void handleCollision(Entity other) {
         if(other.tag == EntityType.ENEMY) {
@@ -179,6 +186,14 @@ public class Player extends Entity {
 
     @Override
     public void handleTriggers(Entity other) {}
+
+    @Override
+    public int getDamage() {
+        return 0;
+    }
+
+    @Override
+    public void onClick() {}
 
     public void playerDied() {
         this.setIsAlive(false);

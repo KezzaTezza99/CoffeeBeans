@@ -18,8 +18,6 @@ public class Enemy extends Entity implements Clickable {
     GameWindow gameWindow;
 
     int hp;
-    int damage = 50;
-    int xMousePos, yMousePos;
 
     // Movement stuff
     float maxSpeed = 4f;
@@ -176,12 +174,7 @@ public class Enemy extends Entity implements Clickable {
     }
 
     @Override
-    public void onClick() {
-        this.health -= damage;
-        this.xMousePos = gameContext.getMouseHandler().getMouseX();
-        this.yMousePos = gameContext.getMouseHandler().getMouseY();
-
-        EventBusService.getBus().post(new EnemyTookDamage(this.health, this));
-        EventBusService.getBus().post(new DrawHP(damage, xMousePos, yMousePos));
+    public int getDamage() {
+        return 25;
     }
 }

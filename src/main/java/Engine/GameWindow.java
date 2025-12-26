@@ -6,6 +6,7 @@ import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
 import Engine.Managers.*;
 import Engine.Managers.UIManager;
+import Engine.Services.GameContextService;
 import Engine.States.STATES;
 import javax.swing.*;
 import java.awt.*;
@@ -59,7 +60,6 @@ public class GameWindow extends JPanel implements Runnable {
     // Testing passing around one main object
     public CollisionManager collisionManager;
     public TileManager tileManager;
-    private GameContext gameContext;
 
     public GameWindow() {
         // Setting up the game window
@@ -106,14 +106,14 @@ public class GameWindow extends JPanel implements Runnable {
         soundManager = new SoundManager();
         entityManager = new EntityManager(mouseHandler);
 
-        gameContext = new GameContext(tileManager, collisionManager, entityManager, uiManager, soundManager, keyHandler, mouseHandler);
+        GameContextService.initGameContext(tileManager, collisionManager, uiManager, soundManager, entityManager, keyHandler, mouseHandler);
 
         // Construct the entities now game context is ready
-        player = new Player(this, keyHandler, gameContext);
-        enemy = new Enemy(this, gameContext);
-        enemy2 = new Enemy(this, gameContext, 128 * 4, 128);
-        enemy3 = new Enemy(this, gameContext, 128 * 3, 128);
-        npc = new NPC(this, gameContext);
+        player = new Player(this, keyHandler, GameContextService.get());
+        enemy = new Enemy(this, GameContextService.get());
+        enemy2 = new Enemy(this, GameContextService.get(), 128 * 4, 128);
+        enemy3 = new Enemy(this, GameContextService.get(), 128 * 3, 128);
+        npc = new NPC(this, GameContextService.get());
 
         // Register the entities
         entityManager.addEntity(player);
@@ -123,7 +123,7 @@ public class GameWindow extends JPanel implements Runnable {
         entityManager.addEntity(npc);
 
         // Now construct game states because entities exist
-        gameStateManager = new GameStateManager(this, gameContext, stateToInit);
+        gameStateManager = new GameStateManager(this, GameContextService.get(), stateToInit);
     }
 
     // Override that is called when the JPanel is created
