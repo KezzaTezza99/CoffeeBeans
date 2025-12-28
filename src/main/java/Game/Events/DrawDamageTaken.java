@@ -1,17 +1,15 @@
 package Game.Events;
 import Engine.Dispatcher.Event;
+import Engine.Entity.EntityType;
 
-public class DrawHP implements Event {
-    private final int hp;
+public class DrawDamageTaken implements Event {
     private final int x, y;
 
-    public DrawHP(int hp, int xPos, int yPos) {
-        this.hp = hp;
+    public DrawDamageTaken(int xPos, int yPos) {
         this.x = xPos;
         this.y = yPos;
     }
 
-    public int getHp() { return this.hp; }
     public int getX() {
         return x;
     }

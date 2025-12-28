@@ -1,12 +1,11 @@
 package Engine.Entity;
 import Engine.Collisions.AABB;
 import Engine.GameContext;
-import Engine.Input.Clickable;
+import Engine.Components.Clickable;
 import Engine.Services.EventBusService;
 import Engine.GameWindow;
-import Game.Events.DrawHP;
+import Game.Events.DrawDamageTaken;
 import Game.Events.EnemyDied;
-import Game.Events.EnemyTookDamage;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -22,6 +21,9 @@ public class Enemy extends Entity implements Clickable {
     // Movement stuff
     float maxSpeed = 4f;
     float damping = 0.05f;
+
+    // DAMAGE
+    private final int DAMAGE_DEALT_TO_PLAYER = 20;
 
     public Enemy(GameWindow gm, GameContext gx) {
         super(gx);
@@ -44,9 +46,8 @@ public class Enemy extends Entity implements Clickable {
 
         EventBusService.getBus().register(EnemyDied.class, event -> enemyDied());
 
-        EventBusService.getBus().register(DrawHP.class, event -> {
-            this.hp = event.getHp();
-            gameContext.getUiManager().displayHP(this.hp, event.getX(), event.getY(), 250);
+        EventBusService.getBus().register(DrawDamageTaken.class, event -> {
+            gameContext.getUiManager().displayDamageTaken(DAMAGE_DEALT_TO_PLAYER, event.getX(), event.getY(), 250);
         });
 
         loadEnemySprite();
@@ -171,10 +172,5 @@ public class Enemy extends Entity implements Clickable {
     public void enemyDied() {
         gameWindow.soundManager.play("death");
         gameWindow.soundManager.reset("death");
-    }
-
-    @Override
-    public int getDamage() {
-        return 25;
     }
 }

@@ -1,15 +1,13 @@
 package Engine.Entity;
 import Engine.Collisions.AABB;
-import Engine.Dispatcher.EventBus;
 import Engine.GameContext;
-import Engine.Input.Clickable;
+import Engine.Components.Clickable;
 import Engine.Services.EventBusService;
 import Engine.GameWindow;
 import Engine.Graphics.Camera;
 import Engine.Input.KeyHandler;
 import Engine.Managers.CollisionManager;
 import Engine.Managers.TileManager;
-import Game.Events.DrawHP;
 import Game.Events.PlayerTookDamage;
 
 import javax.imageio.ImageIO;
@@ -188,12 +186,7 @@ public class Player extends Entity implements Clickable {
     public void handleTriggers(Entity other) {}
 
     @Override
-    public int getDamage() {
-        return 0;
-    }
-
-    @Override
-    public void onClick() {}
+    public void handleClickEvent() {}
 
     public void playerDied() {
         this.setIsAlive(false);

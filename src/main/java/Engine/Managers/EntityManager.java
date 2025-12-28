@@ -1,7 +1,7 @@
 package Engine.Managers;
 import Engine.Entity.Entity;
 import Engine.Entity.EntityType;
-import Engine.Input.Clickable;
+import Engine.Components.Clickable;
 import Engine.Input.MouseHandler;
 
 import java.awt.*;

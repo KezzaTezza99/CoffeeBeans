@@ -6,6 +6,8 @@ import Engine.GenericUIComponents.StatBar;
 
 import java.awt.*;
 
+// TODO: We could change our counter for damage attacks to follow this approach used here
+
 public class UIManager {
     private int health = 100;
     private final StatBar healthBar;
@@ -69,7 +71,7 @@ public class UIManager {
         graphics2D.drawString(String.valueOf(hpToDisplay), xPos, yPos);
     }
 
-    public void displayHP(int hp, int xPos, int yPos, int durationInMs) {
+    public void displayDamageTaken(int hp, int xPos, int yPos, int durationInMs) {
         this.hpToDisplay = hp;
         this.xPos = xPos;
         this.yPos = yPos;
