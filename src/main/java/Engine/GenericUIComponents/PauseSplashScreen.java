@@ -66,7 +66,8 @@ public class PauseSplashScreen {
     }
 
     private void exitToMainMenu() {
-        gameWindow.init(STATES.MAIN_MENU);
+        getGameWindow().resetWorld();
+        getGameWindow().getGameStateManager().queueStateSwitchPauseAndPlay(STATES.MAIN_MENU, true);
     }
 
     private void exitToDesktop() { System.exit(0); }

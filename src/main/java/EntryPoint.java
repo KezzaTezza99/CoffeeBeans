@@ -15,21 +15,18 @@ import javax.swing.JFrame;
 // Look at only allowing player to damage an enemy when within a certain radius
 // Attack animation??? Potential day task
 
-// Do we need game context everywhere now that we have it as a service?
+// Do we need game context everywhere now that we have it as a service? - Should GSM be in this service
 
 /** -------------------------------------------------------------------------------------------------------------------
  *                          CURRENT TASK
- *  - Rewrite the implementation of clickable
- *  I like the way we can only click on entities that implement clickable, but I do not like the override method.
- *  At the moment if I want to "attack" an enemy I need to override in the enemy, I do not like this approach
- *  The player can also hit itself in theory then...
- *  I think what needs to happen is the player needs to know what it can hit (a clickable entity) but it should only do so
- *  IF within a certain attack range, can hit the entity, i.e., an enemy maybe want logic for clicking on NPC(s) who knows
+ *  Bug fixes
  */
 
 /** BUGS:
  *  Found an issue with restarting the game,  game context has already been initialised and crashes
  *  Same problem with 'exiting to main menu'
+ *  Fixed main menu but now can't re-pause after that initial pause -> replay
+ *  Restarting now respawns all new instances of stuff and keeps the old!
  *  */
 
 public class EntryPoint {

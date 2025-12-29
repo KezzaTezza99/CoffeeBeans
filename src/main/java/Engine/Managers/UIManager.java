@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class UIManager {
     private int health = 100;
-    private final StatBar healthBar;
+    private StatBar healthBar;
     private boolean showHUD = true;
 
     // TEMP
@@ -77,5 +77,14 @@ public class UIManager {
         this.yPos = yPos;
         this.damageTextEndTime = System.currentTimeMillis() + durationInMs;
         this.showDamage = true;
+    }
+
+    public void resetHealthBar() {
+        EventBusService.getBus().register(PlayerTookDamage.class, event -> {
+            this.health = event.getNewHealth();
+            healthBar.setCurrentValue(health);
+
+            if(health == 0 || health < 0) showHUD = false;
+        });
     }
 }

@@ -67,6 +67,9 @@ public class EntityManager {
         }
     }
 
+    // Removing entities from the list
+    public void removeAllEntities() { entities.clear(); }
+
     // TODO: this is the main AABB bounds we could have a method for triggering the trigger bounds
     public void handleMouseClickOnAABBBounds() {
         for (Entity entity : entities) {

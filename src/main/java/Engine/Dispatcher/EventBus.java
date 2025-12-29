@@ -21,6 +21,5 @@ public class EventBus {
                 ((EventListener<T>) listener).onEvent(event);
             }
         }
-
     }
 }

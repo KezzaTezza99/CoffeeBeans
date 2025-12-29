@@ -34,6 +34,7 @@ public class PauseState extends GameState {
             pauseSplashScreen.getOptionsButton().handleClick(mouseHandler.getMouseX(), mouseHandler.getMouseY());
             pauseSplashScreen.getExitToMainMenuButton().handleClick(mouseHandler.getMouseX(), mouseHandler.getMouseY());
             pauseSplashScreen.getExitToDesktopButton().handleClick(mouseHandler.getMouseX(), mouseHandler.getMouseY());
+            mouseHandler.resetClick();
         }
         input(keyHandler);
     }

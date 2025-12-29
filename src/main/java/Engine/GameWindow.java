@@ -68,7 +68,6 @@ public class GameWindow extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.setFocusable(true);
 
-
         tileSize = 64;
         maxScreenCol = 30;
         maxScreenRow = 17;
@@ -126,6 +125,28 @@ public class GameWindow extends JPanel implements Runnable {
         gameStateManager = new GameStateManager(this, GameContextService.get(), stateToInit);
     }
 
+    public void resetWorld() {
+        cleanup();
+
+        isRunning = true;
+
+        // Construct the entities now game context is ready
+        player = new Player(this, keyHandler, GameContextService.get());
+        enemy = new Enemy(this, GameContextService.get());
+        enemy2 = new Enemy(this, GameContextService.get(), 128 * 4, 128);
+        enemy3 = new Enemy(this, GameContextService.get(), 128 * 3, 128);
+        npc = new NPC(this, GameContextService.get());
+
+        // Register the entities
+        entityManager.addEntity(player);
+        entityManager.addEntity(enemy);
+        entityManager.addEntity(enemy2);
+        entityManager.addEntity(enemy3);
+        entityManager.addEntity(npc);
+
+        uiManager.resetHealthBar();
+    }
+
     // Override that is called when the JPanel is created
     public void addNotify() {
         super.addNotify();
@@ -172,8 +193,12 @@ public class GameWindow extends JPanel implements Runnable {
         graphics2D.dispose();
     }
 
-    // TODO: RESET EVERYTHING AND THEN RE-INIT
-    // This will be useful for resetting a game, should clean up resources for a final game exit also!
+    private void cleanup() {
+        soundManager.closeAll(false);
+        entityManager.removeAllEntities();
+
+        // TODO: HEALTH RESET
+    }
 
     // Some useful getters
     public int getTileSize() {
