@@ -169,6 +169,13 @@ public class Enemy extends Entity implements Clickable {
     @Override
     public void handleTriggers(Entity other) {}
 
+    @Override
+    public void onClick() {
+        if(gameContext.getCollisionManager().withinDamageRangeAndMouseIsIntersecting(this, entitiesAggroZone, gameWindow.player.entitiesAggroZone)) {
+            handleClickEvent();
+        }
+    }
+
     public void enemyDied() {
         gameWindow.soundManager.play("death");
         gameWindow.soundManager.reset("death");

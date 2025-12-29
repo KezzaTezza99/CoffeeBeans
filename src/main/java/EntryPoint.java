@@ -15,6 +15,8 @@ import javax.swing.JFrame;
 // Look at only allowing player to damage an enemy when within a certain radius
 // Attack animation??? Potential day task
 
+// Do we need game context everywhere now that we have it as a service?
+
 /** -------------------------------------------------------------------------------------------------------------------
  *                          CURRENT TASK
  *  - Rewrite the implementation of clickable
@@ -24,6 +26,12 @@ import javax.swing.JFrame;
  *  I think what needs to happen is the player needs to know what it can hit (a clickable entity) but it should only do so
  *  IF within a certain attack range, can hit the entity, i.e., an enemy maybe want logic for clicking on NPC(s) who knows
  */
+
+/** BUGS:
+ *  Found an issue with restarting the game,  game context has already been initialised and crashes
+ *  Same problem with 'exiting to main menu'
+ *  */
+
 public class EntryPoint {
     public static void main(String[] args) {
         // Create a frame to hold the panel

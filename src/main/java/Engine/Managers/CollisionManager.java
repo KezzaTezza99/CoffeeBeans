@@ -3,8 +3,6 @@ package Engine.Managers;
 import Engine.Collisions.AABB;
 import Engine.Entity.Entity;
 import Engine.GameWindow;
-import Engine.States.STATES;
-
 import java.awt.*;
 
 public class CollisionManager {
@@ -68,4 +66,8 @@ public class CollisionManager {
                 py <= aabb.getY() + aabb.getHeight();
     }
 
+    // Just some easy methods to call so we aren't chaining methods a lot
+    public boolean withinDamageRangeAndMouseIsIntersecting(Entity entity, AABB self, AABB other) {
+        return entity.isMouseOver() && isCollidingWithTrigger(self, other);
+    }
 }
