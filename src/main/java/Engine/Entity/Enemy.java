@@ -4,8 +4,9 @@ import Engine.GameContext;
 import Engine.Components.Clickable;
 import Engine.Services.EventBusService;
 import Engine.GameWindow;
+import Engine.Services.GameContextService;
+import Engine.Utility.GameConstants;
 import Game.Events.DrawDamageTaken;
-import Game.Events.EnemyDied;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -16,14 +17,9 @@ import java.util.Objects;
 public class Enemy extends Entity implements Clickable {
     GameWindow gameWindow;
 
-    int hp;
-
     // Movement stuff
     float maxSpeed = 4f;
     float damping = 0.05f;
-
-    // DAMAGE
-    private final int DAMAGE_DEALT_TO_PLAYER = 20;
 
     public Enemy(GameWindow gm, GameContext gx) {
         super(gx);
@@ -43,12 +39,6 @@ public class Enemy extends Entity implements Clickable {
         entitiesDamageZone = new AABB(x, y, 126, 126);
 
         direction = "down";
-
-        EventBusService.getBus().register(EnemyDied.class, event -> enemyDied());
-
-        EventBusService.getBus().register(DrawDamageTaken.class, event -> {
-            gameContext.getUiManager().displayDamageTaken(DAMAGE_DEALT_TO_PLAYER, event.getX(), event.getY(), 250);
-        });
 
         loadEnemySprite();
     }
@@ -73,7 +63,6 @@ public class Enemy extends Entity implements Clickable {
 
         direction = "down";
 
-        EventBusService.getBus().register(EnemyDied.class, event -> enemyDied());
         loadEnemySprite();
     }
 
@@ -170,14 +159,17 @@ public class Enemy extends Entity implements Clickable {
     public void handleTriggers(Entity other) {}
 
     @Override
-    public void onClick() {
+    public void onClick(Entity entity) {
         if(gameContext.getCollisionManager().withinDamageRangeAndMouseIsIntersecting(this, entitiesAggroZone, gameWindow.player.entitiesAggroZone)) {
-            handleClickEvent();
+            EventBusService.getBus().register(DrawDamageTaken.class, event -> {
+                gameContext.getUiManager().displayDamageTaken(GameConstants.PLAYER_DAMAGE_TO_ENEMY, event.getX(), event.getY(), 250);
+            });
+            handleClickEvent(this);
         }
     }
 
-    public void enemyDied() {
-        gameWindow.soundManager.play("death");
-        gameWindow.soundManager.reset("death");
+    public static void enemyDied() {
+        GameContextService.get().getSoundManager().play("death");
+        GameContextService.get().getSoundManager().reset("death");
     }
 }

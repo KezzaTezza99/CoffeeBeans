@@ -75,7 +75,7 @@ public class EntityManager {
         for (Entity entity : entities) {
             if (entity instanceof Clickable clickable &&
                     entity.getBounds().mouseIsCollidingWith(mouseHandler.getMouseX(), mouseHandler.getMouseY())) {
-                clickable.onClick();
+                clickable.onClick(entity);
             }
         }
     }

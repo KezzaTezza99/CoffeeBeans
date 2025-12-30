@@ -1,13 +1,13 @@
 package Engine.Entity;
 import Engine.Collisions.AABB;
 import Engine.GameContext;
-import Engine.Components.Clickable;
 import Engine.Services.EventBusService;
 import Engine.GameWindow;
 import Engine.Graphics.Camera;
 import Engine.Input.KeyHandler;
 import Engine.Managers.CollisionManager;
 import Engine.Managers.TileManager;
+import Engine.Utility.GameConstants;
 import Game.Events.DamageTaken;
 import Game.Events.EntityDied;
 import javax.imageio.ImageIO;
@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Player extends Entity implements Clickable {
+public class Player extends Entity {
     GameWindow gameWindow;
     KeyHandler keyHandler;
     TileManager tileManager;
@@ -32,10 +32,7 @@ public class Player extends Entity implements Clickable {
     public final int screenX;
     public final int screenY;
 
-    // A 0.5-second delay before the player can take damage again from an enemy
-    private final int DELAY = 30;
-    private final int ENEMY_DAMAGE = 25;
-    private int hasTakenDamageCooldown = DELAY;
+    private int hasTakenDamageCooldown = GameConstants.ENEMY_ATTACK_DELAY;
     private boolean startTimer = false;
 
     public Player(GameWindow gm, KeyHandler kh, GameContext gx) {
@@ -148,7 +145,7 @@ public class Player extends Entity implements Clickable {
 
         if(startTimer && hasTakenDamageCooldown <= 0) {
             startTimer = false;
-            hasTakenDamageCooldown = DELAY;
+            hasTakenDamageCooldown = GameConstants.ENEMY_ATTACK_DELAY;
         }
     }
 
@@ -176,7 +173,7 @@ public class Player extends Entity implements Clickable {
         if(other.tag == EntityType.ENEMY) {
             if(!startTimer) {
                 startTimer = true;
-                EventBusService.getBus().post(new DamageTaken(this, ENEMY_DAMAGE));
+                EventBusService.getBus().post(new DamageTaken(this, GameConstants.ENEMY_DAMAGE_TO_PLAYER));
                 if(this.health <= 0) {
                     EventBusService.getBus().post(new EntityDied(this));
                 }
@@ -186,9 +183,6 @@ public class Player extends Entity implements Clickable {
 
     @Override
     public void handleTriggers(Entity other) {}
-
-    @Override
-    public void handleClickEvent() {}
 
     // TODO: THIS ISN'T THE BEST APPROACH, TO DO DEATH SCREEN WE NEED THE GAME STATE MANAGER WE ARE GETTING IT
     // THROUGH PLAYER, GAME WINDOW THEN GETTING THE GSM

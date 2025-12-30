@@ -1,18 +1,15 @@
 package Engine.Managers;
 import Engine.Entity.EntityType;
-import Engine.GameWindow;
 import Engine.Services.EventBusService;
 import Engine.GenericUIComponents.StatBar;
 import Game.Events.DamageTaken;
-
 import java.awt.*;
 
-// TODO: We could change our counter for damage attacks to follow this approach used here
-
 public class UIManager {
+    // TODO: Health shouldn't be hard-coded
     private int health = 100;
-    private StatBar healthBar;
-    private boolean showHUD = true;
+    private final StatBar healthBar;
+    private final boolean showHUD = true;
     private boolean showDamage = false;
     private int hpToDisplay;
     private int xPos, yPos;
@@ -74,13 +71,7 @@ public class UIManager {
     }
 
     public void resetHealthBar() {
-//        EventBusService.getBus().register(PlayerTookDamage.class, event -> {
-//            this.health = event.getNewHealth();
-//            healthBar.setCurrentValue(health);
-//
-//            if(health == 0 || health < 0) showHUD = false;
-//        });
-        //TODO: NEEDED?
-        System.out.println("POOP");
+        this.health = 100;
+        this.healthBar.setCurrentValue(this.health);
     }
 }

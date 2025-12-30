@@ -1,4 +1,5 @@
 package Engine.Managers;
+import Engine.Entity.Enemy;
 import Engine.Entity.EntityType;
 import Engine.GameContext;
 import Engine.GameWindow;
@@ -32,9 +33,13 @@ public class GameStateManager {
         this.gameContext = gc;
 
         EventBusService.getBus().register(EntityDied.class, event -> {
-            event.entity.setIsAlive(false);
-            if(event.entity.getTag() == EntityType.PLAYER) {
+            event.entity().setIsAlive(false);
+            if(event.entity().getTag() == EntityType.PLAYER) {
                 gameOver();
+            }
+
+            if(event.entity().getTag() == EntityType.ENEMY) {
+                Enemy.enemyDied();
             }
         });
         init(stateToInit);

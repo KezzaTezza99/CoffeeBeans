@@ -23,11 +23,7 @@ import javax.swing.JFrame;
  */
 
 /** BUGS:
- *  Found an issue with restarting the game,  game context has already been initialised and crashes
- *  Same problem with 'exiting to main menu'
  *  Fixed main menu but now can't re-pause after that initial pause -> replay
- *  Restarting now respawns all new instances of stuff and keeps the old!
- *  Health and health bar still aren't updated on restart
  *  */
 
 public class EntryPoint {
