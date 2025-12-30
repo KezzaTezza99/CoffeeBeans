@@ -8,8 +8,8 @@ import Engine.Graphics.Camera;
 import Engine.Input.KeyHandler;
 import Engine.Managers.CollisionManager;
 import Engine.Managers.TileManager;
-import Game.Events.PlayerTookDamage;
-
+import Game.Events.DamageTaken;
+import Game.Events.EntityDied;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -176,8 +176,10 @@ public class Player extends Entity implements Clickable {
         if(other.tag == EntityType.ENEMY) {
             if(!startTimer) {
                 startTimer = true;
-                this.health -= ENEMY_DAMAGE;
-                EventBusService.getBus().post(new PlayerTookDamage(this.health, this));
+                EventBusService.getBus().post(new DamageTaken(this, ENEMY_DAMAGE));
+                if(this.health <= 0) {
+                    EventBusService.getBus().post(new EntityDied(this));
+                }
             }
         }
     }
@@ -187,10 +189,6 @@ public class Player extends Entity implements Clickable {
 
     @Override
     public void handleClickEvent() {}
-
-    public void playerDied() {
-        this.setIsAlive(false);
-    }
 
     // TODO: THIS ISN'T THE BEST APPROACH, TO DO DEATH SCREEN WE NEED THE GAME STATE MANAGER WE ARE GETTING IT
     // THROUGH PLAYER, GAME WINDOW THEN GETTING THE GSM

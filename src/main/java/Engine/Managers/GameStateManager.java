@@ -1,9 +1,13 @@
 package Engine.Managers;
+import Engine.Entity.EntityType;
 import Engine.GameContext;
 import Engine.GameWindow;
 import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
+import Engine.Services.EventBusService;
 import Engine.States.*;
+import Game.Events.EntityDied;
+
 import java.awt.*;
 import java.util.HashMap;
 
@@ -27,6 +31,12 @@ public class GameStateManager {
         this.gameWindow = gameWindow;
         this.gameContext = gc;
 
+        EventBusService.getBus().register(EntityDied.class, event -> {
+            event.entity.setIsAlive(false);
+            if(event.entity.getTag() == EntityType.PLAYER) {
+                gameOver();
+            }
+        });
         init(stateToInit);
     }
 
@@ -122,5 +132,10 @@ public class GameStateManager {
 
     public GameContext getGameContext() {
         return gameContext;
+    }
+
+    private void gameOver() {
+        queueStateSwitchPauseAndPlay(STATES.GAME_OVER, true);
+        getGameContext().getSoundManager().closeAll(true);
     }
 }

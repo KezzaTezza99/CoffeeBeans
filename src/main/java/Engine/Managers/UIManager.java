@@ -1,8 +1,9 @@
 package Engine.Managers;
+import Engine.Entity.EntityType;
 import Engine.GameWindow;
 import Engine.Services.EventBusService;
-import Game.Events.PlayerTookDamage;
 import Engine.GenericUIComponents.StatBar;
+import Game.Events.DamageTaken;
 
 import java.awt.*;
 
@@ -26,11 +27,17 @@ public class UIManager {
         this.gameWindow = gameWindow;
         healthBar = new StatBar(192, 16, 100, 32, 100);
 
-        EventBusService.getBus().register(PlayerTookDamage.class, event -> {
-            this.health = event.getNewHealth();
-            healthBar.setCurrentValue(health);
+//        EventBusService.getBus().register(PlayerTookDamage.class, event -> {
+//            this.health = event.getNewHealth();
+//            healthBar.setCurrentValue(health);
+//
+//            if(health == 0 || health < 0) showHUD = false;
+//        });
 
-            if(health == 0 || health < 0) showHUD = false;
+        EventBusService.getBus().register(DamageTaken.class, event -> {
+            if(event.entity.getTag() != EntityType.PLAYER) return;
+            System.out.println("UI STUFF: " + event.getNewHealth());
+            healthBar.setCurrentValue(event.getNewHealth());
         });
     }
 
@@ -80,11 +87,13 @@ public class UIManager {
     }
 
     public void resetHealthBar() {
-        EventBusService.getBus().register(PlayerTookDamage.class, event -> {
-            this.health = event.getNewHealth();
-            healthBar.setCurrentValue(health);
-
-            if(health == 0 || health < 0) showHUD = false;
-        });
+//        EventBusService.getBus().register(PlayerTookDamage.class, event -> {
+//            this.health = event.getNewHealth();
+//            healthBar.setCurrentValue(health);
+//
+//            if(health == 0 || health < 0) showHUD = false;
+//        });
+        //TODO: NEEDED?
+        System.out.println("POOP");
     }
 }
