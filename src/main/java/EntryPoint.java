@@ -19,7 +19,7 @@ import javax.swing.JFrame;
 
 /** -------------------------------------------------------------------------------------------------------------------
  *                          CURRENT TASK
- *  Fix respawning
+ *
  */
 
 public class EntryPoint {

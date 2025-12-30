@@ -96,7 +96,6 @@ public class GameWindow extends JPanel implements Runnable {
     }
 
     public void init(STATES stateToInit) {
-        System.out.println("init: " + this.hashCode());
         isRunning = true;
         keyHandler = new KeyHandler(this);
         mouseHandler = new MouseHandler(this);

@@ -1,8 +1,11 @@
 package Engine.GenericUIComponents;
 import Engine.GameWindow;
+import Engine.Services.GameContextService;
 import Engine.States.STATES;
 import Engine.Utility.TextPositionHelper;
 import java.awt.*;
+
+// TODO: Why can't we just do this in the state instead?
 
 // TODO: Can make this very generic and decide where buttons are placed within different constructors?
 // Should probably have three buttons, one for Restarting, Returning to Menu, Quitting the game?
@@ -54,10 +57,11 @@ public class DeathSplashScreen {
         exitGameButton.draw(graphics2D, Color.blue, Color.white);
     }
 
-    // The user want's to restart the game so we need to reinitialise everything!!!
     private void resetGame() {
-        // TODO: actually reset the game (BETTER)
-        this.gameWindow.init(STATES.MAIN_MENU);
+        this.gameWindow.getGameStateManager().setGameStateIsActive(STATES.GAME_OVER, false);
+        this.gameWindow.getGameStateManager().setGameStateIsActive(STATES.PLAY, true);
+        this.gameWindow.getGameStateManager().setCurrentState(STATES.PLAY);
+        this.gameWindow.resetWorld();
     }
 
     // The user want's to exit the application so let's exit the game!gam
