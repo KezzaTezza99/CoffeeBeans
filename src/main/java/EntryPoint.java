@@ -19,12 +19,8 @@ import javax.swing.JFrame;
 
 /** -------------------------------------------------------------------------------------------------------------------
  *                          CURRENT TASK
- *  Bug fixes
+ *  Fix respawning
  */
-
-/** BUGS:
- *  Fixed main menu but now can't re-pause after that initial pause -> replay
- *  */
 
 public class EntryPoint {
     public static void main(String[] args) {

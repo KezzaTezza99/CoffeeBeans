@@ -9,6 +9,7 @@ import Engine.Managers.CollisionManager;
 import Engine.Managers.TileManager;
 import Engine.Utility.GameConstants;
 import Game.Events.DamageTaken;
+import Game.Events.DrawDamageTaken;
 import Game.Events.EntityDied;
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -60,6 +61,10 @@ public class Player extends Entity {
 
         collisionManager = new CollisionManager(gx.getTileManager(), gm);
         tileManager = gx.getTileManager();
+
+        EventBusService.getBus().register(DrawDamageTaken.class, event -> {
+            gameContext.getUiManager().displayDamageTaken(GameConstants.ENEMY_DAMAGE_TO_PLAYER, event.getX(), event.getY(), 250);
+        });
 
         loadPlayerSprite();
     }
@@ -173,6 +178,7 @@ public class Player extends Entity {
         if(other.tag == EntityType.ENEMY) {
             if(!startTimer) {
                 startTimer = true;
+                EventBusService.getBus().post(new DrawDamageTaken(x, y));
                 EventBusService.getBus().post(new DamageTaken(this, GameConstants.ENEMY_DAMAGE_TO_PLAYER));
                 if(this.health <= 0) {
                     EventBusService.getBus().post(new EntityDied(this));

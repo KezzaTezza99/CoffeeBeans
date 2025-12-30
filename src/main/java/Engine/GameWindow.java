@@ -61,6 +61,8 @@ public class GameWindow extends JPanel implements Runnable {
     public CollisionManager collisionManager;
     public TileManager tileManager;
 
+    public boolean replayGame = false;
+
     public GameWindow() {
         // Setting up the game window
         this.setPreferredSize(new Dimension(1920,1080));
@@ -94,6 +96,7 @@ public class GameWindow extends JPanel implements Runnable {
     }
 
     public void init(STATES stateToInit) {
+        System.out.println("init: " + this.hashCode());
         isRunning = true;
         keyHandler = new KeyHandler(this);
         mouseHandler = new MouseHandler(this);
@@ -107,44 +110,20 @@ public class GameWindow extends JPanel implements Runnable {
 
         GameContextService.initGameContext(tileManager, collisionManager, uiManager, soundManager, entityManager, keyHandler, mouseHandler);
 
-        // Construct the entities now game context is ready
-        player = new Player(this, keyHandler, GameContextService.get());
-        enemy = new Enemy(this, GameContextService.get());
-        enemy2 = new Enemy(this, GameContextService.get(), 128 * 4, 128);
-        enemy3 = new Enemy(this, GameContextService.get(), 128 * 3, 128);
-        npc = new NPC(this, GameContextService.get());
-
-        // Register the entities
-        entityManager.addEntity(player);
-        entityManager.addEntity(enemy);
-        entityManager.addEntity(enemy2);
-        entityManager.addEntity(enemy3);
-        entityManager.addEntity(npc);
+        createEntities();
 
         // Now construct game states because entities exist
         gameStateManager = new GameStateManager(this, GameContextService.get(), stateToInit);
     }
 
+    // TODO: This is called when we are on main-menu and not actually clicked play
     public void resetWorld() {
         cleanup();
 
-        isRunning = true;
-
-        // Construct the entities now game context is ready
-        player = new Player(this, keyHandler, GameContextService.get());
-        enemy = new Enemy(this, GameContextService.get());
-        enemy2 = new Enemy(this, GameContextService.get(), 128 * 4, 128);
-        enemy3 = new Enemy(this, GameContextService.get(), 128 * 3, 128);
-        npc = new NPC(this, GameContextService.get());
-
-        // Register the entities
-        entityManager.addEntity(player);
-        entityManager.addEntity(enemy);
-        entityManager.addEntity(enemy2);
-        entityManager.addEntity(enemy3);
-        entityManager.addEntity(npc);
-
         uiManager.resetHealthBar();
+        gameStateManager.pauseFlag = false;
+
+        createEntities();
     }
 
     // Override that is called when the JPanel is created
@@ -193,11 +172,25 @@ public class GameWindow extends JPanel implements Runnable {
         graphics2D.dispose();
     }
 
+    private void createEntities() {
+        // Construct the entities now game context is ready
+        player = new Player(this, keyHandler, GameContextService.get());
+        enemy = new Enemy(this, GameContextService.get());
+        enemy2 = new Enemy(this, GameContextService.get(), 128 * 4, 128);
+        enemy3 = new Enemy(this, GameContextService.get(), 128 * 3, 128);
+        npc = new NPC(this, GameContextService.get());
+
+        // Register the entities
+        entityManager.addEntity(player);
+        entityManager.addEntity(enemy);
+        entityManager.addEntity(enemy2);
+        entityManager.addEntity(enemy3);
+        entityManager.addEntity(npc);
+    }
+
     private void cleanup() {
         soundManager.closeAll(false);
         entityManager.removeAllEntities();
-
-        // TODO: HEALTH RESET
     }
 
     // Some useful getters

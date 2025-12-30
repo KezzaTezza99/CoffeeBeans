@@ -15,7 +15,7 @@ public class DamageTaken implements Event {
         this.originalHealth = entity.getHealth();
         int newHealth = (originalHealth - damageTaken);
 
-        EventBusService.getBus().post(new SetEntityUpdatedHealth(entity, newHealth));
+        EventBusService.getBus().post(new UpdateEntityHealth(entity, newHealth));
     }
 
     public int getNewHealth() {

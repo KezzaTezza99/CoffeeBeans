@@ -3,6 +3,8 @@ import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
 import Engine.Managers.GameStateManager;
 import Engine.GenericUIComponents.UIButton;
+import Engine.Services.GameContextService;
+
 import java.awt.*;
 
 public class MainMenuState extends GameState {
@@ -59,6 +61,9 @@ public class MainMenuState extends GameState {
         gameStateManager.setGameStateIsActive(STATES.MAIN_MENU, false);
         gameStateManager.setGameStateIsActive(STATES.PLAY, true);
         gameStateManager.setCurrentState(STATES.PLAY);
+
+        // Game has been restarted reset the world
+        if(gameStateManager.getGameWindow().replayGame) gameStateManager.getGameWindow().resetWorld();
     }
 
     // TODO: Eventually we could clean up memory, is it even worth it we could let garbage collection do it
