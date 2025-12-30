@@ -27,8 +27,7 @@ import javax.swing.JFrame;
  *  Same problem with 'exiting to main menu'
  *  Fixed main menu but now can't re-pause after that initial pause -> replay
  *  Restarting now respawns all new instances of stuff and keeps the old!
- *  - REFACTORING LEAD TO -> UI not updating 100 to reflect new health -> restarting health stays the same until damage
- *  taken again then it jumps back up
+ *  Health and health bar still aren't updated on restart
  *  */
 
 public class EntryPoint {

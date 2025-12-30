@@ -101,7 +101,7 @@ public class GameWindow extends JPanel implements Runnable {
         // Construct stuff with min dependencies
         tileManager = new TileManager(this, false);
         collisionManager = new CollisionManager(tileManager, this);
-        uiManager = new UIManager(this);
+        uiManager = new UIManager();
         soundManager = new SoundManager();
         entityManager = new EntityManager(mouseHandler);
 

@@ -13,30 +13,17 @@ public class UIManager {
     private int health = 100;
     private StatBar healthBar;
     private boolean showHUD = true;
-
-    // TEMP
-    private final GameWindow gameWindow;
-
     private boolean showDamage = false;
     private int hpToDisplay;
     private int xPos, yPos;
     private long damageTextEndTime = 0;
 
-    // TODO: GameWindow is a temporary dependency
-    public UIManager(GameWindow gameWindow) {
-        this.gameWindow = gameWindow;
+    public UIManager() {
         healthBar = new StatBar(192, 16, 100, 32, 100);
-
-//        EventBusService.getBus().register(PlayerTookDamage.class, event -> {
-//            this.health = event.getNewHealth();
-//            healthBar.setCurrentValue(health);
-//
-//            if(health == 0 || health < 0) showHUD = false;
-//        });
 
         EventBusService.getBus().register(DamageTaken.class, event -> {
             if(event.entity.getTag() != EntityType.PLAYER) return;
-            System.out.println("UI STUFF: " + event.getNewHealth());
+            this.health = event.getNewHealth();
             healthBar.setCurrentValue(event.getNewHealth());
         });
     }
