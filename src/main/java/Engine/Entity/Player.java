@@ -1,12 +1,8 @@
 package Engine.Entity;
 import Engine.Collisions.AABB;
-import Engine.GameContext;
 import Engine.Services.EventBusService;
-import Engine.GameWindow;
-import Engine.Graphics.Camera;
 import Engine.Input.KeyHandler;
-import Engine.Managers.CollisionManager;
-import Engine.Managers.TileManager;
+import Engine.Services.GameContextService;
 import Engine.Utility.GameConstants;
 import Game.Events.DamageTaken;
 import Game.Events.DrawDamageTaken;
@@ -18,17 +14,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Player extends Entity {
-    GameWindow gameWindow;
-    KeyHandler keyHandler;
-    TileManager tileManager;
-
-    Camera camera;
-    // TODO: THIS IS TEMP
-    CollisionManager collisionManager;
-    GameContext gameContext;
-    //private final AABB futureBounds;
-    //!TEMP
-
     // The players position on screen
     public final int screenX;
     public final int screenY;
@@ -36,18 +21,14 @@ public class Player extends Entity {
     private int hasTakenDamageCooldown = GameConstants.ENEMY_ATTACK_DELAY;
     private boolean startTimer = false;
 
-    public Player(GameWindow gm, KeyHandler kh, GameContext gx) {
+    public Player() {
         super();
         tag = EntityType.PLAYER;
         this.setIsAlive(true);
 
-        this.gameWindow = gm;
-        this.keyHandler = kh;
-        this.gameContext = gx;
-
         // Setting the players position to be the centre of the map (screen?) changes if the "world" is bigger
-        screenX = (gameWindow.getMaxScreenCol() / 2) * gameWindow.getTileSize();
-        screenY = (gameWindow.getMaxScreenRow() / 2) * gameWindow.getTileSize();
+        screenX = (GameContextService.get().getGameWindow().getMaxScreenCol() / 2) * GameContextService.get().getGameWindow().getTileSize();
+        screenY = (GameContextService.get().getGameWindow().getMaxScreenRow() / 2) * GameContextService.get().getGameWindow().getTileSize();
 
         x = screenX;
         y = screenY;
@@ -55,15 +36,12 @@ public class Player extends Entity {
         speed = 4;
         direction = "down";
 
-        entitiesCollisionBox = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
-        entitiesFutureBounds = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
+        entitiesCollisionBox = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
+        entitiesFutureBounds = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
         entitiesAggroZone = new AABB(x, y, 256, 256);
 
-        collisionManager = new CollisionManager(gx.getTileManager(), gm);
-        tileManager = gx.getTileManager();
-
         EventBusService.getBus().register(DrawDamageTaken.class, event -> {
-            gameContext.getUiManager().displayDamageTaken(GameConstants.ENEMY_DAMAGE_TO_PLAYER, event.getX(), event.getY(), 250);
+            GameContextService.get().getUiManager().displayDamageTaken(GameConstants.ENEMY_DAMAGE_TO_PLAYER, event.getX(), event.getY(), 250);
         });
 
         loadPlayerSprite();
@@ -87,36 +65,42 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        if (keyHandler.up.down && (tileManager.canMoveOffScreen || y != 0)) {
+        if (GameContextService.get().getKeyHandler().up.down
+                && (GameContextService.get().getTileManager().canMoveOffScreen || y != 0)) {
             direction = "up";
             entitiesFutureBounds.setX(x);
             entitiesFutureBounds.setY(y - speed);
 
-            if(!collisionManager.willCollide(entitiesFutureBounds)) {
+            if(!GameContextService.get().getCollisionManager().willCollide(entitiesFutureBounds)) {
                 y -= speed;
             }
-        } else if (keyHandler.down.down && (tileManager.canMoveOffScreen || y != (gameWindow.getScreenHeight()) - gameWindow.getTileSize())) {
+        } else if (GameContextService.get().getKeyHandler().down.down
+                && (GameContextService.get().getTileManager().canMoveOffScreen
+                || y != (GameContextService.get().getGameWindow().getScreenHeight()) - GameContextService.get().getGameWindow().getTileSize())) {
             direction = "down";
             entitiesFutureBounds.setX(x);
             entitiesFutureBounds.setY(y + speed);
 
-            if(!collisionManager.willCollide(entitiesFutureBounds)) {
+            if(!GameContextService.get().getCollisionManager().willCollide(entitiesFutureBounds)) {
                 y += speed;
             }
-        } else if (keyHandler.left.down && (tileManager.canMoveOffScreen || x != 0)) {
+        } else if (GameContextService.get().getKeyHandler().left.down
+                && (GameContextService.get().getTileManager().canMoveOffScreen || x != 0)) {
             direction = "left";
             entitiesFutureBounds.setX(x - speed);
             entitiesFutureBounds.setY(y);
 
-            if(!collisionManager.willCollide(entitiesFutureBounds)) {
+            if(!GameContextService.get().getCollisionManager().willCollide(entitiesFutureBounds)) {
                 x -= speed;
             }
-        } else if (keyHandler.right.down && (tileManager.canMoveOffScreen || x != (gameWindow.getScreenWidth()) - gameWindow.getTileSize())) {
+        } else if (GameContextService.get().getKeyHandler().right.down
+                && (GameContextService.get().getTileManager().canMoveOffScreen
+                || x != (GameContextService.get().getGameWindow().getScreenWidth()) - GameContextService.get().getGameWindow().getTileSize())) {
             direction = "right";
             entitiesFutureBounds.setX(x + speed);
             entitiesFutureBounds.setY(y);
 
-            if(!collisionManager.willCollide(entitiesFutureBounds)) {
+            if(!GameContextService.get().getCollisionManager().willCollide(entitiesFutureBounds)) {
                 x += speed;
             }
         }
@@ -128,7 +112,7 @@ public class Player extends Entity {
         entitiesAggroZone.setX(x);
         entitiesAggroZone.setY(y);
 
-        for(KeyHandler.Key key : keyHandler.keys) {
+        for(KeyHandler.Key key : GameContextService.get().getKeyHandler().keys) {
             if(key.down) {
                 spriteCounter++;
 
@@ -164,7 +148,7 @@ public class Player extends Entity {
             default -> null;
         };
 
-        graphics2D.drawImage(image, x, y, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
+        graphics2D.drawImage(image, x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize(), null);
         entitiesCollisionBox.drawCollider(graphics2D, Color.YELLOW);
         entitiesAggroZone.drawCollider(graphics2D, Color.BLACK);
     }
@@ -189,8 +173,4 @@ public class Player extends Entity {
 
     @Override
     public void handleTriggers(Entity other) {}
-
-    // TODO: THIS ISN'T THE BEST APPROACH, TO DO DEATH SCREEN WE NEED THE GAME STATE MANAGER WE ARE GETTING IT
-    // THROUGH PLAYER, GAME WINDOW THEN GETTING THE GSM
-    public GameWindow getGameWindow() { return gameWindow; }
 }
