@@ -19,7 +19,7 @@ public class NPC extends Entity {
     public boolean hasTriggered = false;
 
     public NPC(GameWindow gm, GameContext gx) {
-        super(gx);
+        super();
         this.tag = EntityType.NPC;
         this.setIsAlive(true);
         this.gameWindow = gm;

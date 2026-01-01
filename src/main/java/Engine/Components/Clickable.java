@@ -1,7 +1,6 @@
 package Engine.Components;
 
 import Engine.Entity.Entity;
-import Engine.Entity.EntityType;
 import Engine.Services.EventBusService;
 import Engine.Services.GameContextService;
 import Engine.Utility.GameConstants;

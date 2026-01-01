@@ -37,7 +37,7 @@ public class Player extends Entity {
     private boolean startTimer = false;
 
     public Player(GameWindow gm, KeyHandler kh, GameContext gx) {
-        super(gx);
+        super();
         tag = EntityType.PLAYER;
         this.setIsAlive(true);
 

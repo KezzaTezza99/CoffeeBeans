@@ -182,9 +182,9 @@ public class GameWindow extends JPanel implements Runnable {
     private void createEntities() {
         // Construct the entities now game context is ready
         player = new Player(this, keyHandler, GameContextService.get());
-        enemy = new Enemy(this, GameContextService.get());
-        enemy2 = new Enemy(this, GameContextService.get(), 128 * 4, 128);
-        enemy3 = new Enemy(this, GameContextService.get(), 128 * 3, 128);
+        enemy = new Enemy();
+        enemy2 = new Enemy(128 * 4, 128);
+        enemy3 = new Enemy(128 * 3, 128);
         npc = new NPC(this, GameContextService.get());
 
         // Register the entities

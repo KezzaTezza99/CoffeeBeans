@@ -7,7 +7,6 @@ import Engine.GameWindow;
 import Engine.Services.GameContextService;
 import Engine.Utility.GameConstants;
 import Game.Events.DrawDamageTaken;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,26 +14,21 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Enemy extends Entity implements Clickable {
-    GameWindow gameWindow;
-
     // Movement stuff
     float maxSpeed = 4f;
     float damping = 0.05f;
 
-    public Enemy(GameWindow gm, GameContext gx) {
-        super(gx);
+    public Enemy() {
+        super();
         tag = EntityType.ENEMY;
         this.setIsAlive(true);
 
-        this.gameWindow = gm;
-        this.gameContext = gx;
-
         // Setting the enemies position to be top left of screen
-        x = gameWindow.getHalfScreenWidth();
+        x = GameContextService.get().getGameWindow().getHalfScreenWidth();
         y = 128;
 
-        entitiesCollisionBox = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
-        entitiesFutureBounds = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
+        entitiesCollisionBox = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
+        entitiesFutureBounds = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
         entitiesAggroZone = new AABB(x, y, 256, 256);
         entitiesDamageZone = new AABB(x, y, 126, 126);
 
@@ -45,19 +39,17 @@ public class Enemy extends Entity implements Clickable {
 
     // TODO: TEMP -> THIS IS TESTING HAVING 2 ENEMIES, IN REALITY WOULD CHOSE A SPAWN POINT OR MAKE IT RANDOM ETC., BASED
     // ON GAME NEEDS FOR NOW WILL JUST CONSTRUCT MY SECOND ENEMY SLIGHTLY DIFFERENTLY !
-    public Enemy(GameWindow gm, GameContext gx, int xPos, int yPos) {
-        super(gx);
+    public Enemy(int xPos, int yPos) {
+        super();
         tag = EntityType.ENEMY;
         this.setIsAlive(true);
 
-        this.gameWindow = gm;
-        this.gameContext = gx;
 
         x = xPos;
         y = yPos;
 
-        entitiesCollisionBox = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
-        entitiesFutureBounds = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
+        entitiesCollisionBox = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
+        entitiesFutureBounds = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
         entitiesAggroZone = new AABB(x, y, 256, 256);
         entitiesDamageZone = new AABB(x, y, 126, 126);
 
@@ -84,12 +76,14 @@ public class Enemy extends Entity implements Clickable {
 
     @Override
     public void update() {
-        if(gameContext.getCollisionManager().isCollidingWithTrigger(this.entitiesAggroZone, gameWindow.player.entitiesAggroZone)) updatePosition();
+        if(GameContextService.get().getCollisionManager().isCollidingWithTrigger(
+                this.entitiesAggroZone, GameContextService.get().getGameWindow().player.entitiesAggroZone)
+        ) updatePosition();
     }
 
     private void updatePosition() {
-        int dx = gameWindow.player.x - this.x;
-        int dy = gameWindow.player.y - this.y;
+        int dx = GameContextService.get().getGameWindow().player.x - this.x;
+        int dy = GameContextService.get().getGameWindow().player.y - this.y;
         float distance = (float) Math.sqrt(dx * dx + dy * dy);
 
         // Get the direction needed for the sprite
@@ -146,7 +140,7 @@ public class Enemy extends Entity implements Clickable {
             default -> null;
         };
 
-        graphics2D.drawImage(image, x, y, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
+        graphics2D.drawImage(image, x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize(), null);
         entitiesCollisionBox.drawCollider(graphics2D, Color.YELLOW);
         entitiesAggroZone.drawCollider(graphics2D, Color.BLACK);
         entitiesDamageZone.drawCollider(graphics2D, Color.CYAN);
@@ -160,9 +154,10 @@ public class Enemy extends Entity implements Clickable {
 
     @Override
     public void onClick(Entity entity) {
-        if(gameContext.getCollisionManager().withinDamageRangeAndMouseIsIntersecting(this, entitiesAggroZone, gameWindow.player.entitiesAggroZone)) {
+        if(GameContextService.get().getCollisionManager().withinDamageRangeAndMouseIsIntersecting(
+                this, entitiesAggroZone, GameContextService.get().getGameWindow().player.entitiesAggroZone)) {
             EventBusService.getBus().register(DrawDamageTaken.class, event -> {
-                gameContext.getUiManager().displayDamageTaken(GameConstants.PLAYER_DAMAGE_TO_ENEMY, event.getX(), event.getY(), 250);
+                GameContextService.get().getUiManager().displayDamageTaken(GameConstants.PLAYER_DAMAGE_TO_ENEMY, event.getX(), event.getY(), 250);
             });
             handleClickEvent(this);
         }
