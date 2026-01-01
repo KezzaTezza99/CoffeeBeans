@@ -19,7 +19,7 @@ import javax.swing.JFrame;
 
 /** -------------------------------------------------------------------------------------------------------------------
  *                          CURRENT TASK
- *
+ * Clean-up TODOs
  */
 
 public class EntryPoint {

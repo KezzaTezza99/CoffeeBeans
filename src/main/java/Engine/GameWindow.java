@@ -107,7 +107,15 @@ public class GameWindow extends JPanel implements Runnable {
         soundManager = new SoundManager();
         entityManager = new EntityManager(mouseHandler);
 
-        GameContextService.initGameContext(tileManager, collisionManager, uiManager, soundManager, entityManager, keyHandler, mouseHandler);
+        GameContextService.initGameContext(
+                tileManager,
+                collisionManager,
+                uiManager,
+                soundManager,
+                entityManager,
+                keyHandler,
+                mouseHandler,
+                this);
 
         createEntities();
 

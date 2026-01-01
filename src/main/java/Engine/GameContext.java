@@ -5,6 +5,7 @@ import Engine.Input.MouseHandler;
 import Engine.Managers.*;
 
 // TODO: Eventually will have a bunch of important dependencies for us, then we inject the GX into classes we need!
+//TODO: Now GameContext has all we need may as well get rid of dependencies in classes and just use the service?
 public class GameContext {
     private final TileManager tileManager;
     private final CollisionManager collisionManager;
@@ -13,8 +14,16 @@ public class GameContext {
     private final SoundManager soundManager;
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
+    private final GameWindow gameWindow;
 
-    public GameContext(TileManager tm, CollisionManager cm, EntityManager em, UIManager ui, SoundManager sm, KeyHandler kh, MouseHandler mh) {
+    public GameContext(TileManager tm,
+                       CollisionManager cm,
+                       EntityManager em,
+                       UIManager ui,
+                       SoundManager sm,
+                       KeyHandler kh,
+                       MouseHandler mh,
+                       GameWindow gw) {
         this.tileManager = tm;
         this.collisionManager = cm;
         this.entityManager = em;
@@ -22,14 +31,13 @@ public class GameContext {
         this.soundManager = sm;
         this.keyHandler = kh;
         this.mouseHandler = mh;
+        this.gameWindow = gw;
     }
 
     public TileManager getTileManager() {
         return tileManager;
     }
-    public CollisionManager getCollisionManager() {
-        return collisionManager;
-    }
+    public CollisionManager getCollisionManager() { return collisionManager; }
     public EntityManager getEntityManager() {
         return entityManager;
     }
@@ -41,4 +49,5 @@ public class GameContext {
     }
     public KeyHandler getKeyHandler() { return keyHandler; }
     public MouseHandler getMouseHandler() { return mouseHandler; }
+    public GameWindow getGameWindow() { return gameWindow; }
 }

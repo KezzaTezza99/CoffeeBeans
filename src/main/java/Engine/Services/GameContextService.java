@@ -1,6 +1,7 @@
 package Engine.Services;
 
 import Engine.GameContext;
+import Engine.GameWindow;
 import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
 import Engine.Managers.*;
@@ -15,11 +16,13 @@ public final class GameContextService {
                                        SoundManager sm,
                                        EntityManager em,
                                        KeyHandler kh,
-                                       MouseHandler mh) {
+                                       MouseHandler mh,
+                                       GameWindow gw
+    ) {
         if(gameContext != null) {
             throw new IllegalStateException("GameContext already initialized");
         }
-        gameContext = new GameContext(tm, cm, em, uim, sm, kh, mh);
+        gameContext = new GameContext(tm, cm, em, uim, sm, kh, mh, gw);
     }
 
     public static GameContext get() {
