@@ -185,7 +185,7 @@ public class GameWindow extends JPanel implements Runnable {
         enemy = new Enemy();
         enemy2 = new Enemy(128 * 4, 128);
         enemy3 = new Enemy(128 * 3, 128);
-        npc = new NPC(this, GameContextService.get());
+        npc = new NPC();
 
         // Register the entities
         entityManager.addEntity(player);

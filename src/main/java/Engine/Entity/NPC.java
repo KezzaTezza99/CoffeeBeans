@@ -3,6 +3,7 @@ import Engine.Collisions.AABB;
 import Engine.GameContext;
 import Engine.GameWindow;
 import Engine.Services.EventBusService;
+import Engine.Services.GameContextService;
 import Engine.States.STATES;
 import Game.Events.ShowDialog;
 
@@ -13,23 +14,17 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class NPC extends Entity {
-    private final GameWindow gameWindow;
-    private final GameContext gameContext;
-
     public boolean hasTriggered = false;
 
-    public NPC(GameWindow gm, GameContext gx) {
+    public NPC() {
         super();
         this.tag = EntityType.NPC;
         this.setIsAlive(true);
-        this.gameWindow = gm;
-        this.gameContext = gx;
-
         this.x = 300;
         this.y = 700;
 
-        entitiesCollisionBox = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
-        entitiesFutureBounds = new AABB(x, y, gameWindow.getTileSize(), gameWindow.getTileSize());
+        entitiesCollisionBox = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
+        entitiesFutureBounds = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
         entitiesAggroZone = new AABB(x, y, 256, 256);
 
         direction = "left";
@@ -69,7 +64,7 @@ public class NPC extends Entity {
             default -> null;
         };
 
-        graphics2D.drawImage(image, x, y, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
+        graphics2D.drawImage(image, x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize(), null);
         entitiesCollisionBox.drawCollider(graphics2D, Color.YELLOW);
         entitiesAggroZone.drawCollider(graphics2D, Color.BLACK);
     }
@@ -82,7 +77,7 @@ public class NPC extends Entity {
     @Override
     public void handleTriggers(Entity other) {
         if(other.tag == EntityType.PLAYER) {
-            if(gameContext.getCollisionManager().isCollidingWithTrigger(this.entitiesAggroZone, other.getAggroZone())) {
+            if(GameContextService.get().getCollisionManager().isCollidingWithTrigger(this.entitiesAggroZone, other.getAggroZone())) {
                 if(!hasTriggered) {
                     hasTriggered = true;
                     EventBusService.getBus().post(new ShowDialog());
@@ -93,8 +88,8 @@ public class NPC extends Entity {
 
     private void showDialog() {
         // Change the game state
-        gameWindow.getGameStateManager().blockInputForCurrentState(true);
-        gameWindow.getGameStateManager().setGameStateIsActive(STATES.DIALOG, true);
+        GameContextService.get().getGameWindow().getGameStateManager().blockInputForCurrentState(true);
+        GameContextService.get().getGameWindow().getGameStateManager().setGameStateIsActive(STATES.DIALOG, true);
     }
 
     public EntityType getType() { return this.tag; }
