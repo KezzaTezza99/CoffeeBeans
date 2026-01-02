@@ -10,9 +10,6 @@ import java.awt.*;
 // TODO: Can make this very generic and decide where buttons are placed within different constructors?
 // Should probably have three buttons, one for Restarting, Returning to Menu, Quitting the game?
 public class DeathSplashScreen {
-    // TODO: Think about how we are handling this GameWindow Injection, could game settings i.e., height width be
-    // injected into a settings class where we can access basic information such as dimensions for cases like this?!
-    private final GameWindow gameWindow;
     private final String message;
 
     private final int x;
@@ -26,13 +23,12 @@ public class DeathSplashScreen {
     private final UIButton exitGameButton;
 
     // TODO: Can expand with a location flag for deciding where to draw text / buttons
-    public DeathSplashScreen(GameWindow gameWindow, String message) {
-        this.gameWindow = gameWindow;
+    public DeathSplashScreen(String message) {
         this.message = message;
         this.font = new Font("Default", Font.BOLD, 48);
 
         // Getting the centre point to display the text
-        Point centrePoint = TextPositionHelper.getCentredTextPos(message, font, gameWindow.getScreenWidth(), gameWindow.getScreenHeight());
+        Point centrePoint = TextPositionHelper.getCentredTextPos(message, font, GameContextService.get().getGameWindow().getScreenWidth(), GameContextService.get().getGameWindow().getScreenHeight());
         this.x = centrePoint.x;
         this.y = centrePoint.y;
 
@@ -45,7 +41,7 @@ public class DeathSplashScreen {
     public void draw(Graphics2D graphics2D) {
         // Drawing a semi-transparent overlay
         graphics2D.setColor(new Color(0, 0,0,150));
-        graphics2D.fillRect(0, 0, gameWindow.getWidth(), gameWindow.getHeight());
+        graphics2D.fillRect(0, 0, GameContextService.get().getGameWindow().getWidth(), GameContextService.get().getGameWindow().getHeight());
 
         // Drawing centred text
         graphics2D.setColor(Color.WHITE);
@@ -58,10 +54,10 @@ public class DeathSplashScreen {
     }
 
     private void resetGame() {
-        this.gameWindow.getGameStateManager().setGameStateIsActive(STATES.GAME_OVER, false);
-        this.gameWindow.getGameStateManager().setGameStateIsActive(STATES.PLAY, true);
-        this.gameWindow.getGameStateManager().setCurrentState(STATES.PLAY);
-        this.gameWindow.resetWorld();
+        GameContextService.get().getGameWindow().getGameStateManager().setGameStateIsActive(STATES.GAME_OVER, false);
+        GameContextService.get().getGameWindow().getGameStateManager().setGameStateIsActive(STATES.PLAY, true);
+        GameContextService.get().getGameWindow().getGameStateManager().setCurrentState(STATES.PLAY);
+        GameContextService.get().getGameWindow().resetWorld();
     }
 
     // The user want's to exit the application so let's exit the game!gam

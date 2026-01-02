@@ -1,6 +1,7 @@
 package Engine.GenericUIComponents;
 
 import Engine.GameWindow;
+import Engine.Services.GameContextService;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,8 +10,6 @@ import java.awt.image.BufferedImage;
 // do on a game by game basis
 
 public class DialogOverlay {
-    // TODO: Again injecting game window for temp
-      private final GameWindow gameWindow;
       private final String message;
 
       private int dialogX, dialogY, textX, textY;
@@ -19,8 +18,7 @@ public class DialogOverlay {
       private Color borderColour = Color.WHITE;
       private final Font font;
 
-      public DialogOverlay(GameWindow gameWindow, String message) {
-          this.gameWindow = gameWindow;
+      public DialogOverlay(String message) {
           this.message = message;
           this.font = new Font("Default", Font.BOLD, 28);
 
@@ -38,10 +36,10 @@ public class DialogOverlay {
 //         FontMetrics metrics = graphics2D.getFontMetrics();
 
          // Setting the dialog overlay location
-         this.width = gameWindow.getHalfScreenWidth();
+         this.width = GameContextService.get().getGameWindow().getHalfScreenWidth();
          this.height = 200;
-         this.dialogX = ((gameWindow.getScreenWidth() / 2) - (width / 2));
-         this.dialogY = ((gameWindow.getScreenHeight() / 2) + (height));
+         this.dialogX = ((GameContextService.get().getGameWindow().getScreenWidth() / 2) - (width / 2));
+         this.dialogY = ((GameContextService.get().getGameWindow().getScreenHeight() / 2) + (height));
 
          // Setting the text position
          // TODO: would do this better and handle long text / multi-line etc.,

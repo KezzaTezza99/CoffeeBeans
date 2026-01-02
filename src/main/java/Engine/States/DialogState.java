@@ -17,7 +17,7 @@ public class DialogState extends GameState {
         super(gm, isActive);
         setOverlay(true);
         this.gameStateManager = gm;
-        dialogOverlay = new DialogOverlay(gm.getGameWindow(), "This is a message");
+        dialogOverlay = new DialogOverlay("This is a message");
     }
 
     @Override

@@ -1,13 +1,11 @@
 package Engine.GenericUIComponents;
 import Engine.GameWindow;
+import Engine.Services.GameContextService;
 import Engine.Utility.TextPositionHelper;
 
 import java.awt.*;
 
 public class BasicSplashScreen {
-    // For now injecting the GameWindow
-    // TODO: How do I want to handle dependencies?
-    private final GameWindow gameWindow;
     private final String message;
 
     private final int x;
@@ -15,12 +13,11 @@ public class BasicSplashScreen {
     // TODO: Font set globally? ServiceLocator?
     private final Font font;
 
-    public BasicSplashScreen(GameWindow gameWindow, String message) {
-        this.gameWindow = gameWindow;
+    public BasicSplashScreen(String message) {
         this.message = message;
         this.font = new Font("Default", Font.BOLD, 48);
 
-        Point centrePoint = TextPositionHelper.getCentredTextPos(message, font, gameWindow.getScreenWidth(), gameWindow.getScreenHeight());
+        Point centrePoint = TextPositionHelper.getCentredTextPos(message, font, GameContextService.get().getGameWindow().getScreenWidth(), GameContextService.get().getGameWindow().getScreenHeight());
         this.x = centrePoint.x;
         this.y = centrePoint.y;
     }
@@ -28,7 +25,7 @@ public class BasicSplashScreen {
     public void draw(Graphics2D graphics2D) {
         // Drawing a semi-transparent overlay
         graphics2D.setColor(new Color(0, 0,0,150));
-        graphics2D.fillRect(0, 0, gameWindow.getWidth(), gameWindow.getHeight());
+        graphics2D.fillRect(0, 0, GameContextService.get().getGameWindow().getWidth(), GameContextService.get().getGameWindow().getHeight());
 
         // Drawing centred text
         graphics2D.setColor(Color.WHITE);

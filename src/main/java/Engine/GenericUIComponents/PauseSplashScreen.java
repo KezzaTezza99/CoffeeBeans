@@ -1,12 +1,11 @@
 package Engine.GenericUIComponents;
 import Engine.GameWindow;
+import Engine.Services.GameContextService;
 import Engine.States.STATES;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class PauseSplashScreen {
-    private final GameWindow gameWindow;
-
     // The buttons that will populate the pause screen
     private final UIButton resumeButton;
     private final UIButton optionsButton;
@@ -17,13 +16,12 @@ public class PauseSplashScreen {
     // and use my collection of buttons class to arrange them to all be the same size
     private ArrayList<UIButton> collectionOfButtons;
 
-    public PauseSplashScreen(GameWindow gw) {
-        this.gameWindow = gw;
+    public PauseSplashScreen() {
         Font font = new Font("Default", Font.BOLD, 22);
 
         // Getting the centre point
-        int x = gameWindow.getHalfScreenWidth();
-        int y = gameWindow.getHalfScreenHeight();
+        int x = GameContextService.get().getGameWindow().getHalfScreenWidth();
+        int y = GameContextService.get().getGameWindow().getHalfScreenHeight();
 
         int padding = 12;
         int spacing = 20;
@@ -57,25 +55,19 @@ public class PauseSplashScreen {
 
     // Button methods
     private void resumeGameplay() {
-        gameWindow.getGameStateManager().queueStateSwitchPauseAndPlay(STATES.PLAY, false);
+        GameContextService.get().getGameWindow().getGameStateManager().queueStateSwitchPauseAndPlay(STATES.PLAY, false);
     }
 
     private void openOptionMenu() {
-        System.out.println("Option menu was opened");
         System.exit(0);
     }
 
     private void exitToMainMenu() {
-        getGameWindow().getGameStateManager().queueStateSwitchPauseAndPlay(STATES.MAIN_MENU, true);
-        getGameWindow().replayGame = true;
+        GameContextService.get().getGameWindow().getGameStateManager().queueStateSwitchPauseAndPlay(STATES.MAIN_MENU, true);
+        GameContextService.get().getGameWindow().replayGame = true;
     }
 
     private void exitToDesktop() { System.exit(0); }
-
-    // Button Getters
-    public GameWindow getGameWindow() {
-        return gameWindow;
-    }
     public UIButton getResumeButton() {
         return resumeButton;
     }

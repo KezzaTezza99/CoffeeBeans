@@ -12,7 +12,7 @@ public class PauseState extends GameState {
     public PauseState(GameStateManager gm, boolean isActive) {
         super(gm, isActive);
         this.gameStateManager = gm;
-        this.pauseSplashScreen = new PauseSplashScreen(gm.getGameWindow());
+        this.pauseSplashScreen = new PauseSplashScreen();
     }
 
     @Override

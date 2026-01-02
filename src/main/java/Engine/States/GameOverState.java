@@ -13,7 +13,7 @@ public class GameOverState extends GameState {
         super(gm, isActive);
         this.gameStateManager = gm;
         setBlockUpdate(false);
-        gameOverSplashScreen = new DeathSplashScreen(gm.getGameWindow(), "YOU DIED");
+        gameOverSplashScreen = new DeathSplashScreen("YOU DIED");
     }
 
     @Override

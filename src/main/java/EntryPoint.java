@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 /** -------------------------------------------------------------------------------------------------------------------
  *                          CURRENT TASK
  * Clean-up TODOs
+ * Work on the global font stuff
  */
 
 public class EntryPoint {
