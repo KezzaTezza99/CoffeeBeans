@@ -17,12 +17,13 @@ public final class GameContextService {
                                        SoundManager sm,
                                        EntityManager em,
                                        KeyHandler kh,
-                                       MouseHandler mh
+                                       MouseHandler mh,
+                                       GameStateManager gsm
     ) {
         if(gameContext != null) {
             throw new IllegalStateException("GameContext already initialized");
         }
-        gameContext = new GameContext(gw,tm, cm, em, uim, sm, kh, mh);
+        gameContext = new GameContext(gw,tm, cm, em, uim, sm, kh, mh, gsm);
     }
 
     public static GameContext get() {

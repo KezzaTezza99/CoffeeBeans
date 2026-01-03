@@ -57,7 +57,7 @@ public class PauseSplashScreen {
 
     // Button methods
     private void resumeGameplay() {
-        GameContextService.get().getGameWindow().getGameStateManager().queueStateSwitchPauseAndPlay(STATES.PLAY, false);
+        GameContextService.get().getGameStateManager().queueStateSwitchPauseAndPlay(STATES.PLAY, false);
     }
 
     private void openOptionMenu() {
@@ -65,7 +65,7 @@ public class PauseSplashScreen {
     }
 
     private void exitToMainMenu() {
-        GameContextService.get().getGameWindow().getGameStateManager().queueStateSwitchPauseAndPlay(STATES.MAIN_MENU, true);
+        GameContextService.get().getGameStateManager().queueStateSwitchPauseAndPlay(STATES.MAIN_MENU, true);
         GameContextService.get().getGameWindow().replayGame = true;
     }
 

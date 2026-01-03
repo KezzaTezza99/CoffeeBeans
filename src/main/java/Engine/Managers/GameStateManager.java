@@ -47,9 +47,7 @@ public class GameStateManager {
         states.put(STATES.DIALOG, new DialogState(this, false));
         states.put(STATES.GAME_OVER, new GameOverState(this, false));
 
-        System.out.println(this.currentState);
         this.currentState = currentState;
-        System.out.println(this.currentState);
     }
 
     public void update() {

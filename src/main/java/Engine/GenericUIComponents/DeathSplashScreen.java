@@ -55,9 +55,9 @@ public class DeathSplashScreen {
     }
 
     private void resetGame() {
-        GameContextService.get().getGameWindow().getGameStateManager().setGameStateIsActive(STATES.GAME_OVER, false);
-        GameContextService.get().getGameWindow().getGameStateManager().setGameStateIsActive(STATES.PLAY, true);
-        GameContextService.get().getGameWindow().getGameStateManager().setCurrentState(STATES.PLAY);
+        GameContextService.get().getGameStateManager().setGameStateIsActive(STATES.GAME_OVER, false);
+        GameContextService.get().getGameStateManager().setGameStateIsActive(STATES.PLAY, true);
+        GameContextService.get().getGameStateManager().setCurrentState(STATES.PLAY);
         GameContextService.get().getGameWindow().resetWorld();
     }
 

@@ -15,6 +15,7 @@ public class GameContext {
     private final SoundManager soundManager;
     private final KeyHandler keyHandler;
     private final MouseHandler mouseHandler;
+    private final GameStateManager gameStateManager;
 
     public GameContext(GameWindow gw,
                        TileManager tm,
@@ -23,7 +24,8 @@ public class GameContext {
                        UIManager ui,
                        SoundManager sm,
                        KeyHandler kh,
-                       MouseHandler mh) {
+                       MouseHandler mh,
+                       GameStateManager gsm) {
         this.gameWindow = gw;
         this.tileManager = tm;
         this.collisionManager = cm;
@@ -32,6 +34,7 @@ public class GameContext {
         this.soundManager = sm;
         this.keyHandler = kh;
         this.mouseHandler = mh;
+        this.gameStateManager = gsm;
     }
 
     public GameWindow getGameWindow() { return gameWindow; }
@@ -50,4 +53,5 @@ public class GameContext {
     }
     public KeyHandler getKeyHandler() { return keyHandler; }
     public MouseHandler getMouseHandler() { return mouseHandler; }
+    public GameStateManager getGameStateManager() { return gameStateManager; }
 }

@@ -89,8 +89,8 @@ public class NPC extends Entity {
 
     private void showDialog() {
         // Change the game state
-        GameContextService.get().getGameWindow().getGameStateManager().blockInputForCurrentState(true);
-        GameContextService.get().getGameWindow().getGameStateManager().setGameStateIsActive(STATES.DIALOG, true);
+        GameContextService.get().getGameStateManager().blockInputForCurrentState(true);
+        GameContextService.get().getGameStateManager().setGameStateIsActive(STATES.DIALOG, true);
     }
 
     public EntityType getType() { return this.tag; }
