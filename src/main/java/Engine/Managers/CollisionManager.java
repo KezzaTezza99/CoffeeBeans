@@ -3,24 +3,19 @@ package Engine.Managers;
 import Engine.Collisions.AABB;
 import Engine.Entity.Entity;
 import Engine.GameWindow;
+import Engine.Services.GameContextService;
+
 import java.awt.*;
 
 public class CollisionManager {
-    TileManager tileManager;
-    GameWindow gameWindow;
-
-    public CollisionManager(TileManager tileManager, GameWindow gameWindow) {
-        this.tileManager = tileManager;
-        this.gameWindow = gameWindow;
-    }
 
     public boolean checkTile(int x, int y) {
-        int col = x / gameWindow.getTileSize();
-        int row = y / gameWindow.getTileSize();
+        int col = x / GameContextService.get().getGameWindow().getTileSize();
+        int row = y / GameContextService.get().getGameWindow().getTileSize();
 
-        int tile = tileManager.mapSpriteData[col][row];
+        int tile = GameContextService.get().getTileManager().mapSpriteData[col][row];
 
-        if(tileManager.sprites[tile].isCollidable) {
+        if(GameContextService.get().getTileManager().sprites[tile].isCollidable) {
             System.out.println("We have hit a wall");
             return false;
         }
@@ -28,23 +23,23 @@ public class CollisionManager {
     }
 
     public boolean willCollide(AABB futureBounds) {
-        int leftTile = (int)(futureBounds.getX()) / gameWindow.getTileSize();
-        int rightTile = (int)(futureBounds.getX() + futureBounds.getWidth() - 1) / gameWindow.getTileSize();
-        int topTile = (int)(futureBounds.getY()) / gameWindow.getTileSize();
-        int bottomTile = (int)(futureBounds.getY() + futureBounds.getHeight() - 1) / gameWindow.getTileSize();
+        int leftTile = (int)(futureBounds.getX()) / GameContextService.get().getGameWindow().getTileSize();
+        int rightTile = (int)(futureBounds.getX() + futureBounds.getWidth() - 1) / GameContextService.get().getGameWindow().getTileSize();
+        int topTile = (int)(futureBounds.getY()) / GameContextService.get().getGameWindow().getTileSize();
+        int bottomTile = (int)(futureBounds.getY() + futureBounds.getHeight() - 1) / GameContextService.get().getGameWindow().getTileSize();
 
         // Optional bounds check if we allow moving off-screen / camera follow
-        if (tileManager.canMoveOffScreen) {
-            if (leftTile < 0 || rightTile >= tileManager.mapSpriteData.length ||
-                    topTile < 0 || bottomTile >= tileManager.mapSpriteData[0].length) {
+        if (GameContextService.get().getTileManager().canMoveOffScreen) {
+            if (leftTile < 0 || rightTile >= GameContextService.get().getTileManager().mapSpriteData.length ||
+                    topTile < 0 || bottomTile >= GameContextService.get().getTileManager().mapSpriteData[0].length) {
                 return false;
             }
         }
 
         for (int col = leftTile; col <= rightTile; col++) {
             for (int row = topTile; row <= bottomTile; row++) {
-                int tile = tileManager.mapSpriteData[col][row];
-                if (tileManager.sprites[tile].isCollidable) {
+                int tile = GameContextService.get().getTileManager().mapSpriteData[col][row];
+                if (GameContextService.get().getTileManager().sprites[tile].isCollidable) {
                     return true;
                 }
             }
