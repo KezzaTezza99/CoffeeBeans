@@ -10,19 +10,19 @@ public final class GameContextService {
     private static GameContext gameContext;
     private GameContextService() {}
 
-    public static void initGameContext(TileManager tm,
+    public static void initGameContext(GameWindow gw,
+                                       TileManager tm,
                                        CollisionManager cm,
                                        UIManager uim,
                                        SoundManager sm,
                                        EntityManager em,
                                        KeyHandler kh,
-                                       MouseHandler mh,
-                                       GameWindow gw
+                                       MouseHandler mh
     ) {
         if(gameContext != null) {
             throw new IllegalStateException("GameContext already initialized");
         }
-        gameContext = new GameContext(tm, cm, em, uim, sm, kh, mh, gw);
+        gameContext = new GameContext(gw,tm, cm, em, uim, sm, kh, mh);
     }
 
     public static GameContext get() {

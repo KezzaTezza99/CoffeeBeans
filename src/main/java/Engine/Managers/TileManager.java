@@ -1,5 +1,4 @@
 package Engine.Managers;
-import Engine.GameWindow;
 import Engine.Graphics.Sprite;
 import Engine.Services.GameContextService;
 
@@ -82,7 +81,6 @@ public class TileManager {
         }
     }
 
-    // TODO: Lots of magic numbers
     public void loadWorldFromFile(String filePath) {
         // Try loading the data
         try {
