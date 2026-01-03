@@ -2,6 +2,7 @@ package Engine.States;
 import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
 import Engine.Managers.GameStateManager;
+import Engine.Services.GameContextService;
 
 import java.awt.*;
 
@@ -16,10 +17,10 @@ public class PlayState extends GameState {
     @Override
     public void update() {
         if(!isBlockUpdate()) {
-            gameStateManager.getGameContext().getEntityManager().update();
-            gameStateManager.getGameContext().getEntityManager().removeDeadEntities();
-            gameStateManager.getGameContext().getUiManager().update();
-            gameStateManager.getGameContext().getSoundManager().loop("test");
+            GameContextService.get().getEntityManager().update();
+            GameContextService.get().getEntityManager().removeDeadEntities();
+            GameContextService.get().getUiManager().update();
+            GameContextService.get().getSoundManager().loop("test");
         }
     }
 
@@ -33,7 +34,7 @@ public class PlayState extends GameState {
     @Override
     public void input(KeyHandler keyHandler, MouseHandler mouseHandler) {
         if(mouseHandler.isClicked()) {
-            gameStateManager.getGameContext().getEntityManager().handleMouseClickOnAABBBounds();
+            GameContextService.get().getEntityManager().handleMouseClickOnAABBBounds();
             mouseHandler.resetClick();
         }
 
@@ -42,8 +43,8 @@ public class PlayState extends GameState {
 
     @Override
     public void draw(Graphics2D graphics2D) {
-        gameStateManager.getGameContext().getTileManager().draw(graphics2D);
-        gameStateManager.getGameContext().getEntityManager().draw(graphics2D);
-        gameStateManager.getGameContext().getUiManager().draw(graphics2D);
+        GameContextService.get().getTileManager().draw(graphics2D);
+        GameContextService.get().getEntityManager().draw(graphics2D);
+        GameContextService.get().getUiManager().draw(graphics2D);
     }
 }

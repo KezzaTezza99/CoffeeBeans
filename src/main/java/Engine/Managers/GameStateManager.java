@@ -6,6 +6,7 @@ import Engine.GameWindow;
 import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
 import Engine.Services.EventBusService;
+import Engine.Services.GameContextService;
 import Engine.States.*;
 import Game.Events.EntityDied;
 
@@ -17,21 +18,15 @@ import java.util.HashMap;
 public class GameStateManager {
     public final HashMap<STATES, GameState> states = new HashMap<>();
     private STATES currentState;
-    private final GameWindow gameWindow;
     public boolean pauseFlag = false;
     private STATES queuedState = null;
-
-    private final GameContext gameContext;
 
     // TODO: Realistically is the stateToInit even needed? So far we only use if to initialise the main menu
     // When we die etc., we reinit and just recreate everything, realistically it works for now but we should do this
     // smarter in the future!
 
     // Default Constructor
-    public GameStateManager(GameWindow gameWindow, GameContext gc, STATES stateToInit) {
-        this.gameWindow = gameWindow;
-        this.gameContext = gc;
-
+    public GameStateManager(STATES stateToInit) {
         EventBusService.getBus().register(EntityDied.class, event -> {
             event.entity().setIsAlive(false);
             if(event.entity().getTag() == EntityType.PLAYER) {
@@ -113,9 +108,6 @@ public class GameStateManager {
     public void setGameStateIsActive(STATES stateToUpdate, boolean isActive) {
         states.get(stateToUpdate).setActive(isActive);
     }
-    public GameWindow getGameWindow() {
-        return this.gameWindow;
-    }
 
     // TODO: rename these variables, it's confusing when we come back to the code what this is doing
     // it basically decided the next state and if we should allow for the state underneath to keep running etc
@@ -135,12 +127,8 @@ public class GameStateManager {
         stateToUpdate.setBlockUpdate(flag);
     }
 
-    public GameContext getGameContext() {
-        return gameContext;
-    }
-
     private void gameOver() {
         queueStateSwitchPauseAndPlay(STATES.GAME_OVER, true);
-        getGameContext().getSoundManager().closeAll(true);
+        GameContextService.get().getSoundManager().closeAll(true);
     }
 }

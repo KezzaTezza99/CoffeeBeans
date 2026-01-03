@@ -120,7 +120,7 @@ public class GameWindow extends JPanel implements Runnable {
         createEntities();
 
         // Now construct game states because entities exist
-        gameStateManager = new GameStateManager(this, GameContextService.get(), stateToInit);
+        gameStateManager = new GameStateManager(stateToInit);
     }
 
     // TODO: This is called when we are on main-menu and not actually clicked play

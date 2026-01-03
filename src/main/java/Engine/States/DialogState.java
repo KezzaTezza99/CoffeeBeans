@@ -6,6 +6,8 @@ import Engine.GenericUIComponents.DialogOverlay;
 import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
 import Engine.Managers.GameStateManager;
+import Engine.Services.GameContextService;
+
 import java.awt.*;
 import java.util.List;
 
@@ -31,7 +33,7 @@ public class DialogState extends GameState {
     @Override
     public void input(KeyHandler keyHandler, MouseHandler mouseHandler) {
         if(keyHandler.enter.clicked) {
-            List<Entity> npcs = gameStateManager.getGameContext().getEntityManager().getEntityByTag(EntityType.NPC);
+            List<Entity> npcs = GameContextService.get().getEntityManager().getEntityByTag(EntityType.NPC);
 
             if(!npcs.isEmpty()) {
                 NPC npc = (NPC) npcs.get(0);

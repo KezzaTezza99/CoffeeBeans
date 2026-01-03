@@ -18,16 +18,16 @@ public class MainMenuState extends GameState {
         setBlockUpdate(false);
 
         playButton = new UIButton(
-                gameStateManager.getGameWindow().getHalfScreenWidth(),
-                gameStateManager.getGameWindow().getHalfScreenHeight() + (gameStateManager.getGameWindow().getTileSize() / 2),
+                GameContextService.get().getGameWindow().getHalfScreenWidth(),
+                GameContextService.get().getGameWindow().getHalfScreenHeight() + (GameContextService.get().getGameWindow().getTileSize() / 2),
                 100,
                 50,
                 "Play",
                 this::loadGame);
 
         exitButton = new UIButton(
-                gameStateManager.getGameWindow().getHalfScreenWidth(),
-                (int) (gameStateManager.getGameWindow().getHalfScreenHeight() + (gameStateManager.getGameWindow().getTileSize() / 0.5)),
+                GameContextService.get().getGameWindow().getHalfScreenWidth(),
+                (int) (GameContextService.get().getGameWindow().getHalfScreenHeight() + (GameContextService.get().getGameWindow().getTileSize() / 0.5)),
                 100,
                 50,
                 "Exit",
@@ -52,7 +52,10 @@ public class MainMenuState extends GameState {
     @Override
     public void draw(Graphics2D graphics2D) {
         graphics2D.setColor(Color.white);
-        graphics2D.drawString("Main Menu", gameStateManager.getGameWindow().getHalfScreenWidth(), gameStateManager.getGameWindow().getHalfScreenHeight());
+        graphics2D.drawString(
+                "Main Menu",
+                GameContextService.get().getGameWindow().getHalfScreenWidth(),
+                GameContextService.get().getGameWindow().getHalfScreenHeight());
         playButton.draw(graphics2D);
         exitButton.draw(graphics2D);
     }
@@ -63,7 +66,7 @@ public class MainMenuState extends GameState {
         gameStateManager.setCurrentState(STATES.PLAY);
 
         // Game has been restarted reset the world
-        if(gameStateManager.getGameWindow().replayGame) gameStateManager.getGameWindow().resetWorld();
+        if(GameContextService.get().getGameWindow().replayGame) GameContextService.get().getGameWindow().resetWorld();
     }
 
     // TODO: Eventually we could clean up memory, is it even worth it we could let garbage collection do it
