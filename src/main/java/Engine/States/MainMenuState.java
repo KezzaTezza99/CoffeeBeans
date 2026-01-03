@@ -3,6 +3,7 @@ import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
 import Engine.Managers.GameStateManager;
 import Engine.GenericUIComponents.UIButton;
+import Engine.Services.FontService;
 import Engine.Services.GameContextService;
 import Engine.Utility.GameConstants;
 
@@ -24,6 +25,7 @@ public class MainMenuState extends GameState {
                 100,
                 50,
                 "Play",
+                FontService.getFonts().getSmallerFont(),
                 this::loadGame);
 
         exitButton = new UIButton(
@@ -32,6 +34,7 @@ public class MainMenuState extends GameState {
                 100,
                 50,
                 "Exit",
+                FontService.getFonts().getSmallerFont(),
                 this::exitGame);
     }
 

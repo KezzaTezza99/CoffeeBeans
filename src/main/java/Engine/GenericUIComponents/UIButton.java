@@ -13,7 +13,7 @@ public class UIButton {
     private final String label;
     private final Runnable onClick;
 
-    public UIButton(int x, int y, int w, int h, String l, Runnable onClick) {
+    public UIButton(int x, int y, int w, int h, String l, Font font, Runnable onClick) {
         this.x = x;
         this.y = y;
         this.width = w;

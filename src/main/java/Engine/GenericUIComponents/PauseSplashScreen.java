@@ -1,5 +1,6 @@
 package Engine.GenericUIComponents;
 import Engine.GameWindow;
+import Engine.Services.FontService;
 import Engine.Services.GameContextService;
 import Engine.States.STATES;
 import Engine.Utility.GameConstants;
@@ -19,8 +20,6 @@ public class PauseSplashScreen {
     private ArrayList<UIButton> collectionOfButtons;
 
     public PauseSplashScreen() {
-        Font font = new Font("Default", Font.BOLD, 22);
-
         // Getting the centre point
         int x = GameConstants.HALF_SCREEN_WIDTH;
         int y = GameConstants.HALF_SCREEN_HEIGHT;
@@ -29,10 +28,37 @@ public class PauseSplashScreen {
         int spacing = 20;
 
         // Creating the buttons
-        resumeButton = new UIButton(x, y, "Resume ", font, padding, this::resumeGameplay);
-        optionsButton = new UIButton(x, (y + resumeButton.getHeight()) + spacing, "Options", font, padding, this::openOptionMenu);
-        exitToMainMenuButton = new UIButton(x, (optionsButton.getY() + optionsButton.getHeight()) + spacing, "Exit to Main Menu", font, padding, this::exitToMainMenu);
-        exitToDesktopButton = new UIButton(x, (exitToMainMenuButton.getY() + exitToMainMenuButton.getHeight()) + spacing, "Exit to Desktop", font, padding, this::exitToDesktop);
+        resumeButton = new UIButton(
+                x,
+                y,
+                "Resume ",
+                FontService.getFonts().getSmallerFont(),
+                padding,
+                this::resumeGameplay
+        );
+        optionsButton = new UIButton(
+                x,
+                (y + resumeButton.getHeight()) + spacing,
+                "Options",
+                FontService.getFonts().getSmallerFont(),
+                padding,
+                this::openOptionMenu);
+        exitToMainMenuButton = new UIButton(
+                x,
+                (optionsButton.getY() + optionsButton.getHeight()) + spacing,
+                "Exit to Main Menu",
+                FontService.getFonts().getSmallerFont(),
+                padding,
+                this::exitToMainMenu
+        );
+        exitToDesktopButton = new UIButton(
+                x,
+                (exitToMainMenuButton.getY() + exitToMainMenuButton.getHeight()) + spacing,
+                "Exit to Desktop",
+                FontService.getFonts().getSmallerFont(),
+                padding,
+                this::exitToDesktop
+        );
 
         // Resizing the buttons to be the same size
         resizeButtons();

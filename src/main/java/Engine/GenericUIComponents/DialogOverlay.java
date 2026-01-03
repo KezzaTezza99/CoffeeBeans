@@ -17,25 +17,15 @@ public class DialogOverlay {
       private int width, height;
       private Color backgroundColour = new Color(0, 0, 0, 200);
       private Color borderColour = Color.WHITE;
-      private final Font font;
 
       public DialogOverlay(String message) {
           this.message = message;
-          this.font = new Font("Default", Font.BOLD, 28);
-
           computeDefaultDialogPos();
      }
 
      // Default position will be bottom centre of the screen
     // TODO: This code isn't DRY as it is very very similar to SplashScreen creation
      private void computeDefaultDialogPos() {
-//         BufferedImage temp = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-//         Graphics2D graphics2D = temp.createGraphics();
-//
-//         graphics2D.setFont(this.font);
-//
-//         FontMetrics metrics = graphics2D.getFontMetrics();
-
          // Setting the dialog overlay location
          this.width = GameConstants.HALF_SCREEN_WIDTH;
          this.height = 200;
@@ -46,8 +36,6 @@ public class DialogOverlay {
          // TODO: would do this better and handle long text / multi-line etc.,
          this.textX = dialogX + 25;
          this.textY = dialogY + 35;
-
-//         graphics2D.dispose();
      }
 
      public void draw(Graphics2D graphics2D) {

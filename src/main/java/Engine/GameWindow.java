@@ -6,6 +6,7 @@ import Engine.Input.KeyHandler;
 import Engine.Input.MouseHandler;
 import Engine.Managers.*;
 import Engine.Managers.UIManager;
+import Engine.Services.FontService;
 import Engine.Services.GameContextService;
 import Engine.States.STATES;
 import Engine.Utility.GameConstants;
@@ -33,6 +34,8 @@ public class GameWindow extends JPanel implements Runnable {
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.setFocusable(true);
+
+        FontService.initialiseFonts();
 
         init(STATES.MAIN_MENU);
     }

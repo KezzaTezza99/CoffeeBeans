@@ -1,5 +1,6 @@
 package Engine.GenericUIComponents;
 import Engine.GameWindow;
+import Engine.Services.FontService;
 import Engine.Services.GameContextService;
 import Engine.States.STATES;
 import Engine.Utility.GameConstants;
@@ -16,9 +17,6 @@ public class DeathSplashScreen {
     private final int x;
     private final int y;
 
-    // TODO: Get a global font object
-    private final Font font;
-
     // Drawing a restart and exit button
     private final UIButton restartGameButton;
     private final UIButton exitGameButton;
@@ -26,17 +24,36 @@ public class DeathSplashScreen {
     // TODO: Can expand with a location flag for deciding where to draw text / buttons
     public DeathSplashScreen(String message) {
         this.message = message;
-        this.font = new Font("Default", Font.BOLD, 48);
 
         // Getting the centre point to display the text
-        Point centrePoint = TextPositionHelper.getCentredTextPos(message, font, GameConstants.SCREEN_WIDTH, GameConstants.SCREEN_HEIGHT);
+        Point centrePoint = TextPositionHelper.getCentredTextPos(
+                message,
+                FontService.getFonts().getDefaultFont(),
+                GameConstants.SCREEN_WIDTH,
+                GameConstants.SCREEN_HEIGHT
+        );
+
         this.x = centrePoint.x;
         this.y = centrePoint.y;
 
         // Placing the buttons under the centre text with a predetermined spacing
         int buttonPadding = 50;
-        restartGameButton = new UIButton(this.x, (this.y + buttonPadding), "Restart", this.font, 25, this::resetGame);
-        exitGameButton = new UIButton(this.x, (restartGameButton.getY() + restartGameButton.getHeight() + buttonPadding), restartGameButton.getWidth(), restartGameButton.getHeight(), "Exit", this::exitTheGame);
+        restartGameButton = new UIButton(
+                this.x,
+                (this.y + buttonPadding),
+                "Restart",
+                FontService.getFonts().getDefaultFont(),
+                25,
+                this::resetGame
+        );
+        exitGameButton = new UIButton(
+                this.x,
+                (restartGameButton.getY() + restartGameButton.getHeight() + buttonPadding),
+                restartGameButton.getWidth(),
+                restartGameButton.getHeight(),
+                "Exit",
+                FontService.getFonts().getDefaultFont(),
+                this::exitTheGame);
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -46,7 +63,7 @@ public class DeathSplashScreen {
 
         // Drawing centred text
         graphics2D.setColor(Color.WHITE);
-        graphics2D.setFont(this.font);
+        graphics2D.setFont(FontService.getFonts().getDefaultFont());
         graphics2D.drawString(message, x, y);
 
         // Drawing the buttons
