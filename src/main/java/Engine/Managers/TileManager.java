@@ -1,6 +1,8 @@
 package Engine.Managers;
 import Engine.GameWindow;
 import Engine.Graphics.Sprite;
+import Engine.Services.GameContextService;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.BufferedReader;
@@ -13,9 +15,6 @@ import java.util.Objects;
  * Tile Manager is responsible for drawing all the sprites to the screen and storing all the data
  * that will make up the game world. It will read in a text file and draw the corresponding sprites*/
 public class TileManager {
-    // Will need access to the game window to draw the tiles to the screen
-    GameWindow gameWindow;
-
     // Information on the sprites
     public Sprite[] sprites;                    // Stores all the sprites that will be used in the game
     public int[][] mapSpriteData;               // Stores the actual sprite that represent an (X,Y) map coordinate
@@ -27,14 +26,15 @@ public class TileManager {
 
     // TODO: PROBABLY SHOULD PASS IN THE MAP TO LOAD AND ALSO ADD MORE CUSTOMIZATION HERE
     // i.e., will the map be full-screen, can you have the concept of a bigger world all this jazz
-    public TileManager(GameWindow gameWindow, boolean canMoveOffScreen) {
-        this.gameWindow = gameWindow;
+    public TileManager(boolean canMoveOffScreen) {
         // TODO: Should probably decide on size of this array based on an input folder for sprite?
         // TODO: Should def introduce the idea of spritesheets instead!
         sprites = new Sprite[40];
 
         // Initialise the map data to be the max size of the screen
-        mapSpriteData = new int[gameWindow.getMaxScreenCol()][gameWindow.getMaxScreenRow()];
+        // TODO: The GameContext is not fully initialised when we make calls to the Game Data here so maybe
+        // the fix is to implement these magic numbers into the Global Constants instead
+        mapSpriteData = new int[30][17];
 
         this.canMoveOffScreen = canMoveOffScreen;
 
@@ -82,6 +82,7 @@ public class TileManager {
         }
     }
 
+    // TODO: Lots of magic numbers
     public void loadWorldFromFile(String filePath) {
         // Try loading the data
         try {
@@ -92,17 +93,17 @@ public class TileManager {
             int y = 0;
 
             // TODO: Works but could be more optimised
-            while(x < gameWindow.getMaxScreenCol() && y < gameWindow.getMaxScreenRow()) {
+            while(x < 30 && y < 17) {
                 String line = bufferedReader.readLine();
 
-                while(x < gameWindow.getMaxScreenCol()) {
+                while(x < 30) {
                     String[] numbers = line.split(" ");
                     int num = Integer.parseInt(numbers[x]);
                     mapSpriteData[x][y] = num;
                     x++;
                 }
 
-                if(x == gameWindow.getMaxScreenCol()) {
+                if(x == 30) {
                     x = 0;
                     y++;
                 }
@@ -112,14 +113,19 @@ public class TileManager {
     }
 
     public void draw(Graphics2D graphics2D) {
-        for (int column = 0; column < gameWindow.getMaxScreenCol(); column++) {
-            for (int row = 0; row < gameWindow.getMaxScreenRow(); row++) {
+        for (int column = 0; column < 30; column++) {
+            for (int row = 0; row < 17; row++) {
                 int sprite = mapSpriteData[column][row];
 
-                int xPos = column * gameWindow.getTileSize();
-                int yPos = row * gameWindow.getTileSize();
+                int xPos = column * 64;
+                int yPos = row * 64;
 
-                graphics2D.drawImage(sprites[sprite].image, xPos, yPos, gameWindow.getTileSize(), gameWindow.getTileSize(), null);
+                graphics2D.drawImage(sprites[sprite].image,
+                        xPos,
+                        yPos,
+                        64,
+                        64,
+                        null);
             }
         }
     }
