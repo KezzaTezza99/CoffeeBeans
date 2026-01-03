@@ -3,6 +3,7 @@ import Engine.Entity.Entity;
 import Engine.Entity.EntityType;
 import Engine.Components.Clickable;
 import Engine.Input.MouseHandler;
+import Engine.Services.GameContextService;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,12 +14,9 @@ import java.util.stream.Collectors;
 // Use an HashMap or something?
 
 public class EntityManager {
-    private final MouseHandler mouseHandler;
-
     public List<Entity> entities;
 
-    public EntityManager(MouseHandler mh) {
-        this.mouseHandler = mh;
+    public EntityManager() {
         this.entities = new ArrayList<>();
     }
 
@@ -74,7 +72,9 @@ public class EntityManager {
     public void handleMouseClickOnAABBBounds() {
         for (Entity entity : entities) {
             if (entity instanceof Clickable clickable &&
-                    entity.getBounds().mouseIsCollidingWith(mouseHandler.getMouseX(), mouseHandler.getMouseY())) {
+                    entity.getBounds().mouseIsCollidingWith(
+                            GameContextService.get().getMouseHandler().getMouseX(),
+                            GameContextService.get().getMouseHandler().getMouseY())) {
                 clickable.onClick(entity);
             }
         }
