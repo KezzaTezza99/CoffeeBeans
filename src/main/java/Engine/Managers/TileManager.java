@@ -1,6 +1,7 @@
 package Engine.Managers;
 import Engine.Graphics.Sprite;
 import Engine.Services.GameContextService;
+import Engine.Utility.GameConstants;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -33,7 +34,7 @@ public class TileManager {
         // Initialise the map data to be the max size of the screen
         // TODO: The GameContext is not fully initialised when we make calls to the Game Data here so maybe
         // the fix is to implement these magic numbers into the Global Constants instead
-        mapSpriteData = new int[30][17];
+        mapSpriteData = new int[GameConstants.MAX_SCREEN_COL][GameConstants.MAX_SCREEN_ROW];
 
         this.canMoveOffScreen = canMoveOffScreen;
 
@@ -91,17 +92,17 @@ public class TileManager {
             int y = 0;
 
             // TODO: Works but could be more optimised
-            while(x < 30 && y < 17) {
+            while(x < GameConstants.MAX_SCREEN_COL && y < GameConstants.MAX_SCREEN_ROW) {
                 String line = bufferedReader.readLine();
 
-                while(x < 30) {
+                while(x < GameConstants.MAX_SCREEN_COL) {
                     String[] numbers = line.split(" ");
                     int num = Integer.parseInt(numbers[x]);
                     mapSpriteData[x][y] = num;
                     x++;
                 }
 
-                if(x == 30) {
+                if(x == GameConstants.MAX_SCREEN_COL) {
                     x = 0;
                     y++;
                 }
@@ -111,18 +112,18 @@ public class TileManager {
     }
 
     public void draw(Graphics2D graphics2D) {
-        for (int column = 0; column < 30; column++) {
-            for (int row = 0; row < 17; row++) {
+        for (int column = 0; column < GameConstants.MAX_SCREEN_COL; column++) {
+            for (int row = 0; row < GameConstants.MAX_SCREEN_ROW; row++) {
                 int sprite = mapSpriteData[column][row];
 
-                int xPos = column * 64;
-                int yPos = row * 64;
+                int xPos = column * GameConstants.TILE_SIZE;
+                int yPos = row * GameConstants.TILE_SIZE;
 
                 graphics2D.drawImage(sprites[sprite].image,
                         xPos,
                         yPos,
-                        64,
-                        64,
+                        GameConstants.TILE_SIZE,
+                        GameConstants.TILE_SIZE,
                         null);
             }
         }

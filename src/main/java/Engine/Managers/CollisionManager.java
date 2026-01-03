@@ -4,14 +4,15 @@ import Engine.Collisions.AABB;
 import Engine.Entity.Entity;
 import Engine.GameWindow;
 import Engine.Services.GameContextService;
+import Engine.Utility.GameConstants;
 
 import java.awt.*;
 
 public class CollisionManager {
 
     public boolean checkTile(int x, int y) {
-        int col = x / GameContextService.get().getGameWindow().getTileSize();
-        int row = y / GameContextService.get().getGameWindow().getTileSize();
+        int col = x / GameConstants.TILE_SIZE;
+        int row = y / GameConstants.TILE_SIZE;
 
         int tile = GameContextService.get().getTileManager().mapSpriteData[col][row];
 
@@ -23,10 +24,10 @@ public class CollisionManager {
     }
 
     public boolean willCollide(AABB futureBounds) {
-        int leftTile = (int)(futureBounds.getX()) / GameContextService.get().getGameWindow().getTileSize();
-        int rightTile = (int)(futureBounds.getX() + futureBounds.getWidth() - 1) / GameContextService.get().getGameWindow().getTileSize();
-        int topTile = (int)(futureBounds.getY()) / GameContextService.get().getGameWindow().getTileSize();
-        int bottomTile = (int)(futureBounds.getY() + futureBounds.getHeight() - 1) / GameContextService.get().getGameWindow().getTileSize();
+        int leftTile = (int)(futureBounds.getX()) / GameConstants.TILE_SIZE;
+        int rightTile = (int)(futureBounds.getX() + futureBounds.getWidth() - 1) / GameConstants.TILE_SIZE;
+        int topTile = (int)(futureBounds.getY()) / GameConstants.TILE_SIZE;
+        int bottomTile = (int)(futureBounds.getY() + futureBounds.getHeight() - 1) / GameConstants.TILE_SIZE;
 
         // Optional bounds check if we allow moving off-screen / camera follow
         if (GameContextService.get().getTileManager().canMoveOffScreen) {

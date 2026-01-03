@@ -8,6 +8,8 @@ import Engine.Managers.*;
 import Engine.Managers.UIManager;
 import Engine.Services.GameContextService;
 import Engine.States.STATES;
+import Engine.Utility.GameConstants;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -23,21 +25,21 @@ import java.awt.*;
 public class GameWindow extends JPanel implements Runnable {
     String title = "CoffeeBeans";
 
-    // Default values that can be overridden by the developer (64x64)
-    int tileSize;
-
-    // Creating the maximum amount of screen columns / rows we can display sprites to get an aspect ratio of 4:3
-    // The max sprites will be (30 x 16)
-    int maxScreenCol;
-    int maxScreenRow;
-
-    // The max screen width and height (1920 x 1080)
-    int screenWidth;
-    int screenHeight;
+//    // Default values that can be overridden by the developer (64x64)
+//    int tileSize;
+//
+//    // Creating the maximum amount of screen columns / rows we can display sprites to get an aspect ratio of 4:3
+//    // The max sprites will be (30 x 16)
+//    int maxScreenCol;
+//    int maxScreenRow;
+//
+//    // The max screen width and height (1920 x 1080)
+//    int screenWidth;
+//    int screenHeight;
 
     Thread mainThread;
     private boolean isRunning = false;
-    double FPS = 60;
+//    double FPS = 60;
 
     private GameStateManager gameStateManager;
 
@@ -65,35 +67,35 @@ public class GameWindow extends JPanel implements Runnable {
 
     public GameWindow() {
         // Setting up the game window
-        this.setPreferredSize(new Dimension(1920,1080));
+        this.setPreferredSize(new Dimension(GameConstants.SCREEN_WIDTH,GameConstants.SCREEN_HEIGHT));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.setFocusable(true);
 
-        tileSize = 64;
-        maxScreenCol = 30;
-        maxScreenRow = 17;
-        screenWidth = 1920;
-        screenHeight = 1080;
+//        tileSize = 64;
+//        maxScreenCol = 30;
+//        maxScreenRow = 17;
+//        screenWidth = 1920;
+//        screenHeight = 1080;
 
         init(STATES.MAIN_MENU);
     }
 
-    public GameWindow(int screenWidth, int screenHeight, int tileSize, int maxScreenX, int maxScreenY) {
-        // Setting up the game window
-        this.setPreferredSize(new Dimension(screenWidth,screenHeight));
-        this.setBackground(Color.black);
-        this.setDoubleBuffered(true);
-        this.setFocusable(true);
-
-        this.tileSize = tileSize;
-        this.maxScreenCol = maxScreenX;
-        this.maxScreenRow = maxScreenY;
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
-
-        init(STATES.MAIN_MENU);
-    }
+//    public GameWindow(int screenWidth, int screenHeight, int tileSize, int maxScreenX, int maxScreenY) {
+//        // Setting up the game window
+//        this.setPreferredSize(new Dimension(screenWidth,screenHeight));
+//        this.setBackground(Color.black);
+//        this.setDoubleBuffered(true);
+//        this.setFocusable(true);
+//
+//        this.tileSize = tileSize;
+//        this.maxScreenCol = maxScreenX;
+//        this.maxScreenRow = maxScreenY;
+//        this.screenWidth = screenWidth;
+//        this.screenHeight = screenHeight;
+//
+//        init(STATES.MAIN_MENU);
+//    }
 
     public void init(STATES stateToInit) {
         isRunning = true;
@@ -147,7 +149,7 @@ public class GameWindow extends JPanel implements Runnable {
     @Override
     public void run() {
         // Time step for limiting FPS
-        double drawInterval = 1000000000.0 / FPS; // 1 second / FPS
+        double drawInterval = 1000000000.0 / GameConstants.FPS; // 1 second / FPS
         double delta = 0;
         long lastTime = System.nanoTime();
 
@@ -201,22 +203,22 @@ public class GameWindow extends JPanel implements Runnable {
     }
 
     // Some useful getters
-    public int getTileSize() {
-        return tileSize;
-    }
-    public int getMaxScreenCol() {
-        return maxScreenCol;
-    }
-    public int getMaxScreenRow() {
-        return maxScreenRow;
-    }
-    public int getScreenWidth() {
-        return screenWidth;
-    }
-    public int getScreenHeight() {
-        return screenHeight;
-    }
-    public int getHalfScreenWidth() { return screenWidth / 2; }
-    public int getHalfScreenHeight() { return screenHeight / 2; }
+//    public int getTileSize() {
+//        return tileSize;
+//    }
+//    public int getMaxScreenCol() {
+//        return maxScreenCol;
+//    }
+//    public int getMaxScreenRow() {
+//        return maxScreenRow;
+//    }
+//    public int getScreenWidth() {
+//        return screenWidth;
+//    }
+//    public int getScreenHeight() {
+//        return screenHeight;
+//    }
+//    public int getHalfScreenWidth() { return screenWidth / 2; }
+//    public int getHalfScreenHeight() { return screenHeight / 2; }
     public GameStateManager getGameStateManager() { return gameStateManager; }
 }

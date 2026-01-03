@@ -2,6 +2,7 @@ package Engine.GenericUIComponents;
 
 import Engine.GameWindow;
 import Engine.Services.GameContextService;
+import Engine.Utility.GameConstants;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -36,10 +37,10 @@ public class DialogOverlay {
 //         FontMetrics metrics = graphics2D.getFontMetrics();
 
          // Setting the dialog overlay location
-         this.width = GameContextService.get().getGameWindow().getHalfScreenWidth();
+         this.width = GameConstants.HALF_SCREEN_WIDTH;
          this.height = 200;
-         this.dialogX = ((GameContextService.get().getGameWindow().getScreenWidth() / 2) - (width / 2));
-         this.dialogY = ((GameContextService.get().getGameWindow().getScreenHeight() / 2) + (height));
+         this.dialogX = ((GameConstants.SCREEN_WIDTH / 2) - (width / 2));
+         this.dialogY = ((GameConstants.SCREEN_HEIGHT / 2) + (height));
 
          // Setting the text position
          // TODO: would do this better and handle long text / multi-line etc.,

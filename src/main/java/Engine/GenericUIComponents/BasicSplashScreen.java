@@ -1,6 +1,7 @@
 package Engine.GenericUIComponents;
 import Engine.GameWindow;
 import Engine.Services.GameContextService;
+import Engine.Utility.GameConstants;
 import Engine.Utility.TextPositionHelper;
 
 import java.awt.*;
@@ -17,7 +18,7 @@ public class BasicSplashScreen {
         this.message = message;
         this.font = new Font("Default", Font.BOLD, 48);
 
-        Point centrePoint = TextPositionHelper.getCentredTextPos(message, font, GameContextService.get().getGameWindow().getScreenWidth(), GameContextService.get().getGameWindow().getScreenHeight());
+        Point centrePoint = TextPositionHelper.getCentredTextPos(message, font, GameConstants.SCREEN_WIDTH, GameConstants.SCREEN_HEIGHT);
         this.x = centrePoint.x;
         this.y = centrePoint.y;
     }

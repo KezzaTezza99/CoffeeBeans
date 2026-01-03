@@ -4,6 +4,7 @@ import Engine.Input.MouseHandler;
 import Engine.Managers.GameStateManager;
 import Engine.GenericUIComponents.UIButton;
 import Engine.Services.GameContextService;
+import Engine.Utility.GameConstants;
 
 import java.awt.*;
 
@@ -18,16 +19,16 @@ public class MainMenuState extends GameState {
         setBlockUpdate(false);
 
         playButton = new UIButton(
-                GameContextService.get().getGameWindow().getHalfScreenWidth(),
-                GameContextService.get().getGameWindow().getHalfScreenHeight() + (GameContextService.get().getGameWindow().getTileSize() / 2),
+                GameConstants.HALF_SCREEN_WIDTH,
+                GameConstants.HALF_SCREEN_HEIGHT + (GameConstants.TILE_SIZE / 2),
                 100,
                 50,
                 "Play",
                 this::loadGame);
 
         exitButton = new UIButton(
-                GameContextService.get().getGameWindow().getHalfScreenWidth(),
-                (int) (GameContextService.get().getGameWindow().getHalfScreenHeight() + (GameContextService.get().getGameWindow().getTileSize() / 0.5)),
+                GameConstants.HALF_SCREEN_WIDTH,
+                (int) (GameConstants.HALF_SCREEN_HEIGHT + (GameConstants.TILE_SIZE / 0.5)),
                 100,
                 50,
                 "Exit",
@@ -54,8 +55,8 @@ public class MainMenuState extends GameState {
         graphics2D.setColor(Color.white);
         graphics2D.drawString(
                 "Main Menu",
-                GameContextService.get().getGameWindow().getHalfScreenWidth(),
-                GameContextService.get().getGameWindow().getHalfScreenHeight());
+                GameConstants.HALF_SCREEN_WIDTH,
+                GameConstants.HALF_SCREEN_HEIGHT);
         playButton.draw(graphics2D);
         exitButton.draw(graphics2D);
     }

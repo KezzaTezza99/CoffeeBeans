@@ -2,6 +2,8 @@ package Engine.GenericUIComponents;
 import Engine.GameWindow;
 import Engine.Services.GameContextService;
 import Engine.States.STATES;
+import Engine.Utility.GameConstants;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -20,8 +22,8 @@ public class PauseSplashScreen {
         Font font = new Font("Default", Font.BOLD, 22);
 
         // Getting the centre point
-        int x = GameContextService.get().getGameWindow().getHalfScreenWidth();
-        int y = GameContextService.get().getGameWindow().getHalfScreenHeight();
+        int x = GameConstants.HALF_SCREEN_WIDTH;
+        int y = GameConstants.HALF_SCREEN_HEIGHT;
 
         int padding = 12;
         int spacing = 20;

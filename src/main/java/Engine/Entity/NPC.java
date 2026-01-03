@@ -5,6 +5,7 @@ import Engine.GameWindow;
 import Engine.Services.EventBusService;
 import Engine.Services.GameContextService;
 import Engine.States.STATES;
+import Engine.Utility.GameConstants;
 import Game.Events.ShowDialog;
 
 import javax.imageio.ImageIO;
@@ -23,8 +24,8 @@ public class NPC extends Entity {
         this.x = 300;
         this.y = 700;
 
-        entitiesCollisionBox = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
-        entitiesFutureBounds = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
+        entitiesCollisionBox = new AABB(x, y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
+        entitiesFutureBounds = new AABB(x, y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
         entitiesAggroZone = new AABB(x, y, 256, 256);
 
         direction = "left";
@@ -64,7 +65,7 @@ public class NPC extends Entity {
             default -> null;
         };
 
-        graphics2D.drawImage(image, x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize(), null);
+        graphics2D.drawImage(image, x, y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE, null);
         entitiesCollisionBox.drawCollider(graphics2D, Color.YELLOW);
         entitiesAggroZone.drawCollider(graphics2D, Color.BLACK);
     }

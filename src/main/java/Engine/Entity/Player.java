@@ -27,8 +27,8 @@ public class Player extends Entity {
         this.setIsAlive(true);
 
         // Setting the players position to be the centre of the map (screen?) changes if the "world" is bigger
-        screenX = (GameContextService.get().getGameWindow().getMaxScreenCol() / 2) * GameContextService.get().getGameWindow().getTileSize();
-        screenY = (GameContextService.get().getGameWindow().getMaxScreenRow() / 2) * GameContextService.get().getGameWindow().getTileSize();
+        screenX = (GameConstants.MAX_SCREEN_COL / 2) * GameConstants.TILE_SIZE;
+        screenY = (GameConstants.MAX_SCREEN_ROW / 2) * GameConstants.TILE_SIZE;
 
         x = screenX;
         y = screenY;
@@ -36,8 +36,8 @@ public class Player extends Entity {
         speed = 4;
         direction = "down";
 
-        entitiesCollisionBox = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
-        entitiesFutureBounds = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
+        entitiesCollisionBox = new AABB(x, y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
+        entitiesFutureBounds = new AABB(x, y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
         entitiesAggroZone = new AABB(x, y, 256, 256);
 
         EventBusService.getBus().register(DrawDamageTaken.class, event -> {
@@ -76,7 +76,7 @@ public class Player extends Entity {
             }
         } else if (GameContextService.get().getKeyHandler().down.down
                 && (GameContextService.get().getTileManager().canMoveOffScreen
-                || y != (GameContextService.get().getGameWindow().getScreenHeight()) - GameContextService.get().getGameWindow().getTileSize())) {
+                || y != (GameConstants.SCREEN_HEIGHT) - GameConstants.TILE_SIZE)) {
             direction = "down";
             entitiesFutureBounds.setX(x);
             entitiesFutureBounds.setY(y + speed);
@@ -95,7 +95,7 @@ public class Player extends Entity {
             }
         } else if (GameContextService.get().getKeyHandler().right.down
                 && (GameContextService.get().getTileManager().canMoveOffScreen
-                || x != (GameContextService.get().getGameWindow().getScreenWidth()) - GameContextService.get().getGameWindow().getTileSize())) {
+                || x != (GameConstants.SCREEN_WIDTH) - GameConstants.TILE_SIZE)) {
             direction = "right";
             entitiesFutureBounds.setX(x + speed);
             entitiesFutureBounds.setY(y);
@@ -148,7 +148,7 @@ public class Player extends Entity {
             default -> null;
         };
 
-        graphics2D.drawImage(image, x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize(), null);
+        graphics2D.drawImage(image, x, y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE, null);
         entitiesCollisionBox.drawCollider(graphics2D, Color.YELLOW);
         entitiesAggroZone.drawCollider(graphics2D, Color.BLACK);
     }

@@ -24,11 +24,11 @@ public class Enemy extends Entity implements Clickable {
         this.setIsAlive(true);
 
         // Setting the enemies position to be top left of screen
-        x = GameContextService.get().getGameWindow().getHalfScreenWidth();
+        x = GameConstants.HALF_SCREEN_WIDTH;
         y = 128;
 
-        entitiesCollisionBox = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
-        entitiesFutureBounds = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
+        entitiesCollisionBox = new AABB(x, y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
+        entitiesFutureBounds = new AABB(x, y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
         entitiesAggroZone = new AABB(x, y, 256, 256);
         entitiesDamageZone = new AABB(x, y, 126, 126);
 
@@ -48,8 +48,8 @@ public class Enemy extends Entity implements Clickable {
         x = xPos;
         y = yPos;
 
-        entitiesCollisionBox = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
-        entitiesFutureBounds = new AABB(x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize());
+        entitiesCollisionBox = new AABB(x, y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
+        entitiesFutureBounds = new AABB(x, y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
         entitiesAggroZone = new AABB(x, y, 256, 256);
         entitiesDamageZone = new AABB(x, y, 126, 126);
 
@@ -140,7 +140,7 @@ public class Enemy extends Entity implements Clickable {
             default -> null;
         };
 
-        graphics2D.drawImage(image, x, y, GameContextService.get().getGameWindow().getTileSize(), GameContextService.get().getGameWindow().getTileSize(), null);
+        graphics2D.drawImage(image, x, y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE, null);
         entitiesCollisionBox.drawCollider(graphics2D, Color.YELLOW);
         entitiesAggroZone.drawCollider(graphics2D, Color.BLACK);
         entitiesDamageZone.drawCollider(graphics2D, Color.CYAN);
