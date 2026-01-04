@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity {
     // Generic Entity Stuff
-    protected int x,y;                                  // Stores the entities (x,y) position
+    protected float x,y;                                // Stores the entities (x,y) position
     public int worldX, worldY;                          // If the "world" is bigger than the screen this is the players
                                                         // position in relation to the world / map
     public int speed;                                   // Stores the entities movement speed

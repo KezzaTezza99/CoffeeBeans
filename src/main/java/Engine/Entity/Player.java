@@ -148,7 +148,7 @@ public class Player extends Entity {
             default -> null;
         };
 
-        graphics2D.drawImage(image, x, y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE, null);
+        graphics2D.drawImage(image, (int) x, (int) y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE, null);
         entitiesCollisionBox.drawCollider(graphics2D, Color.YELLOW);
         entitiesAggroZone.drawCollider(graphics2D, Color.BLACK);
     }
@@ -162,7 +162,7 @@ public class Player extends Entity {
         if(other.tag == EntityType.ENEMY) {
             if(!startTimer) {
                 startTimer = true;
-                EventBusService.getBus().post(new DrawDamageTaken(x, y));
+                EventBusService.getBus().post(new DrawDamageTaken((int)x, (int)y));
                 EventBusService.getBus().post(new DamageTaken(this, GameConstants.ENEMY_DAMAGE_TO_PLAYER));
                 if(this.health <= 0) {
                     EventBusService.getBus().post(new EntityDied(this));

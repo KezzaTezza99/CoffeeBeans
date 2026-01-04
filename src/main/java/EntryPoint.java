@@ -1,27 +1,10 @@
 import Engine.GameWindow;
 import javax.swing.JFrame;
-// GameContext could properly replace lots of calls to getters and other dependencies being injected
-// GameContext is injected into entities this is unnecessary look at start using lightweight interfaces
 
-// GameWindow global somehow?
-
-// TODO: Should change the x,y for entities to be floats and cast to Int when we draw just for smoother movement!
 // TODO: So many hardcoded values that need to be gone!
 // TODO: Entities chasing player need variation of speed and positioning (don't all collapse on top of each other)
 // TODO: Fix the "attacking" of a player (this has semi been improvement, now really need some kind of attack animation and cooldown)
 // TODO: In some instances the enemy chasing the player can pass through collide-able objects
-
-// TODO: WHEN YOU COME BACK DO THE FOLLOWING:
-// Look at only allowing player to damage an enemy when within a certain radius
-// Attack animation??? Potential day task
-
-// Do we need game context everywhere now that we have it as a service? - Should GSM be in this service
-
-/** -------------------------------------------------------------------------------------------------------------------
- *                          CURRENT TASK
- * Clean-up TODOs
- * Work on the global font stuff
- */
 
 public class EntryPoint {
     public static void main(String[] args) {

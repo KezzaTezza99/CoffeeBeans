@@ -82,8 +82,8 @@ public class Enemy extends Entity implements Clickable {
     }
 
     private void updatePosition() {
-        int dx = GameContextService.get().getGameWindow().player.x - this.x;
-        int dy = GameContextService.get().getGameWindow().player.y - this.y;
+        float dx = GameContextService.get().getGameWindow().player.x - this.x;
+        float dy = GameContextService.get().getGameWindow().player.y - this.y;
         float distance = (float) Math.sqrt(dx * dx + dy * dy);
 
         // Get the direction needed for the sprite
@@ -140,7 +140,7 @@ public class Enemy extends Entity implements Clickable {
             default -> null;
         };
 
-        graphics2D.drawImage(image, x, y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE, null);
+        graphics2D.drawImage(image, (int) x, (int) y, GameConstants.TILE_SIZE, GameConstants.TILE_SIZE, null);
         entitiesCollisionBox.drawCollider(graphics2D, Color.YELLOW);
         entitiesAggroZone.drawCollider(graphics2D, Color.BLACK);
         entitiesDamageZone.drawCollider(graphics2D, Color.CYAN);
