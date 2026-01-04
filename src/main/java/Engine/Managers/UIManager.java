@@ -2,16 +2,19 @@ package Engine.Managers;
 import Engine.Entity.EntityType;
 import Engine.Services.EventBusService;
 import Engine.GenericUIComponents.StatBar;
+import Engine.Utility.GameConstants;
 import Game.Events.DamageTaken;
 import java.awt.*;
 
 public class UIManager {
-    // TODO: Health shouldn't be hard-coded
-    private int health = 100;
+    // UI Elements to draw on screen
     private final StatBar healthBar;
+    private int hpToDisplayText;
+
+    private int drawCurrentPlayerHealth = GameConstants.PLAYER_MAX_HEALTH;
     private final boolean showHUD = true;
     private boolean showDamage = false;
-    private int hpToDisplay;
+
     private int xPos, yPos;
     private long damageTextEndTime = 0;
 
@@ -20,7 +23,7 @@ public class UIManager {
 
         EventBusService.getBus().register(DamageTaken.class, event -> {
             if(event.entity.getTag() != EntityType.PLAYER) return;
-            this.health = event.getNewHealth();
+            this.drawCurrentPlayerHealth = event.getNewHealth();
             healthBar.setCurrentValue(event.getNewHealth());
         });
     }
@@ -46,7 +49,7 @@ public class UIManager {
         // Health text
         graphics2D.setColor(Color.white);
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 24F));
-        graphics2D.drawString("HP: " + health, 64, 32);
+        graphics2D.drawString("HP: " + drawCurrentPlayerHealth, 64, 32);
 
         // Health bar
         healthBar.draw(graphics2D);
@@ -59,11 +62,11 @@ public class UIManager {
 
     private void drawHP(Graphics2D graphics2D) {
         graphics2D.setColor(Color.yellow);
-        graphics2D.drawString(String.valueOf(hpToDisplay), xPos, yPos);
+        graphics2D.drawString(String.valueOf(hpToDisplayText), xPos, yPos);
     }
 
     public void displayDamageTaken(int hp, int xPos, int yPos, int durationInMs) {
-        this.hpToDisplay = hp;
+        this.hpToDisplayText = hp;
         this.xPos = xPos;
         this.yPos = yPos;
         this.damageTextEndTime = System.currentTimeMillis() + durationInMs;
@@ -71,7 +74,7 @@ public class UIManager {
     }
 
     public void resetHealthBar() {
-        this.health = 100;
-        this.healthBar.setCurrentValue(this.health);
+        this.drawCurrentPlayerHealth = GameConstants.PLAYER_MAX_HEALTH;
+        this.healthBar.setCurrentValue(this.drawCurrentPlayerHealth);
     }
 }

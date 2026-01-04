@@ -13,6 +13,9 @@ public final class GameConstants {
     public static final int MAX_SCREEN_COL = 30;
     public static final int MAX_SCREEN_ROW = 17;
 
+    // --- PLAYER STATS ---
+    public static final int PLAYER_MAX_HEALTH = 100;
+
     // --- DAMAGE STATS ---
     public static final int PLAYER_DAMAGE_TO_ENEMY = 20;
     public static final int ENEMY_DAMAGE_TO_PLAYER = 25;

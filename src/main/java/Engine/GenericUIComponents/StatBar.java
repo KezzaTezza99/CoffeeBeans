@@ -2,25 +2,34 @@ package Engine.GenericUIComponents;
 
 import java.awt.*;
 
-// TEMP COLOURS AND STUFF WOULD CHANGE THIS
-// PROBABLY HAVE A WAY TO SET THE COLORS IF DON'T WANT DEFAULT!
 public class StatBar {
-    private int x, y, width, height;
+    private final int x;
+    private final int y;
+    private final int width;
+    private final int height;
     private Color backgroundColor = Color.darkGray;
     private Color fillColor = Color.green;
     private Color borderColor = Color.black;
 
-    private int maxValue;
+    private final int maxValue;
     private int currentValue;
 
-    public StatBar(int x, int y, int w, int h, int mv) {
+    public StatBar(int x, int y, int width, int height, int maxValue) {
         this.x = x;
         this.y = y;
-        this.width = w;
-        this.height = h;
-        this.maxValue = mv;
-        this.currentValue = mv;
+        this.width = width;
+        this.height = height;
+        this.maxValue = maxValue;
+        this.currentValue = maxValue;
     }
+
+    public void setAllColours(Color backgroundColor, Color fillColor, Color borderColor) {
+        this.backgroundColor = backgroundColor;
+        this.fillColor = fillColor;
+        this.borderColor = borderColor;
+    }
+
+    public void setFillColor(Color fillColor) { this.fillColor = fillColor; }
 
     public void setCurrentValue(int value) {
         this.currentValue = Math.max(0, Math.min(value, maxValue));
